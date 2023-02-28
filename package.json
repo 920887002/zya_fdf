@@ -1,0 +1,45 @@
+{
+  "name": "fdf",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "vue-cli-service serve",
+    "build": "vue-cli-service build"
+  },
+  "dependencies": {
+    "babel-plugin-import": "^1.13.6",
+    "core-js": "^3.8.3",
+    "postcss-pxtorem": "^6.0.0",
+    "vant": "^2.12.54",
+    "vue": "^2.6.14",
+    "vue-router": "^3.5.1",
+    "vuex": "^3.6.2"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^5.0.0",
+    "@vue/cli-service": "^5.0.0",
+    "autoprefixer": "^10.4.13",
+    "less": "^4.0.0",
+    "less-loader": "^8.0.0",
+    "lib-flexible": "^0.3.2",
+    "postcss": "^8.4.21",
+    "tailwindcss": "^3.2.7",
+    "vue-template-compiler": "^2.6.14"
+  },
+  "postcss": {
+    "plugins": {
+      "tailwindcss":{},
+      "autoprefixer": {},
+      "postcss-pxtorem": {
+        "rootValue": 37.5,
+        "unitPrecision": 3,
+        "propList": [
+          "*",
+          "!border"
+        ],
+        "minPixelValue": 3,
+        "selectorBlackList": []
+      }
+    }
+  }
+}
