@@ -1,0 +1,115 @@
+<template>
+    <div class="w-full">
+        <div class="w-345 mx-auto">
+            <div class="h-44 flex flex-row items-center justify-between">
+                <div class="w-[103px] h-23 bg-[url('~@/img/logo.png')] bg-cover">
+                </div>
+                <div class="text-[14px] w-[103px] font-semibold Transtips overflow-hidden overflow-ellipsis">链接钱包</div>
+                <img src="../../img/Nav.png" class="w-[24px] h-[24px]" alt="">
+            </div>
+            <div class="h-[155px] mt-[10px] bg-[#1B1B1B]">
+                <ul class="contractAddress pt-[12px] pl-[8px]">
+                    <li class="h-[55px]">合约地址：TYmXaDZxYhEvkqGReDCW1LrNom8B8sTMgK</li>
+                    <li>平台运行时间：2023.3.3</li>
+                    <li>周期收益：<span class="text-[#E7B67C]">225%</span></li>
+                </ul>
+            </div>
+            <!-- 中间两个box -->
+            
+            <div class="h-[165px] mt-[15px] flex flex-wrap justify-between content-between">
+                <div class="w-[170px]   h-[80px] middleLeft rounded-[4px] overflow-hidden flex flex-col flex-wrap bg-[#F7B52D]">
+                    <p class=" text-[16px] text-white pt-[17px] pl-[8px] text-left">个人业绩</p>
+                    <span class=" text-white pl-[8px] pt-[5px] text-left">10000</span>
+                    <img src="../../img/IndividualPerformance.png" class="w-[72px] h-[89px] ml-[10px] mt-[5px]" alt="">
+                </div>
+                <div class="w-[170px] middleRight h-[80px] rounded-[4px]  overflow-hidden flex flex-col flex-wrap bg-gradient-to-r from-[#61A9F9] to-[#0068DC]">
+                    <p class=" text-[16px] text-white pt-[17px] pl-[8px] text-left">邀请用户</p>
+                    <span class="  text-white pl-[8px] pt-[5px] text-left">3个</span>
+                    <img src="../../img/inviteUser.png" class="w-[72px] h-[89px] ml-[10px] mt-[5px]" alt="">
+                </div>
+                <div class="w-[170px]  middleRight h-[80px] rounded-[4px]  overflow-hidden flex flex-col flex-wrap bg-gradient-to-r from-[#BCD9FA] to-[#5765E0]">
+                    <p class=" text-[16px] text-white pt-[17px] pl-[8px] text-left">大区业绩</p>
+                    <span class="  text-white pl-[8px] pt-[5px] text-left">3个</span>
+                    <img src="../../img/regionalPerformance.png" class="w-[72px] h-[89px] ml-[10px] mt-[5px]" alt="">
+                </div>
+                <div class="w-[170px] middleRight h-[80px] rounded-[4px]  overflow-hidden flex flex-col flex-wrap bg-gradient-to-r from-[#FF988A] to-[#FF7245]">
+                    <p class=" text-[16px] text-white pt-[17px] pl-[8px] text-left">小区业绩</p>
+                    <span class="  text-white pl-[8px] pt-[5px] text-left">3个</span>
+                    <img src="../../img/communityPerformance.png" class="w-[72px] h-[89px] ml-[10px] mt-[5px]" alt="">
+                </div>
+            </div>
+
+            <div class="h-auto pb-[20px] bg-[#1B1B1B] mt-[16px] pt-[19px] pl-[10px] pr-[9px]">
+                <div class="h-[26px] text-[#FAE2BE] text-[20px] font-semibold text-left">我的团队</div>
+                <ul class="myteamlist">
+                    <li>
+                        <h5>地址</h5>
+                        <p>累计下单金额</p>
+                        <span>团队业绩</span>
+                    </li>
+                    <li><h5>xxxxxxxxx</h5>
+                        <p>1000U</p>
+                        <span>8500</span></li>
+                    <li><h5>xxxxxxxxxxxxxxxxxxxxxxxxxxx</h5>
+                        <p>1000U</p>
+                        <span>8500</span></li>
+                    <li><h5>xxxxxxxxx</h5>
+                        <p>1000U</p>
+                        <span>8500</span></li>
+                        <li><h5>xxxxxxxxx</h5>
+                        <p>1000U</p>
+                        <span>8500</span></li>
+                        <li><h5>xxxxxxxxx</h5>
+                        <p>1000U</p>
+                        <span>8500</span></li>
+                        <li><h5>xxxxxxxxx</h5>
+                        <p>1000U</p>
+                        <span>8500</span></li>
+                </ul>
+            </div>
+    
+           
+        </div>
+    </div>
+</template>
+<script>
+
+</script>
+
+<style lang="less" scoped>
+.Transtips{
+    background-image: linear-gradient(to right,#FAE2BE,#E7B67C);
+     -webkit-background-clip: text;
+      color: transparent;
+}
+.contractAddress{
+    li{
+        text-align: left;
+        word-wrap:break-word;
+        padding-top: 10px;
+        word-break: break-all;
+        text-overflow: ellipsis;
+        font-size: 16px;
+        width: 327px;
+        font-weight: 500;
+        line-height: 24px;
+    }
+}
+.myteamlist{
+    li{
+        display: flex;
+        justify-content: space-between;
+        font-size: 12px;
+        margin-top: 9px;
+        h5,p,span{
+            width: 30%;
+            text-align: left;
+             overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+    li:nth-child(1){
+        font-size: 14px;
+    }
+}
+</style>

@@ -4,7 +4,7 @@
             <div class="h-44 flex flex-row items-center justify-between">
                 <div class="w-[103px] h-23 bg-[url('~@/img/logo.png')] bg-cover">
                 </div>
-                <div class="text-[14px] w-[103px] font-semibold Transtips">链接钱包</div>
+                <div class="text-[14px] w-[103px] font-semibold Transtips overflow-hidden overflow-ellipsis">链接钱包</div>
                 <img src="../../img/Nav.png" class="w-[24px] h-[24px]" alt="">
             </div>
             <div class="bg-[url('~@/img/Frame.png')] h-[120px] bg-[345px,80px] mt-[11px]"></div>
@@ -17,7 +17,7 @@
                 </div>
                 <div class="w-[170px] middleRight h-[80px] rounded-[4px]  overflow-hidden flex flex-col flex-wrap">
                     <p class="font-semibold text-[14px] text-white pt-[17px] pl-[5px]">您当前的NFT</p>
-                    <span class="font-semibold text-[24px] text-white pl-[10px]">3个</span>
+                    <span class="font-semibold text-[24px] text-white pl-[10px]  text-left">3个</span>
                     <img src="../../img/midLeft.png" class="w-[72px] h-[89px] ml-[10px] mt-[5px]" alt="">
                 </div>
             </div>
