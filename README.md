@@ -2,7 +2,7 @@
 
 ## Project setup
 ```
-yarn install
+https://juejin.cn/post/7103711469870514206
 ```
 
 ### Compiles and hot-reloads for development
