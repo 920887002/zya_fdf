@@ -2,7 +2,7 @@
     <div class="w-full">
         <div class="w-[345px] mx-auto">
              <div class="relative h-[20px] mt-[10px]">
-                <img src="~@/img/leftPoints.png" class="absolute w-[20px] h-[20px]" alt="">
+                <img src="~@/img/leftPoints.png" @click="$backFun()" class="absolute w-[20px] h-[20px]" alt="">
                 <div class="mx-auto w-[30px]  font-semibold Transtips">OUT</div>
              </div>
                 <ul class="outList mt-[14px]">

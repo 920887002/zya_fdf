@@ -5,7 +5,7 @@
                 <div class="w-[103px] h-23 bg-[url('~@/img/logo.png')] bg-cover">
                 </div>
                 <div class="text-[14px] w-[103px] font-semibold Transtips overflow-hidden overflow-ellipsis">0x78C4A4D651FB4196a2dF13cD7A742FCe1C4c870A</div>
-                <img src="../../img/Nav.png" class="w-[24px] h-[24px]" alt="">
+                <rightslide></rightslide>
             </div>
             <!-- contract address -->   
             <div class="h-[155px] mt-[10px] bg-[#1B1B1B]">
@@ -58,7 +58,19 @@
 </template>
 
 <script>
+export default{
+    data(){
+        return{
+            show:true,
+        }
+    },
+    components:{
+        rightslide:()=> import(/* webpackChunkName: 'index' */ "@/components/rightSlide/rightSlide.vue")
+    },
+    methods:{
 
+    }
+}
 
 </script>
 

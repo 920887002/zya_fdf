@@ -5,7 +5,7 @@
                 <div class="w-[103px] h-23 bg-[url('~@/img/logo.png')] bg-cover">
                 </div>
                 <div class="text-[14px] w-[103px] font-semibold Transtips overflow-hidden overflow-ellipsis">0x78C4A4D651FB4196a2dF13cD7A742FCe1C4c870A</div>
-                <img src="../../img/Nav.png" class="w-[24px] h-[24px]" alt="">
+                <rightslide></rightslide>
             </div>
             <div class="w-full h-[345px] bg-[url('~@/img/NFTpool.png')] font-semibold bg-[345px,375px] mt-[-75px] overflow-hidden">
             <h1 class="Transtips text-[32px] mt-[100px] h-[45px]">持有NFT</h1>
@@ -36,7 +36,19 @@
 
 <script>
 
+export default{
+    data(){
+        return{
+            show:true,
+        }
+    },
+    components:{
+        rightslide:()=> import(/* webpackChunkName: 'index' */ "@/components/rightSlide/rightSlide.vue")
+    },
+    methods:{
 
+    }
+}
 </script>
 
 <style lang="less" scoped>

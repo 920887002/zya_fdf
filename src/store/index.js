@@ -6,7 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   // 存放数据格式
   state: {
-    user: {}
+    user: {},
+    count:"123456",
   },
   // 获取state数据
   getters: {

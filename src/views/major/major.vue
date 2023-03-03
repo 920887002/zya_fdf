@@ -5,7 +5,7 @@
                 <div class="w-[103px] h-23 bg-[url('~@/img/logo.png')] bg-cover">
                 </div>
                 <div class="text-[14px] w-[103px] font-semibold Transtips">链接钱包</div>
-                <img src="../../img/Nav.png" class="w-[24px] h-[24px]" alt="">
+                <rightslide></rightslide>
             </div>
             <!-- free finance -->
             <div class="h-[136px] mt-[30px] relative bg-gradient-to-r from-[#61A9F9] to-[#0068DC] rounded-[4px] flex flex-col pl-[21px] pt-[21px] flex-wrap">
@@ -66,6 +66,19 @@
 </template>
 
 <script>
+export default{
+    data(){
+        return{
+            show:true,
+        }
+    },
+    components:{
+        rightslide:()=> import(/* webpackChunkName: 'index' */ "@/components/rightSlide/rightSlide.vue")
+    },
+    methods:{
+
+    }
+}
 
 
 </script>

@@ -5,18 +5,22 @@
                 <div class="w-[103px] h-23 bg-[url('~@/img/logo.png')] bg-cover">
                 </div>
                 <div class="text-[14px] w-[103px] font-semibold Transtips overflow-hidden overflow-ellipsis">链接钱包</div>
-                <img src="../../img/Nav.png" class="w-[24px] h-[24px]" alt="">
+                <rightslide></rightslide>
             </div>
-            <div class="bg-[url('~@/img/Frame.png')] h-[120px] bg-[345px,80px] mt-[11px]"></div>
+            <div class="bg-gradient-to-r from-[#F6C144] to-[#F7AF23] pt-[29px] pl-[20px] relative rounded-[4px] h-[120px] bg-[345px,80px] mt-[11px]">
+                <p class="text-[20px] font-medium text-left">抢购F代币，铸造NFT</p>
+                <h1 class="text-[24px] font-medium text-left">赢取收益分红</h1>
+                <img src="~@/img/majorBanner.png" class="absolute top-[0] right-[20px]" alt="">
+            </div>
             <!-- 中间两个box -->
             <div class="h-[80px] mt-[15px] flex">
                 <div class="w-[170px] mr-[10px] h-[80px] middleLeft rounded-[4px] overflow-hidden flex flex-col flex-wrap ">
-                    <p class="font-semibold text-[14px] text-white pt-[17px] pl-[5px]">您当前的F代币</p>
-                    <span class="font-semibold text-[24px] text-white pl-[5px]">10000</span>
+                    <p class="font-semibold text-[14px] text-white pt-[17px] pl-[10px]">您当前的F代币</p>
+                    <span class="font-semibold text-[24px] text-white pl-[5px] text-left">10000</span>
                     <img src="../../img/midLeft.png" class="w-[72px] h-[89px] ml-[10px] mt-[5px]" alt="">
                 </div>
                 <div class="w-[170px] middleRight h-[80px] rounded-[4px]  overflow-hidden flex flex-col flex-wrap">
-                    <p class="font-semibold text-[14px] text-white pt-[17px] pl-[5px]">您当前的NFT</p>
+                    <p class="font-semibold text-[14px] text-white pt-[17px] pl-[10px]">您当前的NFT</p>
                     <span class="font-semibold text-[24px] text-white pl-[10px]  text-left">3个</span>
                     <img src="../../img/midLeft.png" class="w-[72px] h-[89px] ml-[10px] mt-[5px]" alt="">
                 </div>
@@ -45,6 +49,19 @@
     </div>
 </template>
 <script>
+export default{
+    data(){
+        return{
+            show:true,
+        }
+    },
+    components:{
+        rightslide:()=> import(/* webpackChunkName: 'index' */ "@/components/rightSlide/rightSlide.vue")
+    },
+    methods:{
+
+    }
+}
 
 </script>
 

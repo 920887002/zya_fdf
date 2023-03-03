@@ -5,7 +5,7 @@
                 <div class="w-[103px] h-23 bg-[url('~@/img/logo.png')] bg-cover">
                 </div>
                 <div class="text-[14px] w-[103px] font-semibold Transtips overflow-hidden overflow-ellipsis">链接钱包</div>
-                <img src="../../img/Nav.png" class="w-[24px] h-[24px]" alt="">
+                <rightslide></rightslide>
             </div>
             <div class="h-[155px] mt-[10px] bg-[#1B1B1B]">
                 <ul class="contractAddress pt-[12px] pl-[8px]">
@@ -73,7 +73,19 @@
     </div>
 </template>
 <script>
+export default{
+    data(){
+        return{
+            show:true,
+        }
+    },
+    components:{
+        rightslide:()=> import(/* webpackChunkName: 'index' */ "@/components/rightSlide/rightSlide.vue")
+    },
+    methods:{
 
+    }
+}
 </script>
 
 <style lang="less" scoped>

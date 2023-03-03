@@ -4,7 +4,7 @@
              <div class="h-44 flex flex-row items-center justify-between">
                 <div class="w-[103px] h-23 bg-[url('~@/img/logo.png')] bg-cover"></div>
                 <span class="flex ml-[133px] text-[12px]">CN 繁中 <img src="~@/img/bottombut.png" alt=""></span>
-                <img src="../../img/Nav.png" class="w-[24px] h-[24px]" alt="">
+                 <rightslide></rightslide>
             </div>
             <div class="h-[155px] mt-[10px] bg-[#1B1B1B]">
                 <ul class="contractAddress pt-[12px] pl-[8px]">
@@ -36,18 +36,27 @@
                 </div>
             </div>
             <div class="h-[131px] text-[16px] bg-[#1B1B1B] mt-[16px] flex justify-around pt-[18px] pl-[40px] pr-[40px]">
-                <div class="threeCon">
+                
+                <router-link :to="{name:'IN'}">
+                    <div class="threeCon">
                     <img src="~@/img/INlogo.png" alt="">
                     <p>IN</p>
                 </div>
-                <div class="threeCon">
+                </router-link>
+                
+                <router-link :to="{name:'OUT'}">
+                    <div class="threeCon">
                     <img src="~@/img/OUTlogo.png" alt="">
-                    <p>IN</p>
+                    <p>OUT</p>
                 </div>
-                <div class="threeCon">
+                </router-link>
+                
+                <router-link :to="{name:'splitAccount'}">
+                    <div class="threeCon">
                     <img src="~@/img/cyclelogo.png" alt="">
-                    <p>循环账户</p>
+                    <p>拆分账户</p>
                 </div>
+                </router-link>
             </div>
             <div class="h-[170px] bg-[#1B1B1B] mt-[16px]">
                 <ul class="contractAddress  pl-[8px] relative">
@@ -107,6 +116,19 @@
 </template>
 
 <script>
+export default{
+    data(){
+        return{
+            show:true,
+        }
+    },
+    components:{
+        rightslide:()=> import(/* webpackChunkName: 'index' */ "@/components/rightSlide/rightSlide.vue")
+    },
+    methods:{
+
+    }
+}
 
 
 </script>

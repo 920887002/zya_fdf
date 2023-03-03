@@ -2,7 +2,7 @@
     <div class="w-full">
         <div class="w-[345px] mx-auto">
              <div class="relative h-[20px] mt-[10px]">
-                <img src="~@/img/leftPoints.png" class="absolute w-[20px] h-[20px]" alt="">
+                <img src="~@/img/leftPoints.png" @click="$backFun()" class="absolute w-[20px] h-[20px]" alt="">
                 <div class="mx-auto w-[17px]  font-semibold Transtips">IN</div>
              </div>
              <div class="h-[88px] bg-gradient-to-r from-[#FAE2BE] to-[#E7B67C] rounded-[4px] mt-[16px]">
