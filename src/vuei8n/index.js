@@ -4,8 +4,8 @@ import en from "./en"
 import Vue from "vue";
 Vue.use(VueI18n)
 const i18n =new VueI18n({
-    locale:'en',
-    fallbackLocale:'en',
+    locale:'zh',
+    fallbackLocale:'zh',
     messages:{
         zh:{
             ...zh

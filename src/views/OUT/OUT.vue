@@ -6,15 +6,15 @@
                 <div class="mx-auto w-[30px]  font-semibold Transtips">OUT</div>
              </div>
                 <ul class="outList mt-[14px]">
-                    <li><h1>解冻存款</h1><span class="Transtips">0.00 USDT</span></li>
-                    <li><h1>周期收益</h1><span class="Transtips">0.00 USDT</span></li>
-                    <li><h1>1层收益</h1><span class="Transtips">0.00 USDT</span></li>
-                    <li><h1>2-4层收益</h1><span class="Transtips">0.00 USDT</span></li>
-                    <li><h1>5-10层收益</h1><span class="Transtips">0.00 USDT</span></li>
-                    <li><h1>11-15层收益</h1><span class="Transtips">0.00 USDT</span></li>
-                    <li><h1>冻结</h1><span class="Transtips">0.00 USDT</span></li>
-                    <li><h1>幸运奖</h1><span class="Transtips">0.00 USDT</span></li>
-                    <li><h1>可取款金额</h1><span class="Transtips">0.00 USDT</span></li>
+                    <li><h1>{{$t("OUT.UnfrozenDeposit")}}</h1><span class="Transtips">0.00 USDT</span></li>
+                    <li><h1>{{$t("OUT.CyclicalReturn")}}</h1><span class="Transtips">0.00 USDT</span></li>
+                    <li><h1>1{{$t("OUT.layerIncome")}}</h1><span class="Transtips">0.00 USDT</span></li>
+                    <li><h1>2-4{{$t("OUT.layerIncome")}}</h1><span class="Transtips">0.00 USDT</span></li>
+                    <li><h1>5-10{{$t("OUT.layerIncome")}}</h1><span class="Transtips">0.00 USDT</span></li>
+                    <li><h1>11-15{{$t("OUT.layerIncome")}}</h1><span class="Transtips">0.00 USDT</span></li>
+                    <li><h1>{{$t("OUT.freeze")}}</h1><span class="Transtips">0.00 USDT</span></li>
+                    <li><h1>{{$t("OUT.luckyPrize")}}</h1><span class="Transtips">0.00 USDT</span></li>
+                    <li><h1>{{$t("OUT.withdrawAmount")}}</h1><span class="Transtips">0.00 USDT</span></li>
                 </ul>
                 <div class="bg-gradient-to-r from-[#FAE2BE] to-[#E3B97D] h-[36px] rounded-[4px] leading-[36px] text-[#633706] font-semibold text-[17px] mt-[16px]">OUT</div>
         </div>

@@ -4,53 +4,53 @@
              <div class="h-44 flex flex-row items-center justify-between">
                 <div class="w-[103px] h-23 bg-[url('~@/img/logo.png')] bg-cover">
                 </div>
-                <div class="text-[14px] w-[103px] font-semibold Transtips overflow-hidden overflow-ellipsis">0x78C4A4D651FB4196a2dF13cD7A742FCe1C4c870A</div>
+                <div class="text-[14px] w-[103px] font-semibold Transtips overflow-hidden overflow-ellipsis">{{$t("major.connectedWallet")}}</div>
                 <rightslide></rightslide>
             </div>
             <!-- contract address -->   
             <div class="h-[155px] mt-[10px] bg-[#1B1B1B]">
                 <ul class="contractAddress pt-[12px] pl-[8px]">
-                    <li class="h-[55px]">合约地址：TYmXaDZxYhEvkqGReDCW1LrNom8B8sTMgK</li>
-                    <li>平台运行时间：2023.3.3</li>
-                    <li>周期收益：<span class="text-[#E7B67C]">225%</span></li>
+                    <li class="h-[55px]">{{$t("orderDetails.contractAddress")}}：TYmXaDZxYhEvkqGReDCW1LrNom8B8sTMgK</li>
+                    <li>{{$t("orderDetails.platformTime")}}：2023.3.3</li>
+                    <li>{{$t("orderDetails.CyclicalReturn")}}：<span class="text-[#E7B67C]">225%</span></li>
                 </ul>
             </div>
-            <div class="h-[22px] text-[#FAE2BE] text-[16px] font-semibold text-left mt-[16px]">订单详情</div>
+            <div class="h-[22px] text-[#FAE2BE] text-[16px] font-semibold text-left mt-[16px]">{{$t("orderDetails.orderDetail")}}</div>
             <div class="pt-[16px] pb-[16px] bg-[#1B1B1B]">
                 <div class="flex title">
-                    <p>订单金额</p>
-                    <p>存款日期</p>
-                    <p>解冻日期</p>
-                    <p>周期收益</p>
-                    <p>订单状态</p>
+                    <p>{{$t("orderDetails.orderAmount")}}</p>
+                    <p>{{$t("orderDetails.dataOfDeposit")}}</p>
+                    <p>{{$t("orderDetails.ThawingData")}}</p>
+                    <p>{{$t("orderDetails.CyclicalReturn")}}</p>
+                    <p>{{$t("orderDetails.orderStatus")}}</p>
                 </div>
                 <ul class="orderUl items-center">
                     <li>0.00 U</li>
                     <li>2020/02/17 23:23</li>
                     <li>2020/02/17 23:23</li>
                     <li>0.00 U</li>
-                    <li>已完成</li>
+                    <li>{{$t("orderDetails.Status")}}</li>
                 </ul>
                 <ul class="orderUl">
                     <li>0.00 U</li>
                     <li>2020/02/17 23:23</li>
                     <li>2020/02/17 23:23</li>
                     <li>0.00 U</li>
-                    <li>已完成</li>
+                    <li>{{$t("orderDetails.Status")}}</li>
                 </ul>
                 <ul class="orderUl">
                     <li>0.00 U</li>
                     <li>2020/02/17 23:23</li>
                     <li>2020/02/17 23:23</li>
                     <li>0.00 U</li>
-                    <li>已完成</li>
+                    <li>{{$t("orderDetails.Status")}}</li>
                 </ul>
                 <ul class="orderUl">
                     <li>0.00 U</li>
                     <li>2020/02/17 23:23</li>
                     <li>2020/02/17 23:23</li>
                     <li>0.00 U</li>
-                    <li>已完成</li>
+                    <li>{{$t("orderDetails.Status")}}</li>
                 </ul>
             </div>
         </div>

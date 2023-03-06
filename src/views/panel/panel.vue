@@ -8,30 +8,30 @@
             </div>
             <div class="h-[155px] mt-[10px] bg-[#1B1B1B]">
                 <ul class="contractAddress pt-[12px] pl-[8px]">
-                    <li class="h-[55px]">合约地址：TYmXaDZxYhEvkqGReDCW1LrNom8B8sTMgK</li>
-                    <li>平台运行时间：2023.3.3</li>
-                    <li>周期收益：<span class="text-[#E7B67C]">225%</span></li>
+                    <li class="h-[55px]">{{$t("orderDetails.contractAddress")}}：TYmXaDZxYhEvkqGReDCW1LrNom8B8sTMgK</li>
+                    <li>{{$t("orderDetails.platformTime")}}：2023.3.3</li>
+                    <li>{{$t("orderDetails.CyclicalReturn")}}：<span class="text-[#E7B67C]">225%</span></li>
                 </ul>
             </div>
             <div class="h-[109px] mt-[16px] bg-gradient-to-r from-[#FAE2BE] pt-[21px] pl-[16px] to-[#E7B67C] rounded-[4px] text-left relative">
-                <h1 class="text-[20px] text-[#633706] text-left font-medium">玩家数量</h1>
+                <h1 class="text-[20px] text-[#633706] text-left font-medium">{{$t("PANNEL.playersNum")}}</h1>
                 <span class="text-[32px] text-[#633706] mt-[4px]">0</span>
                 <img src="~@/img/panelLogo.png" class="absolute right-[16px] bottom-[3px]" alt="">
             </div>
             <div class="h-[183px] bg-[#1B1B1B] overflow-hidden mt-[16px]">
                 <div class="bg-[url('~@/img/group2.png')] mt-[18px] h-[147.38px] bg-[339px,147.38px] bg-no-repeat bg-center">
-                    <h1 class="h-[34px] text-[24px] pool mt-[6px]">幸运奖池</h1>
+                    <h1 class="h-[34px] text-[24px] pool mt-[6px]">{{$t("PANNEL.luckyPrizePool")}}</h1>
                     <div class="Transtips text-[32px] font-semibold mt-[4px]">10000000.00 <span class="text-[16px]">USDT</span></div>
                     <div class="bg-[url('~@/img/time2.png')] bg-no-repeat bg-contain mt-[4px] mx-auto w-[279px] h-[35px] relative">
                         <span class="absolute leading-[26px] top-[5px] left-[40px] text-[#633706] font-semibold">
                         <span class="brownback">24</span>
-                        时
+                        {{$t("NFTPOOL.hour")}}
                         <span class="brownback">00</span>
-                        分
+                        {{$t("NFTPOOL.minutes")}}
                         <span class="brownback">00</span>
-                        秒
+                        {{$t("NFTPOOL.seconds")}}
                     </span>
-                     <p class="text-[14px] text-[#633706] h-35px leading-[35px] font-semibold text-left pr-[40px] text-right">未开始</p>
+                     <p class="text-[14px] text-[#633706] h-35px leading-[35px] font-semibold text-left pr-[40px] text-right">{{$t("PANNEL.notStarted")}}</p>
                     </div>
                 </div>
             </div>
@@ -54,16 +54,16 @@
                 <router-link :to="{name:'splitAccount'}">
                     <div class="threeCon">
                     <img src="~@/img/cyclelogo.png" alt="">
-                    <p>拆分账户</p>
+                    <p>{{$t("SplitAccount.SplitAccounts")}}</p>
                 </div>
                 </router-link>
             </div>
             <div class="h-[170px] bg-[#1B1B1B] mt-[16px]">
                 <ul class="contractAddress  pl-[8px] relative">
-                    <li >我的等级☆</li>
-                    <li>总收益：$0.00</li>
-                    <li>我的邀请人：0x78C4A4D651FB4196a2dF13cD7A742FCe1C4c870A</li>
-                    <li class="overflow-hidden overflow-ellipsis whitespace-nowrap w-[50px]">我的邀请链接：http//0x78C4A4D651FB4196a2dF13cD7A742FCe1C4c870A</li>
+                    <li >{{$t("SplitAccount.SplitAccounts")}}☆</li>
+                    <li>{{$t("PANNEL.GrossIncome")}}：$0.00</li>
+                    <li>{{$t("PANNEL.myInviter")}}：0x78C4A4D651FB4196a2dF13cD7A742FCe1C4c870A</li>
+                    <li class="overflow-hidden overflow-ellipsis whitespace-nowrap w-[50px]">{{$t("PANNEL.myinviterUrl")}}：http//0x78C4A4D651FB4196a2dF13cD7A742FCe1C4c870A</li>
                     <span class="absolute bottom-[0px] right-[16px] w-[71px] h-[24px] text-center font-medium text-[12px] text-[#633706] box-border leading-[24px] rounded-[4px] bg-gradient-to-r from-[#FAE2BE] to-[#E7B67C]">复制链接</span>
                 </ul>
             </div>

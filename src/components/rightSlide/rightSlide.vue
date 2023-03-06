@@ -15,7 +15,7 @@
         <ul class="slideList relative">
           <router-link :to="{ name: 'major' }"
             ><li>
-              <img src="~@/img/majoricon.png" alt="" /><span>首页</span>
+              <img src="~@/img/majoricon.png" alt="" /><span>{{$t("sideSlide.HomePage")}}</span>
             </li></router-link
           >
           <router-link :to="{ name: 'FDFIDO' }"
@@ -25,39 +25,39 @@
           >
           <router-link :to="{ name: 'NFTpool' }"
             ><li>
-              <img src="~@/img/NFTpoolicon.png" alt="" /><span>NFT奖池</span>
+              <img src="~@/img/NFTpoolicon.png" alt="" /><span>{{$t("sideSlide.NFTpool")}}</span>
             </li></router-link
           >
           <router-link :to="{ name: 'panel' }"
             ><li>
-              <img src="~@/img/pannelicon.png" alt="" /><span>仪表盘</span>
+              <img src="~@/img/pannelicon.png" alt="" /><span>{{$t("sideSlide.pannel")}}</span>
             </li></router-link
           >
           <router-link :to="{ name: 'myteam' }"
             ><li>
-              <img src="~@/img/myteamicon.png" alt="" /><span>我的团队</span>
+              <img src="~@/img/myteamicon.png" alt="" /><span>{{$t("sideSlide.myTeam")}}</span>
             </li></router-link
           >
           <router-link :to="{ name: 'orderDetails' }"
             ><li>
               <img src="~@/img/orderdetailicon.png" alt="" /><span
-                >订单详情</span
+                >{{$t("sideSlide.orderDetail")}}</span
               >
             </li></router-link
           >
           <router-link :to="{ name: 'major' }"
             ><li>
-              <img src="~@/img/gameruleicon.png" alt="" /><span>游戏规则</span>
+              <img src="~@/img/gameruleicon.png" alt="" /><span>{{$t("sideSlide.gameRules")}}</span>
             </li></router-link
           >
           <router-link :to="{ name: 'major' }"
             ><li>
-              <img src="~@/img/whitepapericon.png" alt="" /><span>白皮书</span>
+              <img src="~@/img/whitepapericon.png" alt="" /><span>{{$t("sideSlide.whitePaper")}}</span>
             </li></router-link
           >
           <router-link :to="{ name: 'major' }"
             ><li>
-              <img src="~@/img/reporticon.png" alt="" /><span>审计报告</span>
+              <img src="~@/img/reporticon.png" alt="" /><span>{{$t("sideSlide.AuditReport")}}</span>
             </li></router-link
           >
           <router-link :to="{ name: 'major' }"
@@ -69,13 +69,13 @@
           >
           <router-link :to="{ name: 'IDOswitch' }"
             ><li>
-              <img src="~@/img/idoswitchicon.png" alt="" /><span>IDO开关</span>
+              <img src="~@/img/idoswitchicon.png" alt="" /><span>{{$t("sideSlide.IDOswitch")}}</span>
             </li></router-link
           >
         </ul>
         <span
           class="absolute Transtips font-semibold text-[12px] bottom-[31px] left-[21px]"
-          >复制邀请链接</span
+          >{{$t("sideSlide.copyInviteUrl")}}</span
         >
         <van-popover
           v-model="showPopover"
