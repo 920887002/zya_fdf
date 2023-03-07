@@ -31,7 +31,7 @@
                         <span class="brownback">00</span>
                         {{$t("NFTPOOL.seconds")}}
                     </span>
-                     <p class="text-[14px] text-[#633706] h-35px leading-[35px] font-semibold text-left pr-[40px] text-right">{{$t("PANNEL.notStarted")}}</p>
+                     <p class="text-[14px] w-[110px] text-[#633706] h-35px ml-[170px] leading-[35px] font-semibold text-left">{{$t("PANNEL.notStarted")}}</p>
                     </div>
                 </div>
             </div>
@@ -58,15 +58,16 @@
                 </div>
                 </router-link>
             </div>
-            <div class="h-[170px] bg-[#1B1B1B] mt-[16px]">
-                <ul class="contractAddress  pl-[8px] relative">
+            <div class="h-auto bg-[#1B1B1B] mt-[16px] pb-[25px]">
+                <ul class="contractAddress  pl-[8px] relative pb-[20px]">
                     <li >{{$t("SplitAccount.SplitAccounts")}}☆</li>
                     <li>{{$t("PANNEL.GrossIncome")}}：$0.00</li>
                     <li>{{$t("PANNEL.myInviter")}}：0x78C4A4D651FB4196a2dF13cD7A742FCe1C4c870A</li>
-                    <li class="overflow-hidden overflow-ellipsis whitespace-nowrap w-[50px]">{{$t("PANNEL.myinviterUrl")}}：http//0x78C4A4D651FB4196a2dF13cD7A742FCe1C4c870A</li>
-                    <span class="absolute bottom-[0px] right-[16px] w-[71px] h-[24px] text-center font-medium text-[12px] text-[#633706] box-border leading-[24px] rounded-[4px] bg-gradient-to-r from-[#FAE2BE] to-[#E7B67C]">复制链接</span>
+                    <li>{{$t("PANNEL.myinviterUrl")}}：http//0x78C4A4D651FB4196a2dF13cD7A742FCe1C4c870A</li>
+                    <span class="absolute bottom-[-15px] right-[16px] w-auto pl-[10px] pr-[10px] h-[24px] text-center font-medium text-[12px] text-[#633706] box-border leading-[24px] rounded-[4px] bg-gradient-to-r from-[#FAE2BE] to-[#E7B67C]" @click="showpopup">{{$t("PANNEL.copyurl")}}</span>
                 </ul>
             </div>
+            <tipspopup ref="popup"></tipspopup>
             <div class="h-[22px] text-[#FAE2BE] text-[16px] font-semibold text-left mt-[16px]">NEW IN</div>
             <div class="h-auto pb-[10px] bg-[#1B1B1B] mt-[16px]">
                 <ul class="NewinList">
@@ -123,10 +124,13 @@ export default{
         }
     },
     components:{
-        rightslide:()=> import(/* webpackChunkName: 'index' */ "@/components/rightSlide/rightSlide.vue")
+        rightslide:()=> import(/* webpackChunkName: 'index' */ "@/components/rightSlide/rightSlide.vue"),
+        tipspopup:()=> import(/* webpackChunkName: 'index' */ "@/components/tipspopup/tipspopup.vue")
     },
     methods:{
-
+        showpopup(){
+            this.$refs.popup.showPopup("copyurl");
+        }
     }
 }
 
@@ -170,15 +174,13 @@ export default{
         text-align: left;
         word-wrap:break-word;
         padding-top: 10px;
+        height: auto;
         word-break: break-all;
         text-overflow: ellipsis;
         font-size: 16px;
         width: 327px;
         font-weight: 500;
         line-height: 24px;
-    }
-    li:nth-child(4){
-        width: 210px;
     }
 }
 

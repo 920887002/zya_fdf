@@ -14,23 +14,23 @@
                     <p>{{$t("IN.PrincipalAndIncome")}}</p>
                 </div>
              </div>
-             <div class="h-[143.64px] bg-[#1B1B1B] rounded-b-sm pl-[23px] pt-[18px]">
+             <div class="h-auto bg-[#1B1B1B] rounded-b-sm pl-[23px] pt-[18px]">
                 <h1 class="text-left font-semibold">{{$t("IN.copywriting1")}}</h1>
                 <p class="text-left font-medium opacity-80 w-[297px] mt-[8px]">{{$t("IN.copywriting2")}}</p>
              </div>
             <div class="h-[36px] mt-[17px] flex">
                 <div class="w-[211px] h-[36px] p-[2px] bg-gradient-to-r from-[#FAE2BE] to-[#E3B97D] rounded-[4px]">
-                    <input type="text" v-on:input="value=onlyNum(value)" placeholder="请输入整百" v-model="value" class="bg-[#020202] text-left w-full h-full">
+                    <input type="text" v-on:input="value=onlyNum(value)" :placeholder="$t('IN.placeholder')" v-model="value" class="bg-[#020202] text-left w-full h-full">
                 </div>
                 <div class="h-[21px] w-auto Transtips text-[16px] font-semibold ml-[8px] mt-[7px]">USDT +0.00FDF</div>
             </div>
-            <div class="mt-[10px]">
-                <van-checkbox v-model="checked" class="text-white" icon-size="14px"> 
+            <div class="mt-[10px] h-[35px] relative">
+                <van-checkbox v-model="checked" class="text-white items-start" icon-size="14px"> 
                     <template #icon="props">
                         <img class="img-icon w-[14px] h-[14px]"  :src="props.checked ? activeIcon : inactiveIcon" />
                     </template>
-                    <p class="text-white text-[12px] font-semibold"><span class="text-[#E8BD88]">{{$t("IN.UseIntegral")}}</span> {{$t("IN.justOne")}}1000</p>
                 </van-checkbox>
+                <p class="text-white text-[12px] h-[20px] font-semibold absolute top-[-1px] text-left textindent"><span class="text-[#E8BD88] inline">{{$t("IN.UseIntegral")}}</span> {{$t("IN.justOne")}}1000</p>
             </div>
             <div class="font-semibold text-[12px] text-left mt-[10px]">{{$t("IN.MinAmount")}}</div>
             <div class="bg-gradient-to-r from-[#FAE2BE] h-[36px] to-[#E3B97D] rounded-[4px] leading-[36px] text-[#633706] font-semibold text-[17px] mt-[16px]">{{$t("IN.ensure")}}</div>
@@ -74,6 +74,9 @@ export default{
     p{
         width: 85.75px;
     }
+}
+.textindent{
+    text-indent: 20px;
 }
 
 

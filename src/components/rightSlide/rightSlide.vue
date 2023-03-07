@@ -74,7 +74,7 @@
           >
         </ul>
         <span
-          class="absolute Transtips font-semibold text-[12px] bottom-[31px] left-[21px]"
+          class="absolute Transtips font-semibold text-[12px] bottom-[68px] text-right right-[21px]"
           >{{$t("sideSlide.copyInviteUrl")}}</span
         >
         <van-popover
@@ -84,7 +84,7 @@
           placement="top"
           theme="dark"
           @select="onSelect"
-          class="absolute bottom-[29px] right-[18px]"
+          class="absolute bottom-[29px] right-[21px]"
         >
           <template #reference>
             <span
@@ -161,6 +161,7 @@ export default {
     }
     span {
       line-height: 40px;
+      white-space: nowrap;
     }
   }
   li:hover {

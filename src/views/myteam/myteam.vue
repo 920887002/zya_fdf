@@ -1,12 +1,7 @@
 <template>
     <div class="w-full">
         <div class="w-345 mx-auto">
-            <div class="h-44 flex flex-row items-center justify-between">
-                <div class="w-[103px] h-23 bg-[url('~@/img/logo.png')] bg-cover">
-                </div>
-                <div class="text-[14px] w-[103px] font-semibold Transtips overflow-hidden overflow-ellipsis">{{$t("major.connectedWallet")}}</div>
-                <rightslide></rightslide>
-            </div>
+            <topheader></topheader>
             <div class="h-[155px] mt-[10px] bg-[#1B1B1B]">
                 <ul class="contractAddress pt-[12px] pl-[8px]">
                     <li class="h-[55px]">{{$t("orderDetails.contractAddress")}}：TYmXaDZxYhEvkqGReDCW1LrNom8B8sTMgK</li>
@@ -17,25 +12,25 @@
             <!-- 中间两个box -->
             
             <div class="h-[165px] mt-[15px] flex flex-wrap justify-between content-between">
-                <div class="w-[170px]   h-[80px] middleLeft rounded-[4px] overflow-hidden flex flex-col flex-wrap bg-[#F7B52D]">
-                    <p class=" text-[16px] text-white pt-[17px] pl-[8px] text-left">{{$t("MYTEAM.PersonPerformance")}}</p>
-                    <span class=" text-white pl-[8px] pt-[5px] text-left">10000</span>
-                    <img src="../../img/IndividualPerformance.png" class="w-[72px] h-[89px] ml-[10px] mt-[5px]" alt="">
+                <div class="w-[170px] relative h-[80px] middleLeft rounded-[4px] overflow-hidden flex flex-col flex-wrap bg-[#F7B52D]">
+                    <p class=" text-[16px] text-white leading-[16px] z-[20] pt-[17px] pl-[8px] text-left">{{$t("MYTEAM.PersonPerformance")}}</p>
+                    <span class=" text-white pl-[8px] pt-[5px] z-[20] text-left">10000</span>
+                    <img src="../../img/IndividualPerformance.png" class="w-[72px] absolute right-[12px]  h-[89px] " alt="">
                 </div>
-                <div class="w-[170px] middleRight h-[80px] rounded-[4px]  overflow-hidden flex flex-col flex-wrap bg-gradient-to-r from-[#61A9F9] to-[#0068DC]">
-                    <p class=" text-[16px] text-white pt-[17px] pl-[8px] text-left">{{$t("MYTEAM.inviteUser")}}</p>
-                    <span class="  text-white pl-[8px] pt-[5px] text-left">3个</span>
-                    <img src="../../img/inviteUser.png" class="w-[72px] h-[89px] ml-[10px] mt-[5px]" alt="">
+                <div class="w-[170px] relative middleRight h-[80px] rounded-[4px]  overflow-hidden flex flex-col flex-wrap bg-gradient-to-r from-[#61A9F9] to-[#0068DC]">
+                    <p class=" text-[16px] text-white  pt-[17px] z-[20] leading-[16px] pl-[8px] text-left">{{$t("MYTEAM.inviteUser")}}</p>
+                    <span class="  text-white pl-[8px] pt-[5px] z-[20] text-left">3个</span>
+                    <img src="../../img/inviteUser.png" class="w-[72px] h-[89px] absolute right-[12px] " alt="">
                 </div>
-                <div class="w-[170px]  middleRight h-[80px] rounded-[4px]  overflow-hidden flex flex-col flex-wrap bg-gradient-to-r from-[#BCD9FA] to-[#5765E0]">
-                    <p class=" text-[16px] text-white pt-[17px] pl-[8px] text-left">{{$t("MYTEAM.RegionalPerformance")}}</p>
-                    <span class="  text-white pl-[8px] pt-[5px] text-left">3个</span>
-                    <img src="../../img/regionalPerformance.png" class="w-[72px] h-[89px] ml-[10px] mt-[5px]" alt="">
+                <div class="w-[170px] relative middleRight h-[80px] rounded-[4px]  overflow-hidden flex flex-col flex-wrap bg-gradient-to-r from-[#BCD9FA] to-[#5765E0]">
+                    <p class=" text-[16px] text-white pt-[17px] z-[20] leading-[16px] pl-[8px] text-left">{{$t("MYTEAM.RegionalPerformance")}}</p>
+                    <span class="  text-white pl-[8px] pt-[5px] z-[20] text-left">3个</span>
+                    <img src="../../img/regionalPerformance.png" class="w-[72px] h-[89px] absolute right-[12px] " alt="">
                 </div>
-                <div class="w-[170px] middleRight h-[80px] rounded-[4px]  overflow-hidden flex flex-col flex-wrap bg-gradient-to-r from-[#FF988A] to-[#FF7245]">
-                    <p class=" text-[16px] text-white pt-[17px] pl-[8px] text-left">{{$t("MYTEAM.CommunityPerformance")}}</p>
-                    <span class="  text-white pl-[8px] pt-[5px] text-left">3个</span>
-                    <img src="../../img/communityPerformance.png" class="w-[72px] h-[89px] ml-[10px] mt-[5px]" alt="">
+                <div class="w-[170px] relative middleRight h-[80px] rounded-[4px]  overflow-hidden flex flex-col flex-wrap bg-gradient-to-r from-[#FF988A] to-[#FF7245]">
+                    <p class=" text-[16px] text-white pt-[17px] z-[20] leading-[16px] pl-[8px] text-left">{{$t("MYTEAM.CommunityPerformance")}}</p>
+                    <span class="  text-white pl-[8px] pt-[5px] z-[20] text-left">3个</span>
+                    <img src="../../img/communityPerformance.png" class="w-[72px] h-[89px] absolute right-[12px] " alt="">
                 </div>
             </div>
 
@@ -80,7 +75,8 @@ export default{
         }
     },
     components:{
-        rightslide:()=> import(/* webpackChunkName: 'index' */ "@/components/rightSlide/rightSlide.vue")
+        topheader:()=> import(/* webpackChunkName: 'index' */ "@/components/header/header.vue")
+        
     },
     methods:{
 

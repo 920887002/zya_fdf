@@ -1,12 +1,7 @@
 <template>
     <div class="w-full">
         <div class="w-[345px] mx-auto">
-             <div class="h-44 flex flex-row items-center justify-between">
-                <div class="w-[103px] h-23 bg-[url('~@/img/logo.png')] bg-cover">
-                </div>
-                <div class="text-[14px] w-[103px] font-semibold Transtips overflow-hidden overflow-ellipsis">{{$t("major.connectedWallet")}}</div>
-                <rightslide></rightslide>
-            </div>
+             <topheader></topheader>
             <!-- contract address -->   
             <div class="h-[155px] mt-[10px] bg-[#1B1B1B]">
                 <ul class="contractAddress pt-[12px] pl-[8px]">
@@ -65,7 +60,7 @@ export default{
         }
     },
     components:{
-        rightslide:()=> import(/* webpackChunkName: 'index' */ "@/components/rightSlide/rightSlide.vue")
+        topheader:()=> import(/* webpackChunkName: 'index' */ "@/components/header/header.vue")
     },
     methods:{
 

@@ -7,12 +7,12 @@
              </div>
              <div class="h-[80px] mt-[26px] flex justify-between">
                 <div class="w-[170px] h-[80px] font-semibold bg-gradient-to-r from-[#61A9F9] to-[#0068DC] rounded-[4px] flex flex-col flex-wrap">
-                    <h1 class="text-[16px] pt-[12px] pl-[20px]">{{$t("SplitAccount.useIntegral")}}</h1>
+                    <h1 class="text-[16px] pt-[12px] w-[83px] z-[10] whitespace-nowrap pl-[20px]">{{$t("SplitAccount.useIntegral")}}</h1>
                     <p class="pt-[8px] pl-[20px] text-left">10000.00</p>
                     <img src="~@/img/crown.png" class="w-[84px] h-[80px]" alt="">
                 </div>
                 <div class="w-[170px] h-[80px] font-semibold bg-gradient-to-r from-[#F6C144] to-[#F7AF23] rounded-[4px] flex flex-col flex-wrap">
-                    <h1 class="text-[16px] pt-[12px] pl-[20px]">{{$t("SplitAccount.freezeIntegral")}}</h1>
+                    <h1 class="text-[16px] pt-[12px] w-[83px] z-[10] whitespace-nowrap pl-[20px]">{{$t("SplitAccount.freezeIntegral")}}</h1>
                     <p class="pt-[8px] pl-[20px] text-left">3.00</p>
                     <img src="~@/img/lock.png" class="w-[84px] h-[80px]" alt="">
                 </div>

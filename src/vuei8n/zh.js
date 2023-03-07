@@ -69,7 +69,8 @@ const lang={
         UseIntegral:"使用積分",
         justOne:" ( 只可一次,當前解凍積分: )",
         MinAmount:"最低下單100U，請輸入100的倍數",
-        ensure:"確定" 
+        ensure:"確定" ,
+        placeholder:"请输入整百"
     },
     OUT:{
         UnfrozenDeposit:"解凍存款",
@@ -116,6 +117,7 @@ const lang={
         myInviter:"我的邀請人",
         myinviterUrl:"我的邀請鏈接",
         more:"更多",
+        copyurl:"復製鏈接"
     },
     MYTEAM:{
          PersonPerformance:"個人業績",
@@ -130,13 +132,14 @@ const lang={
     tips:{
         submitted:"已提交",
         NotOpenYet:"暫未開啟",
-        loading:"加載中",
+        loading:"注册中..",
         UnregisteredInvitation:"該地址未註冊請聯系推薦人獲取邀請鏈接",
         inputMoney:"輸入搶購金額",
         snapUpRatio:"搶購比例",
         cancel:"取消",
         snapUp:"馬上搶購",
         copy:"已復製",
+        noregister:"該地址未註冊 請聯系推薦人獲取註冊鏈接",
 
     }
 

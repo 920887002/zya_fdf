@@ -1,19 +1,15 @@
 <template>
     <div class="w-full">
         <div class="w-[345px] mx-auto">
-             <div class="h-44 flex flex-row items-center justify-between">
-                <div class="w-[103px] h-23 bg-[url('~@/img/logo.png')] bg-cover">
-                </div>
-                <div class="text-[14px] w-[103px] font-semibold Transtips">{{$t("major.connectedWallet")}}</div>
-                <rightslide></rightslide>
-            </div>
+                <topheader></topheader>
             <!-- free finance -->
             <div class="h-[136px] mt-[30px] relative bg-gradient-to-r from-[#61A9F9] to-[#0068DC] rounded-[4px] flex flex-col pl-[21px] pt-[21px] flex-wrap">
-                <h2 class="text-[20px] font-semibold text-left">{{$t("major.blockChainFinance")}}</h2>
-                <p class="font-semibold text-left pt-[5px]">{{$t("major.CircularMutualAid")}}</p>
-                <span class="w-[96px] h-[27px] bg-black text-[12px] mt-[15px] rounded-[4px] leading-[27px]">{{$t("major.startMoney")}}</span>
-                <img src="~@/img/indexIcon1.png" class="w-[218px] absolute mt-[-40px] right-[-20px] h-[168px]" alt="">
+                <h2 class="text-[20px] font-semibold text-left z-[10]">{{$t("major.blockChainFinance")}}</h2>
+                <p class="font-semibold text-left pt-[5px] z-[10]">{{$t("major.CircularMutualAid")}}</p>
+                <span class="w-[100px] h-[27px] bg-black text-[12px] mt-[15px] rounded-[4px] leading-[27px]" @click="showpopup">{{$t("major.startMoney")}}</span>
+                <img src="~@/img/indexIcon1.png" class="w-[218px] absolute mt-[-40px] right-[-20px] h-[168px] z-[1]" alt="">
             </div>
+            <tipspopup ref="popup"></tipspopup>
             <!-- lucky pool -->
             <div class="flex flex-col relative flex-wrap content-start justify-start h-[86px] bg-gradient-to-r from-[#FAE2BE] to-[#E7B67C] rounded-[4px] mt-[16px]">
                 <img src="~@/img/luckypool.png" class="w-[82px] h-[82px] pt-[6px] pl-[12px]">
@@ -33,24 +29,24 @@
                 </div>
             </div>
             <!-- Trusted platform -->
-            <div class="h-[321px] bg-[#1B1B1B] mt-[16px]">
+            <div class="h-auto bg-[#1B1B1B] mt-[16px]">
                 <h1 class="text-[18px] pt-[15px]">{{$t("major.trustPlatform")}}</h1>
                 <p class="text-gray-600 font-medium mt-[3px]">{{$t("major.chooseFDF")}}</p>
                 <div class="flex mt-[12px]">
-                    <div class="w-[168px] mr-[8px] h-[224px] pl-[8px] bg-gradient-to-r from-[#61A9F9] to-[#0068DC] rounded-[4px]">
+                    <div class="w-[168px] mr-[8px] relative h-[250px] pl-[8px] bg-gradient-to-r from-[#61A9F9] to-[#0068DC] rounded-[4px]">
                         <img src="~@/img/Vector.png" class="w-[43px] h-[33px] mt-[12px]" alt="">
-                        <h1 class="text-left mt-[22px] text-[16px] font-semibold">{{$t("major.footLeft1")}}</h1>
+                        <h1 class="text-left mt-[15px] text-[16px] font-semibold">{{$t("major.footLeft1")}}</h1>
                         <p class="text-left mt-[10px] h-[80px] text-[11px]" v-html="$t('major.footLeft2')"></p>
-                        <div class="flex justify-between  pr-[8px]">
+                        <div class="flex justify-between w-full pr-[8px] absolute bottom-[10px]">
                             <p class="text-[18px]">.....</p>
                             <h1 class="text-[24px]">NO.1</h1>
                         </div>
                     </div>
-                    <div class="w-[168px] h-[224px] pl-[8px] bg-gradient-to-r from-[#FAE2BE] to-[#E7B67C] rounded-[4px]">
+                    <div class="w-[168px] h-[250px] pl-[8px]  relative bg-gradient-to-r from-[#FAE2BE] to-[#E7B67C] rounded-[4px]">
                         <img src="~@/img/Vector2.png" class="w-[43px] h-[33px] mt-[12px]" alt="">
-                        <h1 class="text-left mt-[22px] text-[#633706] text-[16px] font-semibold">{{$t("major.footRight1")}}</h1>
+                        <h1 class="text-left mt-[15px] text-[#633706] text-[16px] font-semibold">{{$t("major.footRight1")}}</h1>
                         <p class="text-left mt-[10px] h-[80px] text-[#633706] text-[11px]"  v-html="$t('major.footRight2')"></p>
-                        <div class="flex justify-between pr-[8px]">
+                        <div class="flex justify-between w-full pr-[8px] absolute bottom-[10px]">
                             <p class="text-[18px] text-[#633706]">.....</p>
                             <h1 class="text-[24px] text-[#633706]">NO.1</h1>
                         </div>
@@ -73,10 +69,14 @@ export default{
         }
     },
     components:{
-        rightslide:()=> import(/* webpackChunkName: 'index' */ "@/components/rightSlide/rightSlide.vue")
+        topheader:()=> import(/* webpackChunkName: 'index' */ "@/components/header/header.vue"),
+        tipspopup:()=> import(/* webpackChunkName: 'index' */ "@/components/noregister/noregister.vue"),
+
     },
     methods:{
-
+        showpopup(){
+            this.$refs.popup.showPopup();
+        }
     }
 }
 
@@ -88,11 +88,7 @@ export default{
 .tranback{
     background: linear-gradient(-45deg,#E7B67C,#C79C7E,#C59B7E,#F9DFB9);
 }
-.Transtips{
-    background-image: linear-gradient(to right,#FAE2BE,#E7B67C);
-     -webkit-background-clip: text;
-      color: transparent;
-}
+
 .transList{
     width: 340px;
     padding: 8px 0 20px 18px;
