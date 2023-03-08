@@ -19,7 +19,7 @@
           {{ $t("NFTPOOL.currentPrizePool") }}
         </h1>
         <div
-          class="bg-[url('~@/img/time2.png')] bg-no-repeat bg-contain mt-[28px] ml-[20px] w-[279px] h-[35px] relative"
+          class="bg-[url('~@/img/time2.png')] bg-no-repeat bg-contain mt-[28px] ml-[20px] mr-[20px] w-[279px] h-[35px] relative"
         >
           <p
             class="text-[10px] text-[#633706] h-35px leading-[35px] text-left pl-[8px]"

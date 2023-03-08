@@ -4,10 +4,12 @@ import en from "./en"
 import jp from "./jp"
 import ko from "./ko"
 import ru from "./ru"
+import es from "./es"
+import ar from "./ar"
 import Vue from "vue";
 Vue.use(VueI18n)
 const i18n =new VueI18n({
-    locale:'jp',
+    locale:'zh',
     fallbackLocale:'ru',
     messages:{
         zh:{
@@ -24,6 +26,12 @@ const i18n =new VueI18n({
         },
         ru:{
             ...ru
+        },
+        es:{
+            ...es   
+        },
+        ar:{
+            ...ar
         }
     }
 })

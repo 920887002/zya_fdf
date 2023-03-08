@@ -1,6 +1,6 @@
 <template>
     <div>
-    <van-popup v-model="show" :style="{color:'white',width:'110px',height:'110px',wordBreak:'normal',background:'#363636',overflow:'hidden',paddingBottom:'20px'}"> 
+    <van-popup v-model="show" :style="{color:'white',width:'110px',height:'auto',wordBreak:'normal',background:'#363636',overflow:'hidden',paddingBottom:'20px'}"> 
         <!-- <img src="~@/img/truePoint.png" class="text-center ml-[30px] w-[48px] h-[41px] mt-[10px] mb-[10px]" alt=""> -->
         <div v-if="typeStyle==='submit'"><img src="~@/img/truePoint.png" class="text-center ml-[30px] w-[48px] h-[41px] mt-[15px] mb-[10px]" alt="">{{$t("tips.submitted")}}</div>
         <div v-else-if="typeStyle==='notopenyet'"><img src="~@/img/exclamationMark.png" class="text-center ml-[30px] w-[48px] h-[41px] mt-[15px] mb-[10px]" alt="">{{$t("tips.NotOpenYet")}}</div>

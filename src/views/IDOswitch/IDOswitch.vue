@@ -24,7 +24,8 @@ export default{
     },
     components:{
         tipspopup:()=> import(/* webpackChunkName: 'index' */ "@/components/tipspopup/tipspopup.vue"),
-        topheader:()=> import(/* webpackChunkName: 'index' */ "@/components/header/header.vue")
+        topheader:()=> import(/* webpackChunkName: 'index' */ "@/components/header/header.vue"),
+        sidebar:()=>import(/* webpackChunkName: 'index' */ "@/components/sidebar/sidebar.vue")
     },
     methods:{
         showpopup(){

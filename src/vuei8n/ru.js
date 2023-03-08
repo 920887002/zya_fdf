@@ -49,7 +49,7 @@ const lang = {
     sideSlide: {
         HomePage: "Главная страница",
         NFTpool: "Призовой пул NFT",
-        Pannel: "Приборная панель",
+        pannel: "Приборная панель",
         myTeam: "Моя команда",
         orderDetail: "Подробности заказа",
         gameRules: "Правила игры",

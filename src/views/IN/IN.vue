@@ -30,7 +30,7 @@
                         <img class="img-icon w-[14px] h-[14px]"  :src="props.checked ? activeIcon : inactiveIcon" />
                     </template>
                 </van-checkbox>
-                <p class="text-white text-[12px] h-[20px] font-semibold absolute top-[-1px] text-left textindent"><span class="text-[#E8BD88] inline">{{$t("IN.UseIntegral")}}</span> {{$t("IN.justOne")}}1000</p>
+                <p class="text-white text-[12px] h-[20px] font-semibold absolute top-[-1px] left-[17px] text-left textindent"><span class="text-[#E8BD88] inline">{{$t("IN.UseIntegral")}}</span> {{$t("IN.justOne")}}1000</p>
             </div>
             <div class="font-semibold text-[12px] text-left mt-[10px]">{{$t("IN.MinAmount")}}</div>
             <div class="bg-gradient-to-r from-[#FAE2BE] h-[36px] to-[#E3B97D] rounded-[4px] leading-[36px] text-[#633706] font-semibold text-[17px] mt-[16px]">{{$t("IN.ensure")}}</div>
@@ -75,9 +75,7 @@ export default{
         width: 85.75px;
     }
 }
-.textindent{
-    text-indent: 20px;
-}
+
 
 
 </style>

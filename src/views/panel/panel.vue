@@ -13,10 +13,10 @@
                     <li>{{$t("orderDetails.CyclicalReturn")}}：<span class="text-[#E7B67C]">225%</span></li>
                 </ul>
             </div>
-            <div class="h-[109px] mt-[16px] bg-gradient-to-r from-[#FAE2BE] pt-[21px] pl-[16px] to-[#E7B67C] rounded-[4px] text-left relative">
-                <h1 class="text-[20px] text-[#633706] text-left font-medium">{{$t("PANNEL.playersNum")}}</h1>
-                <span class="text-[32px] text-[#633706] mt-[4px]">0</span>
-                <img src="~@/img/panelLogo.png" class="absolute right-[16px] bottom-[3px]" alt="">
+            <div class="h-[109px] mt-[16px] bg-gradient-to-r from-[#FAE2BE] pt-[24px] pr-[20px] pl-[16px] text-start to-[#E7B67C] rounded-[4px] flex flex-col flex-wrap">
+                <h1 class="text-[20px] w-[178px] text-start text-[#633706] font-medium">{{$t("PANNEL.playersNum")}}</h1>
+                <span class="text-[32px] text-start text-[#633706]">0</span>
+                <img src="~@/img/panelLogo.png" class="w-[104px] h-[80px]" alt="">
             </div>
             <div class="h-[183px] bg-[#1B1B1B] overflow-hidden mt-[16px]">
                 <div class="bg-[url('~@/img/group2.png')] mt-[18px] h-[147.38px] bg-[339px,147.38px] bg-no-repeat bg-center">
@@ -31,7 +31,7 @@
                         <span class="brownback">00</span>
                         {{$t("NFTPOOL.seconds")}}
                     </span>
-                     <p class="text-[14px] w-[110px] text-[#633706] h-35px ml-[170px] leading-[35px] font-semibold text-left">{{$t("PANNEL.notStarted")}}</p>
+                     <p class="text-[14px] w-[110px] text-[#633706] h-35px ml-[180px] leading-[35px] font-semibold text-left">{{$t("PANNEL.notStarted")}}</p>
                     </div>
                 </div>
             </div>
@@ -147,6 +147,7 @@ export default{
 }
 .NewinList{
     padding-left:8px ;
+    padding-right: 8px;
     overflow: hidden;
     li{
         margin-top: 10px;
@@ -171,7 +172,7 @@ export default{
 }
 .contractAddress{
     li{
-        text-align: left;
+        text-align: start;
         word-wrap:break-word;
         padding-top: 10px;
         height: auto;

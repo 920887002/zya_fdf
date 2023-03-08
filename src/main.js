@@ -7,7 +7,9 @@ import "lib-flexible"
 import 'vant/lib/index.less'
 import "./index.css"
 import i18n from './vuei8n'
-
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+Vue.use(ElementUI);
 Vue.config.productionTip = false
 Vue.prototype.$backFun=function(){
   this.$router.go(-1);

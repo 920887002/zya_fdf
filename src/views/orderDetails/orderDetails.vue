@@ -95,6 +95,7 @@ export default{
         width: 68.6px;
         font-weight: 600;
         font-size: 12px;
+        word-break:break-all;
     }
 }
 .orderUl{

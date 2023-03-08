@@ -3,11 +3,11 @@
         <div class="w-[345px] mx-auto">
                 <topheader></topheader>
             <!-- free finance -->
-            <div class="h-[136px] mt-[30px] relative bg-gradient-to-r from-[#61A9F9] to-[#0068DC] rounded-[4px] flex flex-col pl-[21px] pt-[21px] flex-wrap">
-                <h2 class="text-[20px] font-semibold text-left z-[10]">{{$t("major.blockChainFinance")}}</h2>
-                <p class="font-semibold text-left pt-[5px] z-[10]">{{$t("major.CircularMutualAid")}}</p>
-                <span class="w-[100px] h-[27px] bg-black text-[12px] mt-[15px] rounded-[4px] leading-[27px]" @click="showpopup">{{$t("major.startMoney")}}</span>
-                <img src="~@/img/indexIcon1.png" class="w-[218px] absolute mt-[-40px] right-[-20px] h-[168px] z-[1]" alt="">
+            <div class="h-[136px] mt-[30px] relative bg-gradient-to-r from-[#61A9F9] to-[#0068DC] rounded-[4px] flex flex-col pr-[21px] pl-[21px] pt-[21px] flex-wrap">
+                <h2 class="text-[20px]  text-start w-[80px] whitespace-nowrap font-semibold z-[10]">{{$t("major.blockChainFinance")}}</h2>
+                <p class="font-semibold pt-[5px] text-start z-[10]">{{$t("major.CircularMutualAid")}}</p>
+                <span class="w-[100px] h-[27px]  bg-black text-[12px] mt-[15px] rounded-[4px] leading-[27px]" @click="showpopup">{{$t("major.startMoney")}}</span>
+                <img src="~@/img/indexIcon1.png" class="w-[218px]  mt-[-40px]  h-[168px] z-[1]" alt="">
             </div>
             <tipspopup ref="popup"></tipspopup>
             <!-- lucky pool -->
@@ -33,7 +33,7 @@
                 <h1 class="text-[18px] pt-[15px]">{{$t("major.trustPlatform")}}</h1>
                 <p class="text-gray-600 font-medium mt-[3px]">{{$t("major.chooseFDF")}}</p>
                 <div class="flex mt-[12px]">
-                    <div class="w-[168px] mr-[8px] relative h-[250px] pl-[8px] bg-gradient-to-r from-[#61A9F9] to-[#0068DC] rounded-[4px]">
+                    <div class="w-[168px] marginR mr-[8px]  relative h-[250px] pl-[8px] bg-gradient-to-r from-[#61A9F9] to-[#0068DC] rounded-[4px]">
                         <img src="~@/img/Vector.png" class="w-[43px] h-[33px] mt-[12px]" alt="">
                         <h1 class="text-left mt-[15px] text-[16px] font-semibold">{{$t("major.footLeft1")}}</h1>
                         <p class="text-left mt-[10px] h-[80px] text-[11px]" v-html="$t('major.footLeft2')"></p>
@@ -42,7 +42,7 @@
                             <h1 class="text-[24px]">NO.1</h1>
                         </div>
                     </div>
-                    <div class="w-[168px] h-[250px] pl-[8px]  relative bg-gradient-to-r from-[#FAE2BE] to-[#E7B67C] rounded-[4px]">
+                    <div class="w-[168px] h-[250px]  pl-[8px]  relative bg-gradient-to-r from-[#FAE2BE] to-[#E7B67C] rounded-[4px]">
                         <img src="~@/img/Vector2.png" class="w-[43px] h-[33px] mt-[12px]" alt="">
                         <h1 class="text-left mt-[15px] text-[#633706] text-[16px] font-semibold">{{$t("major.footRight1")}}</h1>
                         <p class="text-left mt-[10px] h-[80px] text-[#633706] text-[11px]"  v-html="$t('major.footRight2')"></p>
@@ -70,12 +70,12 @@ export default{
     },
     components:{
         topheader:()=> import(/* webpackChunkName: 'index' */ "@/components/header/header.vue"),
-        tipspopup:()=> import(/* webpackChunkName: 'index' */ "@/components/noregister/noregister.vue"),
+        tipspopup:()=> import(/* webpackChunkName: 'index' */ "@/components/tipspopup/tipspopup.vue"),
 
     },
     methods:{
         showpopup(){
-            this.$refs.popup.showPopup();
+            this.$refs.popup.showPopup("noregister");
         }
     }
 }
@@ -111,5 +111,9 @@ export default{
         font-weight: normal;
         font-size: 12px;
     }
+}
+[dir="rtl"] .marginR{
+  margin-right: 0;
+  margin-left: 8px;
 }
 </style>
