@@ -3,7 +3,9 @@
         <div class="w-[345px] mx-auto pb-[20px]">
              <div class="h-44 flex flex-row items-center justify-between">
                 <div class="w-[103px] h-23 bg-[url('~@/img/logo.png')] bg-cover"></div>
-                <span class="flex ml-[133px] text-[12px]">CN 繁中 <img src="~@/img/bottombut.png" alt=""></span>
+                <span class="flex ml-[133px] text-[12px]">
+                    <toppopup></toppopup>
+                </span>
                  <rightslide></rightslide>
             </div>
             <div class="h-[155px] mt-[10px] bg-[#1B1B1B]">
@@ -125,12 +127,23 @@ export default{
     },
     components:{
         rightslide:()=> import(/* webpackChunkName: 'index' */ "@/components/rightSlide/rightSlide.vue"),
-        tipspopup:()=> import(/* webpackChunkName: 'index' */ "@/components/tipspopup/tipspopup.vue")
+        tipspopup:()=> import(/* webpackChunkName: 'index' */ "@/components/tipspopup/tipspopup.vue"),
+        toppopup:()=> import(/* webpackChunkName: 'index' */ "@/components/toppopup/toppopup.vue")
+
     },
     methods:{
         showpopup(){
             this.$refs.popup.showPopup("copyurl");
-        }
+        },
+        onSelect(action) {
+      if(action.sx==="ar"){
+        document.documentElement.setAttribute("dir","rtl")
+      }else{
+        document.documentElement.removeAttribute("dir")
+      }
+      this.localLanguage=action.sx+" "+action.text
+      this.$i18n.locale=action.sx
+    },
     }
 }
 
@@ -194,7 +207,7 @@ export default{
 .brownback{
     display: inline-block;
     width: 24px;
-    height: 24px;
+    height: auto;
     border-radius: 4px;
     background-color: #633706;
     color: white;

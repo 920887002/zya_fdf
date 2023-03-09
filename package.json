@@ -10,6 +10,7 @@
     "babel-plugin-import": "^1.13.6",
     "core-js": "^3.8.3",
     "element-ui": "^2.15.13",
+    "ethers": "^5.5.2",
     "postcss-pxtorem": "^6.0.0",
     "vant": "^2.12.54",
     "vue": "^2.6.14",

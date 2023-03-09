@@ -3,17 +3,29 @@
     <div class="h-44 flex flex-row items-center justify-between">
                 <div class="w-[103px] h-23 bg-[url('~@/img/logo.png')] bg-cover">
                 </div>
-                <div class="text-[14px] w-[150px] font-semibold whitespace-nowrap Transtips overflow-hidden overflow-ellipsis">{{$t("major.connectedWallet")}}</div>
+                <div class="text-[14px] w-[150px] font-semibold whitespace-nowrap Transtips overflow-hidden overflow-ellipsis" @click="connectedWallet">{{$store.state.UserAddress}}</div>
                 <rightslide></rightslide>
             </div>
     </div>
 </template>
 
 <script>
+import { ethers } from 'ethers'
+import {conncetWallet} from '../../api/FDFapi'
 export default {
      components:{
         rightslide:()=> import(/* webpackChunkName: 'index' */ "@/components/rightSlide/rightSlide.vue")
     },
+    methods:{
+        async connectedWallet(){
+            const Address= await conncetWallet();
+            console.log(Address)
+        }
+    },
+    watch:{
+        
+    }
+    
 }
 </script>
 

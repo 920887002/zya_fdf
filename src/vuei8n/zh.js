@@ -91,7 +91,7 @@ const lang={
 
     },
     IDOswitch:{
-        totalNft:"全網NFT個數:",
+        totalNft:"全網NFT個數",
         stopIDO:"停止IDO",
         startclaim:"開啟領取FDF和NFT" ,
         HaveStopped:"已停止",

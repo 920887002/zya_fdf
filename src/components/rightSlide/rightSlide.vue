@@ -74,9 +74,10 @@
           >
         </ul>
         <span
-          class="absolute Transtips font-semibold text-[12px] bottom-[68px] text-right right-[21px]"
+          class="absolute Transtips font-semibold text-[12px] bottom-[68px] text-right right-[21px]" @click="showMidPopup"
           >{{$t("sideSlide.copyInviteUrl")}}</span
         >
+        <tipspopup ref="popup"></tipspopup>
         <van-popover
           v-model="showPopover"
           trigger="click"
@@ -85,6 +86,7 @@
           theme="dark"
           @select="onSelect"
           class="absolute bottom-[29px] right-[21px]"
+          ref="popover"
         >
           <template #reference>
             <span
@@ -106,6 +108,9 @@ Vue.use(Popup);
 Vue.use(Popover);
 export default {
   name: "rightslide",
+  components:{
+    tipspopup:()=> import(/* webpackChunkName: 'index' */ "@/components/tipspopup/tipspopup.vue")
+  },
   data() {
     return {
       show: false,
@@ -118,7 +123,6 @@ export default {
   methods: {
     showPopup() {
       this.show = true;
-      console.log(this.$store.state.count)
     },
     onSelect(action) {
       if(action.sx==="ar"){
@@ -126,9 +130,12 @@ export default {
       }else{
         document.documentElement.removeAttribute("dir")
       }
-      this.localLanguage=action.sx+" "+action.text
+      this.localLanguage=action.text
       this.$i18n.locale=action.sx
     },
+    showMidPopup(){
+            this.$refs.popup.showPopup("copyurl");
+        }
   },
 };
 </script>

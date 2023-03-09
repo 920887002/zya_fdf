@@ -10,7 +10,7 @@
                     <li>{{$t("orderDetails.CyclicalReturn")}}：<span class="text-[#E7B67C]">225%</span></li>
                 </ul>
             </div>
-            <div class="h-[22px] text-[#FAE2BE] text-[16px] font-semibold text-left mt-[16px]">{{$t("orderDetails.orderDetail")}}</div>
+            <div class="h-[22px] text-[#FAE2BE] text-[16px] font-semibold text-start mt-[16px]">{{$t("orderDetails.orderDetail")}}</div>
             <div class="pt-[16px] pb-[16px] bg-[#1B1B1B]">
                 <div class="flex title">
                     <p>{{$t("orderDetails.orderAmount")}}</p>
@@ -79,7 +79,7 @@ export default{
 }
 .contractAddress{
     li{
-        text-align: left;
+        text-align: start;
         word-wrap:break-word;
         padding-top: 10px;
         word-break: break-all;
