@@ -27,7 +27,6 @@ export default {
     showPopup(arg){
         this.typeStyle=arg
         this.show=true
-        console.log(arg)
     }
    }
 }

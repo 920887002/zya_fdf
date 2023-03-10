@@ -10,7 +10,7 @@
             </div>
             <div class="h-[155px] mt-[10px] bg-[#1B1B1B]">
                 <ul class="contractAddress pt-[12px] pl-[8px]">
-                    <li class="h-[55px]">{{$t("orderDetails.contractAddress")}}：TYmXaDZxYhEvkqGReDCW1LrNom8B8sTMgK</li>
+                    <li class="h-[55px]">{{$t("orderDetails.contractAddress")}}:{{$store.state.contractAddress.IDOfdfStaking}}</li>
                     <li>{{$t("orderDetails.platformTime")}}：2023.3.3</li>
                     <li>{{$t("orderDetails.CyclicalReturn")}}：<span class="text-[#E7B67C]">225%</span></li>
                 </ul>

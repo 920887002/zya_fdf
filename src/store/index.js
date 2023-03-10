@@ -6,9 +6,18 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   // 存放数据格式
   state: {
-    user: {},
-    count:"123456",
-    UserAddress:"0x94C20d72295d9Ea392e554a536515C1BE20727b7"
+    user:{
+      UserAddress:"",
+      fdfAmount:0,
+      nftNums:0,
+      registers:0,
+      amount:0,
+      invites:0,
+      inviteAmount:0,
+    },
+    contractAddress:{
+      IDOfdfStaking:"0xcee5a124a758c1d7885f814f7d2a5f3d1cde9a26"
+    }
   },
   // 获取state数据
   getters: {

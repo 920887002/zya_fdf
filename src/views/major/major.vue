@@ -6,7 +6,7 @@
             <div class="h-[136px] mt-[30px] relative bg-gradient-to-r from-[#61A9F9] to-[#0068DC] rounded-[4px] flex flex-col pr-[21px] pl-[21px] pt-[21px] flex-wrap">
                 <h2 class="text-[20px]  text-start w-[80px] whitespace-nowrap font-semibold z-[10]">{{$t("major.blockChainFinance")}}</h2>
                 <p class="font-semibold pt-[5px] text-start z-[10]">{{$t("major.CircularMutualAid")}}</p>
-                <span class="w-[100px] h-[27px]  bg-black text-[12px] mt-[15px] rounded-[4px] leading-[27px]" @click="showpopup">{{$t("major.startMoney")}}</span>
+                <span class="w-[100px] h-[27px]  bg-black text-[12px] mt-[15px] rounded-[4px] leading-[27px]" ><router-link :to="{name:'panel'}">{{$t("major.startMoney")}}</router-link></span>
                 <img src="~@/img/indexIcon1.png" class="w-[218px]  mt-[-40px]  h-[168px] z-[1]" alt="">
             </div>
             <tipspopup ref="popup"></tipspopup>

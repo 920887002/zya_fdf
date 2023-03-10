@@ -10,13 +10,13 @@
             <!-- 中间两个box -->
             <div class="h-[80px] mt-[15px] flex text-start">
                 <div class="w-[170px] mr-[10px] marginR pr-[10px] h-[80px] middleLeft rounded-[4px] overflow-hidden flex flex-col flex-wrap ">
-                    <p class="font-semibold w-[83px] z-[20] whitespace-nowrap text-[14px] text-white pt-[17px] ">{{$t("FDFIDO.FTokenBalance")}}</p>
-                    <span class="font-semibold w-[83px] z-[20] text-[24px] whitespace-nowrap text-white pl-[5px] text-left">10000000</span>
+                    <p class="font-semibold w-[83px] z-[20] whitespace-nowrap text-[14px] text-white pl-[5px] pt-[17px] ">{{$t("FDFIDO.FTokenBalance")}}</p>
+                    <span class="font-semibold w-[83px] z-[20] text-[24px] whitespace-nowrap text-white pl-[5px] text-left">{{$store.state.user.fdfAmount}}</span>
                     <img src="../../img/midLeft.png" class="w-[72px] h-[89px] ml-[10px] mt-[5px]" alt="">
                 </div>
                 <div class="w-[170px] pr-[10px] middleRight h-[80px] rounded-[4px]  overflow-hidden flex flex-col flex-wrap">
-                    <p class="font-semibold w-[83px] z-[20] whitespace-nowrap text-[14px] text-white pt-[17px]">{{$t("FDFIDO.NFTTokenBalance")}}</p>
-                    <span class="font-semibold w-[83px] z-[20] text-[24px] whitespace-nowrap text-white pl-[10px]  text-left">3{{$t("FDFIDO.PCS")}}</span>
+                    <p class="font-semibold w-[83px] z-[20] whitespace-nowrap text-[14px] text-white pl-[5px] pt-[17px]">{{$t("FDFIDO.NFTTokenBalance")}}</p>
+                    <span class="font-semibold w-[83px] z-[20] text-[24px] whitespace-nowrap text-white pl-[10px]  text-left">{{$store.state.user.nftNums}}{{$t("FDFIDO.PCS")}}</span>
                     <img src="../../img/midLeft.png" class="w-[72px] h-[89px] ml-[10px] mt-[5px]" alt="">
                 </div>
             </div>
@@ -38,7 +38,7 @@
                         <div class=""><img src="~@/img/reward3.png" class="w-[30px] h-auto ml-[15px] mr-[15px]" alt=""><p class="w-[60px] h-auto mt-[8px] ">{{$t("FDFIDO.ClaimANft")}}</p></div>
                     </div>
                 </div>
-                <p class="text-[#F8DCB5] font-medium mt-[18px]">{{$t("FDFIDO.TotalInvitation")}}30</p>
+                <p class="text-[#F8DCB5] font-medium mt-[18px]">{{$t("FDFIDO.TotalInvitation")}}{{$store.state.user.invites}}</p>
             </div>
         </div>
     </div>
@@ -50,6 +50,9 @@ export default{
             show:true,
         }
     },
+    async mounted(){
+        
+    },  
     components:{
         topheader:()=> import(/* webpackChunkName: 'index' */ "@/components/header/header.vue")
     },
