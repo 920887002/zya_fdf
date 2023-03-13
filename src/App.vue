@@ -5,6 +5,16 @@
   </div>
 </template>
 
+<script>
+export default {
+  setup() {
+    
+  },
+  mounted(){
+    this.$connect.sendThis(this)
+  }
+}
+</script>
 <style lang="less">
 @import '../src/styles/global.less';
 

@@ -10,6 +10,7 @@
                 <tipspopup ref="popup"></tipspopup>
                 <div class="w-[304px] mx-auto h-[36px] bg-gradient-to-r from-[#FAE2BE] to-[#E7B67C] rounded-[4px] text-[#633706] mt-[15px] leading-[36px] font-semibold"  @click="showpopup">{{$t("IDOswitch.closeedClaim")}}</div>
             </div>
+            <popupInput></popupInput>
         </div>
     </div>
 </template>
@@ -25,12 +26,14 @@ export default{
     components:{
         tipspopup:()=> import(/* webpackChunkName: 'index' */ "@/components/tipspopup/tipspopup.vue"),
         topheader:()=> import(/* webpackChunkName: 'index' */ "@/components/header/header.vue"),
-        sidebar:()=>import(/* webpackChunkName: 'index' */ "@/components/sidebar/sidebar.vue")
+        sidebar:()=>import(/* webpackChunkName: 'index' */ "@/components/sidebar/sidebar.vue"),
+        popupInput:()=>import(/* webpackChunkName: 'index' */ "@/components/dialog/dialog.vue")
     },
     methods:{
         showpopup(){
             this.$refs.popup.showPopup("submit");
-        }
+        },
+        
     }
 }
 

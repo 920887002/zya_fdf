@@ -21,7 +21,8 @@
                 </div>
             </div>
             <!-- 参与抢购 -->
-            <div class="h-[36px] border border-[#E3B97D] rounded-[4px] mt-[20px] text-center font-medium text-[14px] text-[#E3B97D] leading-[36px]">{{$t("FDFIDO.SnapUping")}}</div>
+            <div class="h-[36px] border border-[#E3B97D] rounded-[4px] mt-[20px] text-center font-medium text-[14px] text-[#E3B97D] leading-[36px]" @click="buyFDF">{{$t("FDFIDO.SnapUping")}}</div>
+            <popupInput ref="popupInput"></popupInput>
             <!-- 领取代币 -->
             <div class="flex justify-between mt-[20px]"> 
                 <div class="w-[168px] h-[36px] text-center font-medium text-[14px] text-[#633706] box-border leading-[36px] rounded-[4px] bg-gradient-to-r from-[#FAE2BE] to-[#E7B67C]">{{$t("FDFIDO.ClaimToken")}}</div>
@@ -54,10 +55,13 @@ export default{
         
     },  
     components:{
-        topheader:()=> import(/* webpackChunkName: 'index' */ "@/components/header/header.vue")
+        topheader:()=> import(/* webpackChunkName: 'index' */ "@/components/header/header.vue"),
+        popupInput:()=>import(/* webpackChunkName: 'index' */ "@/components/dialog/dialog.vue")
     },
     methods:{
-
+        buyFDF(){
+            this.$refs.popupInput.showdialog();
+        }
     }
 }
 

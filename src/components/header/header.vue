@@ -11,30 +11,41 @@
 </template>
 
 <script>
-import { ethers } from 'ethers'
-import {connect,getUserinfo,getIDOInfo} from '../../utils/connetc'
 export default {
     data(){
         return{
             prolist:['123','123']
         }
     },
+    mounted(){
+    },
      components:{
         rightslide:()=> import(/* webpackChunkName: 'index' */ "@/components/rightSlide/rightSlide.vue"),
         tipspopup:()=> import(/* webpackChunkName: 'index' */ "@/components/tipspopup/tipspopup.vue"),
     },
+    computed:{
+         listenAddress(){
+            return this.$store.state.user.UserAddress
+        }
+    },
     methods:{
         async connectedWallet(){
-            const result =await connect(this);
-            console.log(result)
+            const result =await this.$connect.connect();
             if(!result){
                 this.$refs.popup.showPopup("noregister")
             }
-            getIDOInfo();
         }
     },
     watch:{
-        
+        listenAddress:{
+            async handler(newVal,oldVal){
+                const result = await this.$connect.getUserinfo(newVal);
+                if(!result){
+                    this.$refs.popup.showPopup('noregister')
+                }
+            },
+            deep:true
+        }
     }
     
 }
