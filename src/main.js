@@ -12,6 +12,13 @@ import 'element-ui/lib/theme-chalk/index.css'
 import Connect from './utils/connect'
 Vue.prototype.$connect=Connect;
 Vue.use(ElementUI);
+Vue.prototype.$open=function(type,arg,title){
+    this.$notify({
+        title:title,
+        message:arg,
+        type:type
+    });
+}
 Vue.config.productionTip = false
 Vue.prototype.$backFun=function(){
   this.$router.go(-1);

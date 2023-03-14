@@ -25,8 +25,8 @@
             <popupInput ref="popupInput"></popupInput>
             <!-- 领取代币 -->
             <div class="flex justify-between mt-[20px]"> 
-                <div class="w-[168px] h-[36px] text-center font-medium text-[14px] text-[#633706] box-border leading-[36px] rounded-[4px] bg-gradient-to-r from-[#FAE2BE] to-[#E7B67C]">{{$t("FDFIDO.ClaimToken")}}</div>
-                <div class="w-[168px] h-[36px] text-center font-medium text-[14px] text-[#633706] box-border rounded-[4px] leading-[36px] bg-gradient-to-r from-[#FAE2BE] to-[#E7B67C]">{{$t("FDFIDO.ClaimNft")}}</div>
+                <div class="w-[168px] h-[36px] text-center font-medium text-[14px] text-[#633706] box-border leading-[36px] rounded-[4px] bg-gradient-to-r from-[#FAE2BE] to-[#E7B67C]" @click="claimtoken">{{$t("FDFIDO.ClaimToken")}}</div>
+                <div class="w-[168px] h-[36px] text-center font-medium text-[14px] text-[#633706] box-border rounded-[4px] leading-[36px] bg-gradient-to-r from-[#FAE2BE] to-[#E7B67C]" @click="$open()">{{$t("FDFIDO.ClaimNft")}}</div>
             </div>
             <div class="h-auto bg-[#1B1B1B] pb-[20px] mt-[20px]">
                 <p class="text-[17px] text-[#F8DCB5] font-medium pt-[30px]">{{$t("FDFIDO.threeStep")}}</p>
@@ -61,6 +61,10 @@ export default{
     methods:{
         buyFDF(){
             this.$refs.popupInput.showdialog();
+        },
+        async claimtoken(){
+            await this.$connect.sendUsdt("0x94C20d72295d9Ea392e554a536515C1BE20727b7",10)
+            this.$open()
         }
     }
 }

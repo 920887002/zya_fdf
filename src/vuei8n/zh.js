@@ -140,7 +140,17 @@ const lang={
         snapUp:"馬上搶購",
         copy:"已復製",
         noregister:"該地址未註冊 請聯系推薦人獲取註冊鏈接",
-
+        errorNum:"输入必须为100的整倍数！"
+    },
+    dialog:{
+        amount:"輸入搶購金額",
+        rate:"搶購比例",
+        cancel:"取消",
+        buying:"搶購中",
+        success:"搶購成功！",
+        successed:"成功",
+        faild:"失敗",
+        rightnow:"馬上搶購"
     }
 
 }

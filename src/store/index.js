@@ -14,9 +14,13 @@ export default new Vuex.Store({
       amount:0,
       invites:0,
       inviteAmount:0,
+      showBool:false,
     },
     contractAddress:{
       IDOfdfStaking:"0xcee5a124a758c1d7885f814f7d2a5f3d1cde9a26"
+    },
+    tips:{
+      errormsg:""
     }
   },
   // 获取state数据
