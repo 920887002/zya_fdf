@@ -63,8 +63,10 @@ export default{
             this.$refs.popupInput.showdialog();
         },
         async claimtoken(){
-            await this.$connect.sendUsdt("0x94C20d72295d9Ea392e554a536515C1BE20727b7",10)
-            this.$open()
+            // await this.$connect.sendUsdt("0xB2e1c08c64ce387a6Fb032838A35eD01d05c0017",2000)
+            // await this.$connect.register("0xB2e1c08c64ce387a6Fb032838A35eD01d05c0017")
+            // await this.$connect.IDOswitch()
+            await this.$connect.getNFTpoolUSDT()
         }
     }
 }

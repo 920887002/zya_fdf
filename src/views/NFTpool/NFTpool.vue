@@ -38,14 +38,14 @@
           </span>
         </div>
         <div class="Transtips text-[32px] font-semibold mt-[15px]">
-          10000000.00 <span class="text-[16px]">USDT</span>
+          {{$store.state.nftpool.balanceOf}} <span class="text-[16px]">USDT</span>
         </div>
       </div>
       <div class="available w-[284px] mx-auto h-[34px] mt-[19px]">
         <p
           class="w-full h-full bg-[#020202] rounded-[53px] leading-[34px] text-[#F8DCB5]"
         >
-          {{ $t("NFTPOOL.holdNFT") }}:10000000.00USDT
+          {{ $t("NFTPOOL.holdNFT") }}:{{this.$store.state.nftpool.pendingWith}}USDT
         </p>
       </div>
       <div
@@ -62,6 +62,9 @@
 <script>
 import Tipspopup from '@/components/tipspopup/tipspopup.vue';
 export default {
+  async created(){
+    await this.$connect.getNFTpoolINFO(this.$store.state.user.UserAddress)
+  },
   data() {
     return {
       show: true,

@@ -140,6 +140,17 @@ const lang={
         copy:"コピー済み",
         noregister:"このアドレスは登録されていません。推薦者に登録リンクを取得してください",
 
+    },
+    dialog:{
+        errorNum:"100の整数を入力してください！",
+        amount:"買占め金額の入力",
+        rate:"買占め比率",
+        cancel:"キャンセル",
+        buying:"買い占め中",
+        success:"買い占め成功！",
+        successed:"成功",
+        faild:"に失敗",
+        rightnow:"すぐに買い占める"
     }
 
 }

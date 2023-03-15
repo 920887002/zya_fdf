@@ -141,6 +141,17 @@ const lang={
         copy:"Copiado",
         noregister:"La Dirección no está registrada, Póngase en contacto con el recomendado para obtener la conexión registrada.",
 
+    },
+    dialog:{
+        errorNum:"¡¡ la entrada debe ser un múltiplo entero de 100!",
+        amount:"Introduzca el monto de la compra",
+        rate:"Proporción de compras",
+        cancel:"Cancelación",
+        buying:"En la compra",
+        success:"¡¡ la compra fue exitosa!",
+        successed:"éxito",
+        faild:"Fracaso",
+        rightnow:"Compra de inmediato"
     }
 
 }

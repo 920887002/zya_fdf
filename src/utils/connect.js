@@ -1,7 +1,7 @@
-import { data } from 'autoprefixer';
 import {ethers, providers} from 'ethers'
 import FDFStakingABI from '../contract/FDFStaking.json';
 import IERC20 from '../contract/IERC20.json';
+import FNFTpool from '../contract/FNFTpool.json'
 let vm=null;
 const sendThis=(_this)=>{
     vm=_this
@@ -15,15 +15,42 @@ function getContractObj(Address,abi){
     const provider=new ethers.providers.Web3Provider(window.ethereum)
     return provider
 }
-//获取地址实例
+//获取IDOstaking地址实例
  function getFDFstakingObj(){
-    const contractFDFstaking=new ethers.Contract(FDFStakingABI.contractAddress,FDFStakingABI.abi,provider())
+    const contractFDFstaking=new ethers.Contract(FDFStakingABI.contractAddress,FDFStakingABI.abi,provider().getSigner())
     return contractFDFstaking
+}
+//获取IDO信息
+async function getIDOInfo(){
+    const IDOinfo=await getFDFstakingObj().getIDOInfo()
+
+    vm.$store.state.IDOinfo.totalRegisterUser=parseInt(IDOinfo.totalRegisterUser,16)
+}
+//查询合约信息
+async function getSysInfo(){
+    const sysinfo = await getFDFstakingObj().getSysInfo()
+    vm.$store.state.IDOinfo.stakingPool=parseInt(sysinfo.stakingPool,16)
+    console.log(ethers.utils.formatUnits(sysinfo.startTime,0))
+}
+//查询单个用户业绩信息
+async function getuserInfoPer(address){
+    if(address){
+        const userinfoper=await getFDFstakingObj().userInfoPer(address)
+        vm.$store.state.user.maxDeposit=userinfoper.maxDeposit
+        if(parseInt(userinfoper.level)>=1){
+            vm.$store.state.user.star=parseInt(ethers.utils.formatUnits(userinfoper.level,0))+1
+        }else{
+            vm.$store.state.user.star=parseInt(ethers.utils.formatUnits(userinfoper.level,0))
+        }
+        console.log(vm.$store.state.user.star)
+    }else{
+        console.log("no")
+    }
 }
 //获取用户信息
  async function getUserinfo(address){
-    const contractFDFstaking= getFDFstakingObj()
-    const userinfo=await contractFDFstaking.getUserIDO(address);
+    const userinfo=await getFDFstakingObj().getUserIDO(address);
+    console.log(userinfo)
     //     if(parseInt(userinfo.referrer,16)===0){
     //     vm.$store.state.user.UserAddress=""
     //     vm.$store.state.user.fdfAmount="0"
@@ -41,12 +68,14 @@ function getContractObj(Address,abi){
     vm.$store.state.user.amount=parseInt(ethers.utils.formatUnits(userinfo.amount,18))
     vm.$store.state.user.invites=userinfo.invites
     vm.$store.state.user.inviteAmount=userinfo.inviteAmount
+    vm.$store.state.user.referrer=userinfo.referrer
     return true;
 }
 //链接钱包
  async function connect(){
     const [account]= await window.ethereum.request({method:'eth_requestAccounts'})
-    vm.$store.state.UserAddress=account;
+    console.log(account)
+    vm.$store.state.user.UserAddress=account;
     const reselut=await getUserinfo(account);
     return reselut
 }
@@ -63,26 +92,24 @@ window.ethereum.on('accountsChanged',async (newAddress)=>{
     }else{
         await getUserinfo(newAddress[0])
         console.log(newAddress[0])
+        getNFTpoolINFO(newAddress[0])
     }
 
 })
-//获取IDO信息
-async function getIDOInfo(){
-    const IDOinfo=await contractFDFstaking.getIDOInfo()
-}
+
 //参与抢购
 export async function buyFDF(amount){
     return new Promise(async (resolve,reject)=>{
-        const IERC20usdt=getContractObj("0x232D2a478767E9Ac8D6711754e89050E69fF8e62",IERC20.abi)
-        const allowancce=await IERC20usdt.approve("0x225a41ec10950ae0d4d691C87023D1f76bCD3c8A",ethers.utils.parseUnits(amount.toString(),18)).catch(res=>{
+        const IERC20usdt=getContractObj(FDFStakingABI.testUSDT,IERC20.abi)
+        const allowancce=await IERC20usdt.approve(FDFStakingABI.contractAddress,ethers.utils.parseUnits(amount.toString(),6)).catch(res=>{
             vm.$store.state.tips.errormsg=res.message
             reject(res)
         })
         const allowanceRes=await provider().waitForTransaction(allowancce.hash)
         resolve(allowanceRes)
     }).then(async res=>{
-        const FDFcontractObj= await getContractObj("0x225a41ec10950ae0d4d691C87023D1f76bCD3c8A",FDFStakingABI.abi)
-        const buyFdf= await FDFcontractObj.buyFDF(ethers.utils.parseUnits(amount.toString(),18)).catch(res=>{
+        const FDFcontractObj= await getContractObj(FDFStakingABI.contractAddress,FDFStakingABI.abi)
+        const buyFdf= await FDFcontractObj.buyFDF(ethers.utils.parseUnits(amount.toString(),6)).catch(res=>{
             vm.$store.state.tips.errormsg=res.data.message
         })
         const buyFdfRes = await checkTranstionsDone(buyFdf.hash)
@@ -94,11 +121,16 @@ export async function buyFDF(amount){
         vm.$store.state.tips.errormsg=res.data.message
     })
 }
+//IDOswitch
+async function IDOswitch(){
+    const idoswitch=await getFDFstakingObj().setIDOStop()
+    console.log(idoswitch)
+}
 ////test测试
 async function sendUsdt(address,amount){
-    const IERC20usdt=getContractObj("0x232D2a478767E9Ac8D6711754e89050E69fF8e62",IERC20.abi)
+    const IERC20usdt=getContractObj("0x226433A2241feF174BB68d01b9549Da4CEceA3aa",IERC20.abi)
     return new Promise(async (resolve,reject)=>{
-        const sendusdt= await IERC20usdt.transfer(address,ethers.utils.parseUnits(amount.toString(),18))
+        const sendusdt= await IERC20usdt.transfer(address,ethers.utils.parseUnits(amount.toString(),6))
         await IERC20usdt
         resolve(sendusdt)
     }).then(async res=>{
@@ -109,8 +141,21 @@ async function sendUsdt(address,amount){
         return res
     })
 }
+//获取NFT合约信息
+async function getNFTpoolINFO(address){
+    const contractNFTpool=getContractObj(FDFStakingABI.nftPoolAddr,FNFTpool.abi)
+    const balanceUsdt=await contractNFTpool.balanceOf()
+    const starttime=await contractNFTpool.startTime()
+    if(address){
+        const getuserwithdraw=await contractNFTpool.pendingWith(address)
+        vm.$store.state.nftpool.pendingWith=parseInt(ethers.utils.formatUnits(getuserwithdraw,6))
+        console.log(ethers.utils.formatUnits(getuserwithdraw,6))
+    }
+    vm.$store.state.nftpool.balanceOf=parseInt(ethers.utils.formatUnits(balanceUsdt,6))
+    vm.$store.state.nftpool.startTime=ethers.utils.formatUnits(starttime,0)
+}
 async function register(address){
-    const FDFcontractObj= await getContractObj("0x225a41ec10950ae0d4d691C87023D1f76bCD3c8A",FDFStakingABI.abi)
+    const FDFcontractObj= await getContractObj("0xad45BA557f851c05b1f6b45875BDc6Bc76232dbA",FDFStakingABI.abi)
    const promisetest= new Promise(async (resolve,reject)=>{
         const registerAddr=FDFcontractObj.register(address)
         await registerAddr
@@ -120,4 +165,4 @@ async function register(address){
         console.log(res)
     })
 }
-export default {sendThis,connect,getUserinfo,getIDOInfo,provider,buyFDF,getContractObj,sendUsdt,register}
+export default {sendThis,connect,getUserinfo,getIDOInfo,provider,buyFDF,getContractObj,sendUsdt,register,getSysInfo,getuserInfoPer,IDOswitch,getNFTpoolINFO}

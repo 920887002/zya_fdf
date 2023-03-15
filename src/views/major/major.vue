@@ -14,7 +14,7 @@
             <div class="flex flex-col relative flex-wrap content-start justify-start h-[86px] bg-gradient-to-r from-[#FAE2BE] to-[#E7B67C] rounded-[4px] mt-[16px]">
                 <img src="~@/img/luckypool.png" class="w-[82px] h-[82px] pt-[6px] pl-[12px]">
                 <p class="text-[20px] text-[#633706] font-semibold pt-[15px] pl-[5px]">{{$t("major.luckyPool")}}</p>
-                <span class="text-[#633706] font-semibold text-start pt-[5px]  pl-[5px]">$0.00</span>
+                <span class="text-[#633706] font-semibold text-start pt-[5px]  pl-[5px]">${{$store.state.IDOinfo.stakingPool}}</span>
                 <img src="~@/img/rightPoints.png" class="absolute right-[17px] top-[35px] w-[16px] h-[16px]" alt="">
             </div>
             <!-- introduce -->

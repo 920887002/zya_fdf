@@ -15,12 +15,27 @@ export default new Vuex.Store({
       invites:0,
       inviteAmount:0,
       showBool:false,
+      star:5,
+      maxDeposit:0,
+      referrer:"",
+      otherTeamDeposit:0,
+      maxTeamDeposit:0
     },
     contractAddress:{
-      IDOfdfStaking:"0xcee5a124a758c1d7885f814f7d2a5f3d1cde9a26"
+      IDOfdfStaking:"0x8ea68e174c27032e1a35eff83483b0d7d1a4b0b0"
     },
     tips:{
       errormsg:""
+    },
+    IDOinfo:{
+      totalRegisterUser:0,
+      stakingPool:0 ,
+      startTime
+    },
+    nftpool:{
+      balanceOf:0,
+      pendingWith:0,
+      startTime:0
     }
   },
   // 获取state数据

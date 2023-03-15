@@ -17,13 +17,13 @@
             </div>
             <div class="h-[109px] mt-[16px] bg-gradient-to-r from-[#FAE2BE] pt-[24px] pr-[20px] pl-[16px] text-start to-[#E7B67C] rounded-[4px] flex flex-col flex-wrap">
                 <h1 class="text-[20px] w-[178px] text-start text-[#633706] font-medium">{{$t("PANNEL.playersNum")}}</h1>
-                <span class="text-[32px] text-start text-[#633706]">0</span>
+                <span class="text-[32px] text-start text-[#633706]">{{$store.state.IDOinfo.totalRegisterUser}}</span>
                 <img src="~@/img/panelLogo.png" class="w-[104px] h-[80px]" alt="">
             </div>
             <div class="h-[183px] bg-[#1B1B1B] overflow-hidden mt-[16px]">
                 <div class="bg-[url('~@/img/group2.png')] mt-[18px] h-[147.38px] bg-[339px,147.38px] bg-no-repeat bg-center">
                     <h1 class="h-[34px] text-[24px] pool mt-[6px]">{{$t("PANNEL.luckyPrizePool")}}</h1>
-                    <div class="Transtips text-[32px] font-semibold mt-[4px]">10000000.00 <span class="text-[16px]">USDT</span></div>
+                    <div class="Transtips text-[32px] font-semibold mt-[4px]">{{$store.state.IDOinfo.stakingPool}}<span class="text-[16px]">USDT</span></div>
                     <div class="bg-[url('~@/img/time2.png')] bg-no-repeat bg-contain mt-[4px] mx-auto w-[279px] h-[35px] relative">
                         <span class="absolute leading-[26px] top-[5px] left-[40px] text-[#633706] font-semibold">
                         <span class="brownback">24</span>
@@ -62,10 +62,10 @@
             </div>
             <div class="h-auto bg-[#1B1B1B] mt-[16px] pb-[25px]">
                 <ul class="contractAddress  pl-[8px] relative pb-[20px]">
-                    <li >{{$t("SplitAccount.SplitAccounts")}}☆</li>
+                    <li class="h-[20px]">{{$t("SplitAccount.SplitAccounts")}} : <van-rate v-model="$store.state.user.star" :icon="star" :void-icon="hollowstra" readonly size="22px"/></li>
                     <li>{{$t("PANNEL.GrossIncome")}}：$0.00</li>
-                    <li>{{$t("PANNEL.myInviter")}}：0x78C4A4D651FB4196a2dF13cD7A742FCe1C4c870A</li>
-                    <li>{{$t("PANNEL.myinviterUrl")}}：http//0x78C4A4D651FB4196a2dF13cD7A742FCe1C4c870A</li>
+                    <li>{{$t("PANNEL.myInviter")}}：{{$store.state.user.referrer}}</li>
+                    <li>{{$t("PANNEL.myinviterUrl")}}：http//:{{$store.state.user.UserAddress}}</li>
                     <span class="absolute bottom-[-15px] right-[16px] w-auto pl-[10px] pr-[10px] h-[24px] text-center font-medium text-[12px] text-[#633706] box-border leading-[24px] rounded-[4px] bg-gradient-to-r from-[#FAE2BE] to-[#E7B67C]" @click="showpopup">{{$t("PANNEL.copyurl")}}</span>
                 </ul>
             </div>
@@ -119,11 +119,20 @@
 </template>
 
 <script>
+import Vue from "vue"
+import {Rate} from 'vant'
+Vue.use(Rate)
 export default{
     data(){
         return{
             show:true,
+            star:require('../../img/star.png'),
+            hollowstra:require('../../img/hollowStar.png'),
+            val:3,
         }
+    },
+    async created(){
+        this.$connect.getuserInfoPer(this.$store.state.user.UserAddress)
     },
     components:{
         rightslide:()=> import(/* webpackChunkName: 'index' */ "@/components/rightSlide/rightSlide.vue"),
@@ -195,6 +204,9 @@ export default{
         width: 327px;
         font-weight: 500;
         line-height: 24px;
+    }
+    li:nth-child(1){
+        display: flex;
     }
 }
 

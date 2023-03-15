@@ -141,6 +141,17 @@ const lang={
         copy:"Copy!",
         noregister:"The address  not registered. Please contact the referrer for an invitation link",
 
+    },
+    dialog:{
+        errorNum:"The input must be an integral multiple of 100!",
+        amount:"Enter the rush purchase amountasdaaaaaaaaa",
+        rate:"proportion",
+        cancel:"cancel",
+        buying:"In rush purchase",
+        success:"Successful rush purchase!",
+        successed:"succeed",
+        faild:"fail",
+        rightnow:"Buy now"
     }
 
 }

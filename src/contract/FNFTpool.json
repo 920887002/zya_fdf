@@ -1,0 +1,74 @@
+{
+    "contractName": "FDFStaking",
+    "abi":[
+        {
+            "inputs": [],
+            "name": "balanceOf",
+            "outputs": [
+              {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+              }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+          },
+          {
+            "inputs": [
+              {
+                "internalType": "address",
+                "name": "_userAddr",
+                "type": "address"
+              }
+            ],
+            "name": "pendingWith",
+            "outputs": [
+              {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+              }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+          },
+          {
+            "inputs": [],
+            "name": "startTime",
+            "outputs": [
+              {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+              }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+          },{
+            "anonymous": false,
+            "inputs": [
+              {
+                "indexed": false,
+                "internalType": "address",
+                "name": "_user",
+                "type": "address"
+              },
+              {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "amount",
+                "type": "uint256"
+              }
+            ],
+            "name": "WithdrawToken",
+            "type": "event"
+          },{
+            "inputs": [],
+            "name": "withdrawToken",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+          }
+    ]
+}

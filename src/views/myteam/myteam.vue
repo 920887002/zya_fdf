@@ -32,7 +32,7 @@
             {{ $t("MYTEAM.PersonPerformance") }}
           </p>
           <span class="text-white pl-[8px] pt-[5px] z-[20]">{{
-            $store.state.user.amount
+            $store.state.user.maxDeposit
           }}</span>
           <img
             src="../../img/IndividualPerformance.png"
@@ -66,7 +66,7 @@
             {{ $t("MYTEAM.RegionalPerformance") }}
           </p>
           <span class="text-white pl-[8px] pt-[5px] z-[20]"
-            >3{{ $t("FDFIDO.PCS") }}</span
+            >{{$store.state.user.maxTeamDeposit}}{{ $t("FDFIDO.PCS") }}</span
           >
           <img
             src="../../img/regionalPerformance.png"
@@ -83,7 +83,7 @@
             {{ $t("MYTEAM.CommunityPerformance") }}
           </p>
           <span class="text-white pl-[8px] pt-[5px] z-[20]"
-            >3{{ $t("FDFIDO.PCS") }}</span
+            >{{$store.state.user.maxTeamDeposit}}{{ $t("FDFIDO.PCS") }}</span
           >
           <img
             src="../../img/communityPerformance.png"
@@ -151,6 +151,9 @@
 </template>
 <script>
 export default {
+  async created(){
+    
+  },
   data() {
     return {
       show: true,

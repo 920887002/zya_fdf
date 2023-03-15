@@ -140,6 +140,17 @@ const lang = {
         snapUp: "바로 사재기",
         copy: "복사됨",
         noregister: "이 주소는 등록되지 않았습니다. 추천인에게 등록 연결을 요청하십시오",
+    },
+    dialog:{
+        errorNum:"100이어야 하는 정수 배수를 입력하십시오!",
+        amount:"사재기 금액을 입력하다.",
+        rate:"사재기 비율",
+        cancel:"취소",
+        buying:"사재기 중",
+        success:"사재기 성공!",
+        successed:"성공",
+        faild:"실패",
+        rightnow:"당장 사재기"
     }
 
 }

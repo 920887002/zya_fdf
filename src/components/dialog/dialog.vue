@@ -1,6 +1,6 @@
 <template>
   <div>
-    <van-dialog v-model="show" :showConfirmButton="false" class="dialogStyle h-[241px] w-[320px]">
+    <van-dialog v-model="show" :showConfirmButton="false" class="dialogStyle h-auto w-[320px]">
         <h1 class="text-[16px] mt-[32px] font-semibold mb-[20px]">{{$t("dialog.amount")}}</h1>
         <van-field v-model="value" type="digit" placeholder="100U"/></van-field>
         <p class="text-start text-[16px] ml-[25px] mr-[25px] mt-[10px]">{{$t("dialog.rate")}} <span class="text-[#CC863A]">1:100</span></p>
@@ -47,6 +47,7 @@ export default {
                     this.$open("success",this.$t('dialog.success'),this.$t('dialog.successed'))
                 }).catch(res=>{
                     this.show=false
+                    console.log("ad")
                     this.loading=false
                     this.$open('error',this.$store.state.tips.errormsg,this.$t('dialog.faild'))
                 })
