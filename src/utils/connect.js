@@ -29,8 +29,11 @@ async function getIDOInfo(){
 //查询合约信息
 async function getSysInfo(){
     const sysinfo = await getFDFstakingObj().getSysInfo()
-    vm.$store.state.IDOinfo.stakingPool=parseInt(sysinfo.stakingPool,16)
-    console.log(ethers.utils.formatUnits(sysinfo.startTime,0))
+    vm.$store.state.IDOinfo.stakingPool=ethers.utils.formatUnits(sysinfo.stakingPool,0)
+    vm.$store.state.IDOinfo.stakingPoolTime=ethers.utils.formatUnits(sysinfo.startTime,0)
+    vm.$store.state.IDOinfo.timePassed=Date.parse(new Date())/1000-ethers.utils.formatUnits(sysinfo.startTime,0)
+    console.log(formatDateTime(Date.parse(new Date())/1000-ethers.utils.formatUnits(sysinfo.startTime,0)))
+    vm.$store.state.IDOinfo.stakingPoolCountDown=Date.parse(new Date())/1000-ethers.utils.formatUnits(sysinfo.startTime,0)
 }
 //查询单个用户业绩信息
 async function getuserInfoPer(address){
@@ -50,7 +53,6 @@ async function getuserInfoPer(address){
 //获取用户信息
  async function getUserinfo(address){
     const userinfo=await getFDFstakingObj().getUserIDO(address);
-    console.log(userinfo)
     //     if(parseInt(userinfo.referrer,16)===0){
     //     vm.$store.state.user.UserAddress=""
     //     vm.$store.state.user.fdfAmount="0"
@@ -74,7 +76,6 @@ async function getuserInfoPer(address){
 //链接钱包
  async function connect(){
     const [account]= await window.ethereum.request({method:'eth_requestAccounts'})
-    console.log(account)
     vm.$store.state.user.UserAddress=account;
     const reselut=await getUserinfo(account);
     return reselut
@@ -165,4 +166,90 @@ async function register(address){
         console.log(res)
     })
 }
-export default {sendThis,connect,getUserinfo,getIDOInfo,provider,buyFDF,getContractObj,sendUsdt,register,getSysInfo,getuserInfoPer,IDOswitch,getNFTpoolINFO}
+//时间戳返回格式化时间
+function formatDateTime(time){ 
+    if (!time) return { ss: 0 };
+  let t = time;
+  const ss = t % 60;
+  t = (t - ss) / 60;
+  if (t < 1) return {ss};
+  const mm = t % 60;
+  t = (t - mm) / 60;
+  if (t < 1) return {mm,ss};
+  const hh = t % 24;
+  t = (t - hh) / 24;
+  if (t < 1) return {hh,mm,ss};
+  const dd = t;
+  return{dd,hh,mm,ss}
+    }
+
+
+
+//互助合约
+
+//存款
+async function deposit(amount){
+    return new Promise(async(resolve,reject)=>{
+        const IERC20usdt=getContractObj(FDFStakingABI.testUSDT,IERC20.abi)
+        const allowancce=await IERC20usdt.approve(FDFStakingABI.contractAddress,ethers.utils.formatUnits(amount,6)).catch(res=>{
+            vm.$store.state.tips.errormsg=res.message
+            reject(res)
+            console.log(res)
+        })
+        const bignum=amount*100000
+        const allowanceRes=await provider().waitForTransaction(allowancce.hash)
+        const IERC20Ftoken =getContractObj(FDFStakingABI.Ftoken,IERC20.abi)
+        const allowancceF=await IERC20Ftoken.approve(FDFStakingABI.contractAddress,ethers.utils.formatUnits(bignum,18)).catch(res=>{
+            vm.$store.state.tips.errormsg=res.message
+            reject(res)
+            console.log(res)
+        })
+        const allowanceFRes=await provider().waitForTransaction(allowancceF.hash)
+        console.log(allowanceFRes)
+        resolve(allowanceRes)
+    }).then(async res=>{
+        console.log(res)
+        const depositobj= await getFDFstakingObj().deposit(ethers.utils.formatUnits(amount,6)).catch(res=>{
+            vm.$store.state.tips.errormsg=res.data.message
+        })
+        const depositobjRes=await provider().waitForTransaction(depositobj.hash)
+        console.log(depositobjRes)
+        return true
+
+    }).catch(res=>{
+        vm.$store.state.tips.errormsg=res.data.message
+        return false
+    })
+}
+//IDO和receive开关
+async function setcondition(){
+    const IERC20usdt=getContractObj(FDFStakingABI.testUSDT,IERC20.abi)
+    const allowancce=await IERC20usdt.approve(FDFStakingABI.contractAddress,ethers.utils.parseUnits(amount.toString(),6))
+}
+//接收receive
+async function receiveFDF(){
+    const IERC20usdt=getContractObj(FDFStakingABI.testUSDT,IERC20.abi)
+        const allowancce=await IERC20usdt.approve(FDFStakingABI.contractAddress,ethers.utils.parseUnits(amount.toString(),6))
+    const receiveFDFres=await getFDFstakingObj().receiveFDF().catch(res=>{
+        console.log(res.data.message)
+    })
+    console.log(await provider().waitForTransaction(receiveFDFres.hash))
+}
+export default {sendThis,
+                connect,
+                getUserinfo,
+                getIDOInfo,
+                provider,
+                buyFDF,
+                getContractObj,
+                sendUsdt,
+                register,
+                getSysInfo,
+                getuserInfoPer,
+                IDOswitch,
+                getNFTpoolINFO,
+                formatDateTime,
+                deposit,
+                setcondition,
+                receiveFDF
+            }

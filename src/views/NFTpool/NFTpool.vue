@@ -29,11 +29,11 @@
           <span
             class="absolute leading-[26px] top-[5px] right-[15px] text-[#633706] font-semibold"
           >
-            <span class="brownback">24</span>
+            <span class="brownback">{{displayTime.hh+displayTime.dd*24}}</span>
             {{ $t("NFTPOOL.hour") }}
-            <span class="brownback">00</span>
+            <span class="brownback">{{displayTime.mm}}</span>
             {{ $t("NFTPOOL.minutes") }}
-            <span class="brownback">00</span>
+            <span class="brownback">{{displayTime.ss}}</span>
             {{ $t("NFTPOOL.seconds") }}
           </span>
         </div>
@@ -65,10 +65,36 @@ export default {
   async created(){
     await this.$connect.getNFTpoolINFO(this.$store.state.user.UserAddress)
   },
+   computed:{
+    listenTimepassed(){
+        return this.$store.state.IDOinfo.timePassed
+    }
+  },
+  watch:{
+    listenTimepassed:{
+        async handler(newVal,oldVal){
+            this.timePassed=newVal
+        }
+    }
+  },
+   beforeDestroy(){
+    clearInterval(this.setval)
+  },
   data() {
     return {
       show: true,
+      timePassed:this.$store.state.IDOinfo.timePassed,
+      displayTime:{
+        dd:0,
+        hh:0,
+        mm:0,
+        ss:0
+      },
+      setval:NaN
     };
+  },
+  mounted() {
+    this.changeTimePassed()
   },
   components: {
     tipspopup: () =>
@@ -81,6 +107,12 @@ export default {
   methods: {
     showpopup(){
         this.$refs.popup.showPopup("notopenyet")
+    },
+    changeTimePassed(){
+        this.setval=setInterval(()=>{
+            this.timePassed++
+            this.displayTime=this.$connect.formatDateTime(this.timePassed)
+        },1000)
     }
   },
 };

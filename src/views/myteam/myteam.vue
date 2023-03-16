@@ -9,7 +9,7 @@
               $t("orderDetails.contractAddress")
             }}:{{$store.state.contractAddress.IDOfdfStaking}}
           </li>
-          <li>{{ $t("orderDetails.platformTime") }}：2023.3.3</li>
+          <li>{{ $t("orderDetails.platformTime") }}：{{displayTime.dd}}{{$t('NFTPOOL.hour')}}{{displayTime.mm}}{{$t('NFTPOOL.minutes')}}{{displayTime.ss}}{{$t('NFTPOOL.seconds')}}</li>
           <li>
             {{ $t("orderDetails.CyclicalReturn") }}：<span
               class="text-[#E7B67C]"
@@ -157,13 +157,46 @@ export default {
   data() {
     return {
       show: true,
+      timePassed:this.$store.state.IDOinfo.timePassed,
+      displayTime:{
+        dd:0,
+        hh:0,
+        mm:0,
+        ss:0
+      },
+      setval:NaN
     };
+  },
+  mounted(){
+    this.changeTimePassed()
+  },
+  watch:{
+    listenTimepassed:{
+        async handler(newVal,oldVal){
+            this.timePassed=newVal
+        }
+    }
+  },
+  computed:{
+    listenTimepassed(){
+            return this.$store.state.IDOinfo.timePassed
+        }
+  },
+  beforeDestroy(){
+    clearInterval(this.setval)
   },
   components: {
     topheader: () =>
       import(/* webpackChunkName: 'index' */ "@/components/header/header.vue"),
   },
-  methods: {},
+  methods: {
+    changeTimePassed(){
+        this.setval=setInterval(()=>{
+            this.timePassed++
+            this.displayTime=this.$connect.formatDateTime(this.timePassed)
+        },1000)
+    }
+  },
 };
 </script>
 

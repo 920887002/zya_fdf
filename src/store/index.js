@@ -30,7 +30,10 @@ export default new Vuex.Store({
     IDOinfo:{
       totalRegisterUser:0,
       stakingPool:0 ,
-      startTime
+      timePassed:0,
+      stakingPoolTime:new Date(),
+      stakingPoolCountDown:0,
+      startTime:0
     },
     nftpool:{
       balanceOf:0,
