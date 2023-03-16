@@ -190,35 +190,16 @@ function formatDateTime(time){
 //存款
 async function deposit(amount){
     return new Promise(async(resolve,reject)=>{
-        const IERC20usdt=getContractObj(FDFStakingABI.testUSDT,IERC20.abi)
-        const allowancce=await IERC20usdt.approve(FDFStakingABI.contractAddress,ethers.utils.formatUnits(amount,6)).catch(res=>{
-            vm.$store.state.tips.errormsg=res.message
-            reject(res)
-            console.log(res)
-        })
-        const bignum=amount*100000
-        const allowanceRes=await provider().waitForTransaction(allowancce.hash)
-        const IERC20Ftoken =getContractObj(FDFStakingABI.Ftoken,IERC20.abi)
-        const allowancceF=await IERC20Ftoken.approve(FDFStakingABI.contractAddress,ethers.utils.formatUnits(bignum,18)).catch(res=>{
-            vm.$store.state.tips.errormsg=res.message
-            reject(res)
-            console.log(res)
-        })
-        const allowanceFRes=await provider().waitForTransaction(allowancceF.hash)
-        console.log(allowanceFRes)
-        resolve(allowanceRes)
-    }).then(async res=>{
-        console.log(res)
-        const depositobj= await getFDFstakingObj().deposit(ethers.utils.formatUnits(amount,6)).catch(res=>{
+        // const IERC20usdt=getContractObj("0x226433a2241fef174bb68d01b9549da4cecea3aa",IERC20.abi)
+        // console.log(ethers.utils.formatUnits(await IERC20usdt.allowance(vm.$store.state.user.UserAddress,FDFStakingABI.contractAddress),6))
+        // const IERC20F=getContractObj("0x8ea68e174c27032e1a35eff83483b0d7d1a4b0b0",IERC20.abi)
+        // await IERC20F.approve(FDFStakingABI.contractAddress,ethers.utils.parseEther("2000000"))
+        const depositobj= await getFDFstakingObj().deposit(ethers.utils.parseUnits("101",6)).catch(res=>{
             vm.$store.state.tips.errormsg=res.data.message
         })
         const depositobjRes=await provider().waitForTransaction(depositobj.hash)
         console.log(depositobjRes)
         return true
-
-    }).catch(res=>{
-        vm.$store.state.tips.errormsg=res.data.message
-        return false
     })
 }
 //IDO和receive开关
