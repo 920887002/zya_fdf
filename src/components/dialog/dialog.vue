@@ -6,7 +6,11 @@
         <p class="text-start text-[16px] ml-[25px] mr-[25px] mt-[10px]">{{$t("dialog.rate")}} <span class="text-[#CC863A]">1:100</span></p>
         <ul class="buyBut flex mt-[30px]">
             <li @click="showdialog" class="rtlLi ltrLi">{{$t("dialog.cancel")}}</li>
-            <li class="text-[#CC863A] font-semibold" @click="buyFDFfr"><van-loading size="24px" color="#CC863A" v-if="loading">{{$t("dialog.buying")}}...</van-loading><p v-else>{{$t("dialog.rightnow")}}</p></li>
+            <li class="text-[#CC863A] font-semibold"> <button class="w-[100%] h-[100%] block" :disabled="dis" @click="buyFDFfr">
+                <van-loading size="24px" color="#CC863A" v-if="dis">{{$t("dialog.buying")}}...</van-loading>
+                <p v-else>{{$t("dialog.rightnow")}}</p>
+                </button>
+                 </li>
         </ul>
     </van-dialog>
     <tipspopup ref="popup"></tipspopup>
@@ -29,7 +33,7 @@ export default {
             show:false,
             value:"",
             errorMeg:"",
-            loading:false
+            dis:false
         }
     },
     methods:{
@@ -37,22 +41,27 @@ export default {
             this.show=!this.show
             },
         async buyFDFfr(){
-            if(this.value!=0 && this.value % 100===0){
-                this.loading=true
+            if(this.$connect.accountsAchainid()){
+                if(this.value!=0 && this.value % 100===0){
+                this.dis=true
                 const resulttx=await this.$connect.buyFDF(this.value).then(res=>{
                     console.log(res)
                 }).then(res=>{
                     this.show=false
-                    this.loading=false
+                    this.dis=false
                     this.$open("success",this.$t('dialog.success'),this.$t('dialog.successed'))
                 }).catch(res=>{
                     this.show=false
                     console.log("ad")
-                    this.loading=false
+                    this.dis=false
                     this.$open('error',this.$store.state.tips.errormsg,this.$t('dialog.faild'))
                 })
             }else{
                 this.$refs.popup.showPopup("errorNum")
+            }
+            }else{
+                this.show=false
+                this.$open('error',this.$t('errormessage.chainid'),this.$t('errormessage.errortitle'))
             }
         }
 }}

@@ -102,9 +102,10 @@ const lang={
         DivideEqually:"Divide the prize pool equally", 
         currentPrizePool:"Prize pool",
         hour24claim:"Every 24 hours claim",
-        hour:"h",
-        minutes:"m",
-        seconds:"s",
+        days:"D",
+        hour:"H",
+        minutes:"M",
+        seconds:"S",
         currentlyAvailable:"Dividends are currently available",
         ImmediateClaim:"Get it now"
     },

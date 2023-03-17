@@ -15,7 +15,7 @@
               $store.state.contractAddress.IDOfdfStaking
             }}
           </li>
-          <li>{{ $t("orderDetails.platformTime") }}：{{displayTime.dd}}{{$t('NFTPOOL.hour')}}{{displayTime.mm}}{{$t('NFTPOOL.minutes')}}{{displayTime.ss}}{{$t('NFTPOOL.seconds')}}</li>
+          <li>{{ $t("orderDetails.platformTime") }}：{{displayTime.dd}}{{$t('NFTPOOL.days')}}{{displayTime.hh}}{{$t('NFTPOOL.hour')}}{{displayTime.mm}}{{$t('NFTPOOL.minutes')}}{{displayTime.ss}}{{$t('NFTPOOL.seconds')}}</li>
           <li>
             {{ $t("orderDetails.CyclicalReturn") }}：<span
               class="text-[#E7B67C]"
@@ -131,41 +131,13 @@
       </div>
       <div class="h-auto pb-[10px] bg-[#1B1B1B] mt-[16px]">
         <ul class="NewinList">
-          <li>
-            <span>xxxxxxxxxxxxxxxxxxxxxxxx</span>
-            <p>2023/02/28 12:00</p>
-            <h5>10000U</h5>
+          <li v-for="item in getNewestOrder">
+            <span>{{item.addr}}</span>
+            <p>{{timetranstion(item.startTime*1000)}}</p>
+            <h5>{{item.amount}}</h5>
           </li>
-          <li>
-            <span>xxxxxxxxxxxx</span>
-            <p>2023/02/28 12:00</p>
-            <h5>10000U</h5>
-          </li>
-          <li>
-            <span>xxxxxxxxxxxx</span>
-            <p>2023/02/28 12:00</p>
-            <h5>10000U</h5>
-          </li>
-          <li>
-            <span>xxxxxxxxxxxx</span>
-            <p>2023/02/28 12:00</p>
-            <h5>10000U</h5>
-          </li>
-          <li>
-            <span>xxxxxxxxxxxx</span>
-            <p>2023/02/28 12:00</p>
-            <h5>10000U</h5>
-          </li>
-          <li>
-            <span>xxxxxxxxxxxx</span>
-            <p>2023/02/28 12:00</p>
-            <h5>10000U</h5>
-          </li>
-          <li>
-            <span>xxxxxxxxxxxx</span>
-            <p>2023/02/28 12:00</p>
-            <h5>1000000U</h5>
-          </li>
+          
+          
         </ul>
       </div>
     </div>
@@ -177,16 +149,29 @@ import Vue from "vue";
 import { Rate, CountDown } from "vant";
 Vue.use(Rate).use(CountDown);
 export default {
-  created() {
+  async created() {
+      this.$connect.getuserInfoPer(this.$store.state.user.UserAddress)
+      this.getNewestOrder=await this.$connect.getOrders()
   },
   computed:{
+    timetranstion(){
+      return function(val){
+      let time= new Date(val)
+      let y=time.getFullYear()
+      let m=time.getMonth()+1
+      let d=time.getDate()
+      return y+"."+m+"."+d
+      }
+    },
     listenTimepassed(){
         return this.$store.state.IDOinfo.timePassed
-    }
+    },
+
   },
   watch:{
     listenTimepassed:{
         async handler(newVal,oldVal){
+            console.log(newVal)
             this.timePassed=newVal
         }
     }
@@ -217,11 +202,9 @@ export default {
         mm:0,
         ss:0
       },
-      setval:NaN
+      setval:NaN,
+      getNewestOrder:[]
     };
-  },
-  async created() {
-    this.$connect.getuserInfoPer(this.$store.state.user.UserAddress);
   },
   components: {
     rightslide: () =>
@@ -258,7 +241,7 @@ export default {
         },1000)
     }
   },
-};
+}
 </script>
 
 <style lang="less" scoped>

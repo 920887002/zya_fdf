@@ -102,6 +102,7 @@ const lang={
         DivideEqually:"平分獎池分紅", 
         currentPrizePool:"当前奖池",
         hour24claim:"每滿24小時可領一次獎",
+        days:"天",
         hour:"時",
         minutes:"分",
         seconds:"秒",
@@ -151,6 +152,12 @@ const lang={
         successed:"成功",
         faild:"失敗",
         rightnow:"馬上搶購"
+    },
+    errormessage:{
+        chainid:"網絡錯誤請選擇polygon網絡",
+        errortitle:"網絡錯誤",
+        walleterror:"請鏈接錢包",
+        wallettitle:"錯誤"
     }
 
 }

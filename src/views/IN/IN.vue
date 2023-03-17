@@ -33,25 +33,30 @@
                 <p class="text-white text-[12px] h-[20px] font-semibold absolute top-[-1px] left-[17px] text-left textindent"><span class="text-[#E8BD88] inline">{{$t("IN.UseIntegral")}}</span> {{$t("IN.justOne")}}1000</p>
             </div>
             <div class="font-semibold text-[12px] text-left mt-[10px]"  @click="setcondition">{{$t("IN.MinAmount")}}</div>
-            <div class="bg-gradient-to-r from-[#FAE2BE] h-[36px] to-[#E3B97D] rounded-[4px] leading-[36px] text-[#633706] font-semibold text-[17px] mt-[16px]" @click="deposit">{{$t("IN.ensure")}}</div>
+            <div class="bg-gradient-to-r from-[#FAE2BE] h-[36px] to-[#E3B97D] rounded-[4px] leading-[36px] text-[#633706] font-semibold text-[17px] mt-[16px]">
+                <button @click="deposit" class="block w-[100%] h-[100%]">
+                    <van-loading text-size="20px" color="#633706"  v-if="dis">{{$t("IN.ensure")}}...</van-loading>
+                    <p class="text-center block" v-else>{{$t("IN.ensure")}}</p>
+                    </button>
+                </div>
         </div>
     </div>
 </template>
 
 <script>
 import Vue from "vue";
-import {Checkbox, CheckboxGroup} from 'vant'
+import {Checkbox, CheckboxGroup,Loading} from 'vant'
 import select from "../../img/select.png"
 import noselect from "../../img/noselect.png"
-Vue.use(Checkbox)
-Vue.use(CheckboxGroup)
+Vue.use(Checkbox).use(CheckboxGroup).use(Loading)
 export default{
     data(){
         return{
             checked:true,
             activeIcon:select,
             inactiveIcon:noselect,
-            value:100
+            value:100,
+            dis:false
         }
     },
     methods:{
@@ -64,11 +69,13 @@ export default{
             await this.$connect.receiveFDF()
         },
         async deposit(){
-            this.$connect.connect()
-            const depositcb=await this.$connect.deposit(this.value).then(res=>{
+            this.dis=true
+            await this.$connect.connect()
+            await this.$connect.deposit().then(res=>{
+                this.dis=false
                 console.log(res)
+
             })
-            console.log(depositcb)
         }
     }
 }

@@ -31,18 +31,20 @@ export default {
     methods:{
         async connectedWallet(){
             const result =await this.$connect.connect();
-            if(!result){
-                this.$refs.popup.showPopup("noregister")
-            }
+            // if(!result){
+            //     this.$refs.popup.showPopup("noregister")
+            // }
         }
     },
     watch:{
         listenAddress:{
             async handler(newVal,oldVal){
-                const result = await this.$connect.getUserinfo(newVal);
+               if(this.$connect.accountsAchainid()){
+                 const result = await this.$connect.getUserinfo(newVal);
                 if(!result){
                     this.$refs.popup.showPopup('noregister')
                 }
+               }
             },
             deep:true
         }

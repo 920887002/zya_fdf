@@ -102,6 +102,7 @@ const lang={
         DivideEqually:"Dividir por igual", 
         currentPrizePool:"Recompensa",
         hour24claim:"Recogida las 24 horas",
+        days:"D",
         hour:"H",
         minutes:"M",
         seconds:"S",

@@ -8,10 +8,27 @@
 <script>
 export default {
   async created(){
-    this.$connect.getSysInfo()
-    this.$connect.getIDOInfo()
-    this.$connect.getuserInfoPer(this.$store.state.user.UserAddress)
+        this.$connect.getSysInfo()
+        this.$connect.getIDOInfo()
+        this.$connect.getuserInfoPer(this.$store.state.user.UserAddress)
   },
+  watch:{
+    listenAddress:{
+            async handler(newVal,oldVal){
+               if(this.$connect.accountsAchainid()){
+                this.$connect.getSysInfo()
+                this.$connect.getIDOInfo()
+                this.$connect.getuserInfoPer(newVal)
+               }
+            },
+            deep:true
+        }
+  },
+  computed:{
+         listenAddress(){
+            return this.$store.state.user.UserAddress
+        }
+    },
   setup() {
     
   },

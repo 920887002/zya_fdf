@@ -25,6 +25,7 @@ async function getIDOInfo(){
     const IDOinfo=await getFDFstakingObj().getIDOInfo()
 
     vm.$store.state.IDOinfo.totalRegisterUser=parseInt(IDOinfo.totalRegisterUser,16)
+    
 }
 //查询合约信息
 async function getSysInfo(){
@@ -32,8 +33,11 @@ async function getSysInfo(){
     vm.$store.state.IDOinfo.stakingPool=ethers.utils.formatUnits(sysinfo.stakingPool,0)
     vm.$store.state.IDOinfo.stakingPoolTime=ethers.utils.formatUnits(sysinfo.startTime,0)
     vm.$store.state.IDOinfo.timePassed=Date.parse(new Date())/1000-ethers.utils.formatUnits(sysinfo.startTime,0)
-    console.log(formatDateTime(Date.parse(new Date())/1000-ethers.utils.formatUnits(sysinfo.startTime,0)))
     vm.$store.state.IDOinfo.stakingPoolCountDown=Date.parse(new Date())/1000-ethers.utils.formatUnits(sysinfo.startTime,0)
+}
+//bignum转10进制
+function transitionBignum(num,dec){
+    return ethers.utils.formatUnits(num,dec)
 }
 //查询单个用户业绩信息
 async function getuserInfoPer(address){
@@ -45,8 +49,8 @@ async function getuserInfoPer(address){
         }else{
             vm.$store.state.user.star=parseInt(ethers.utils.formatUnits(userinfoper.level,0))
         }
-        console.log(vm.$store.state.user.star)
-    }else{
+    }
+    else{
         console.log("no")
     }
 }
@@ -77,18 +81,38 @@ async function getuserInfoPer(address){
  async function connect(){
     const [account]= await window.ethereum.request({method:'eth_requestAccounts'})
     vm.$store.state.user.UserAddress=account;
-    const reselut=await getUserinfo(account);
-    return reselut
+    if(ethers.utils.formatUnits(window.ethereum.chainId,0)==137){
+        vm.$store.state.UserAddress=account
+        getUserinfo(account)
+    }else{
+        vm.$store.state.user.UserAddress=''
+        vm.$open('error',(vm.$t('errormessage.chainid')),(vm.$t('errormessage.errortitle')))
+    }
 }
 //查询交易是否结束
 async function checkTranstionsDone(txhash){
     const hashresult=await provider().waitForTransaction(txhash)
     return hashresult
 }
+//重置用户信息
+function resetUserInfo(){
+    vm.$store.state.user.UserAddress=""
+    vm.$store.state.user.fdfAmount="0"
+    vm.$store.state.user.nftNums="0"
+    vm.$store.state.user.registers="0"
+    vm.$store.state.user.amount="0"
+    vm.$store.state.user.invites="0"
+    vm.$store.state.user.inviteAmount="0"
+    vm.$store.state.user.star="0"
+    vm.$store.state.user.maxDeposit="0"
+    vm.$store.state.user.referrer="0"
+    vm.$store.state.user.otherTeamDeposit="0"
+    vm.$store.state.user.maxTeamDeposit="0"
+}
 //检查钱包变更
 window.ethereum.on('accountsChanged',async (newAddress)=>{
     if(newAddress.length===0){
-        vm.$open('error','请链接钱包','错误')
+        vm.$open('error',(vm.$t('errormessage.walleterror')),(vm.$t('errormessage.wallettitle')))
         vm.$store.state.user.UserAddress=''
     }else{
         await getUserinfo(newAddress[0])
@@ -97,6 +121,13 @@ window.ethereum.on('accountsChanged',async (newAddress)=>{
     }
 
 })
+//检查网络变更
+ window.ethereum.on('chainChanged',async (chainId)=>{
+    if(ethers.utils.formatUnits(chainId,0)!=137){
+        vm.$open('error',(vm.$t('errormessage.chainid')),(vm.$t('errormessage.errortitle')))
+        resetUserInfo()
+    }
+ })
 
 //参与抢购
 export async function buyFDF(amount){
@@ -142,6 +173,10 @@ async function sendUsdt(address,amount){
         return res
     })
 }
+//获取链信息
+async function getNetwork(){
+    return await provider().getNetwork()
+}
 //获取NFT合约信息
 async function getNFTpoolINFO(address){
     const contractNFTpool=getContractObj(FDFStakingABI.nftPoolAddr,FNFTpool.abi)
@@ -182,24 +217,34 @@ function formatDateTime(time){
   const dd = t;
   return{dd,hh,mm,ss}
     }
-
-
+function accountsAchainid(){
+    const chainid=ethers.utils.formatUnits(window.ethereum.chainId,0)
+    const account=window.ethereum.selectedAddress
+    if(chainid==137 && account){
+        return true
+    }else{
+        vm.$store.state.tips.errormsg=vm.$t('errormessage.chainid')
+        return false
+    }
+}
 
 //互助合约
 
-//存款
-async function deposit(amount){
+//存款  error
+async function deposit(){
     return new Promise(async(resolve,reject)=>{
-        // const IERC20usdt=getContractObj("0x226433a2241fef174bb68d01b9549da4cecea3aa",IERC20.abi)
-        // console.log(ethers.utils.formatUnits(await IERC20usdt.allowance(vm.$store.state.user.UserAddress,FDFStakingABI.contractAddress),6))
-        // const IERC20F=getContractObj("0x8ea68e174c27032e1a35eff83483b0d7d1a4b0b0",IERC20.abi)
-        // await IERC20F.approve(FDFStakingABI.contractAddress,ethers.utils.parseEther("2000000"))
-        const depositobj= await getFDFstakingObj().deposit(ethers.utils.parseUnits("101",6)).catch(res=>{
-            vm.$store.state.tips.errormsg=res.data.message
-        })
-        const depositobjRes=await provider().waitForTransaction(depositobj.hash)
-        console.log(depositobjRes)
-        return true
+        const approveAmount=20000000
+        const IERC20usdt=getContractObj("0x8ea68e174c27032e1a35eff83483b0d7d1a4b0b0",IERC20.abi)
+        const allonceobj=await IERC20usdt.allowance(vm.$store.state.user.UserAddress,FDFStakingABI.contractAddress)
+        resolve(allonceobj)
+    }).then(res=>{
+        return transitionBignum(res,18)
+    })
+}
+//查询全网最新的十单
+async function getOrders(){
+    return await getFDFstakingObj().getOrders().then(res=>{
+        return res
     })
 }
 //IDO和receive开关
@@ -209,28 +254,31 @@ async function setcondition(){
 }
 //接收receive
 async function receiveFDF(){
-    const IERC20usdt=getContractObj(FDFStakingABI.testUSDT,IERC20.abi)
-        const allowancce=await IERC20usdt.approve(FDFStakingABI.contractAddress,ethers.utils.parseUnits(amount.toString(),6))
     const receiveFDFres=await getFDFstakingObj().receiveFDF().catch(res=>{
         console.log(res.data.message)
+        getUserinfo(vm.$store.state.user.UserAddress)
     })
     console.log(await provider().waitForTransaction(receiveFDFres.hash))
 }
 export default {sendThis,
-                connect,
-                getUserinfo,
-                getIDOInfo,
-                provider,
-                buyFDF,
-                getContractObj,
-                sendUsdt,
-                register,
-                getSysInfo,
-                getuserInfoPer,
-                IDOswitch,
-                getNFTpoolINFO,
-                formatDateTime,
-                deposit,
-                setcondition,
-                receiveFDF
+                connect,//链接钱包
+                getUserinfo,//获取用户信息
+                getIDOInfo,//获取IDO信息
+                provider,//provider
+                buyFDF,//参与抢购
+                getContractObj,//获取地址实例
+                sendUsdt,//发送测试币 test
+                register,//注册
+                getSysInfo,//获取互助合约的信息
+                getuserInfoPer,//查询单个用户业绩信息
+                IDOswitch,//IDO开关
+                getNFTpoolINFO,//获取nfg池子信息
+                formatDateTime,//转换时间戳
+                deposit,//互助入金
+                setcondition,//设置条件
+                receiveFDF,//接收fdf
+                getNetwork,//获取网络
+                accountsAchainid,//判断账户和chainId链接
+                getOrders,//获取全网最新10单
+                transitionBignum,
             }

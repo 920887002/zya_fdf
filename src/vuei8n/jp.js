@@ -101,6 +101,7 @@ const lang={
         DivideEqually:"分配プール配当", 
         currentPrizePool:"現在のプール",
         hour24claim:"24時間ごとのクレーム",
+        days:"日",
         hour:"時",
         minutes:"分",
         seconds:"秒",

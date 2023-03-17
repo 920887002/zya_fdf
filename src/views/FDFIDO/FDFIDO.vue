@@ -66,7 +66,7 @@ export default{
             // await this.$connect.sendUsdt("0xB2e1c08c64ce387a6Fb032838A35eD01d05c0017",2000)
             // await this.$connect.register("0xB2e1c08c64ce387a6Fb032838A35eD01d05c0017")
             // await this.$connect.IDOswitch()
-            await this.$connect.getNFTpoolUSDT()
+            await this.$connect.receiveFDF()
         }
     }
 }

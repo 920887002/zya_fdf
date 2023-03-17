@@ -9,7 +9,7 @@
               $t("orderDetails.contractAddress")
             }}:{{$store.state.contractAddress.IDOfdfStaking}}
           </li>
-          <li>{{ $t("orderDetails.platformTime") }}：{{displayTime.dd}}{{$t('NFTPOOL.hour')}}{{displayTime.mm}}{{$t('NFTPOOL.minutes')}}{{displayTime.ss}}{{$t('NFTPOOL.seconds')}}</li>
+          <li>{{ $t("orderDetails.platformTime") }}：{{displayTime.dd}}{{$t('NFTPOOL.days')}}{{displayTime.hh}}{{$t('NFTPOOL.hour')}}{{displayTime.mm}}{{$t('NFTPOOL.minutes')}}{{displayTime.ss}}{{$t('NFTPOOL.seconds')}}</li>
           <li>
             {{ $t("orderDetails.CyclicalReturn") }}：<span
               class="text-[#E7B67C]"

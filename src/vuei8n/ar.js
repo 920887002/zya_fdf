@@ -102,6 +102,7 @@ const lang={
         DivideEqually:"تقاسم المكافآت", 
         currentPrizePool:"جائزة بركة",
         hour24claim:"",
+        days:"أيام .",
         hour:"ساعة .",
         minutes:"دقيقة .",
         seconds:"ثانية .",

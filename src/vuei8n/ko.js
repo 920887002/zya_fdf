@@ -102,6 +102,7 @@ const lang = {
         DivideEqually: "상장 배당금 균등하게 나누기",
         currentPrizePool: "현재 보너스 풀",
         hour24claim: "24시간마다 청구",
+        days:"일",
         hour: "시",
         minutes: "분할",
         seconds: "초",

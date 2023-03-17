@@ -32,6 +32,8 @@ export default{
     methods:{
         showpopup(){
             this.$refs.popup.showPopup("submit");
+            const chainid=this.$connect.accountsAchainid()
+            console.log(chainid)
         },
         
     }

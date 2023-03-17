@@ -101,6 +101,7 @@ const lang = {
         DivideEqually: "Распределение дивидендов в пулах призов",
         currentPrizePool: "Призовой пул",
         hour24claim: "Получить 24 часа ",
+        days:"D",
         hour: "H",
         minutes: "M",
         seconds: "S",
