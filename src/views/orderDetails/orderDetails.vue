@@ -19,33 +19,12 @@
                     <p>{{$t("orderDetails.CyclicalReturn")}}</p>
                     <p>{{$t("orderDetails.orderStatus")}}</p>
                 </div>
-                <ul class="orderUl items-center">
-                    <li>0.00 U</li>
-                    <li>2020/02/17 23:23</li>
-                    <li>2020/02/17 23:23</li>
-                    <li>0.00 U</li>
-                    <li>{{$t("orderDetails.Status")}}</li>
-                </ul>
-                <ul class="orderUl">
-                    <li>0.00 U</li>
-                    <li>2020/02/17 23:23</li>
-                    <li>2020/02/17 23:23</li>
-                    <li>0.00 U</li>
-                    <li>{{$t("orderDetails.Status")}}</li>
-                </ul>
-                <ul class="orderUl">
-                    <li>0.00 U</li>
-                    <li>2020/02/17 23:23</li>
-                    <li>2020/02/17 23:23</li>
-                    <li>0.00 U</li>
-                    <li>{{$t("orderDetails.Status")}}</li>
-                </ul>
-                <ul class="orderUl">
-                    <li>0.00 U</li>
-                    <li>2020/02/17 23:23</li>
-                    <li>2020/02/17 23:23</li>
-                    <li>0.00 U</li>
-                    <li>{{$t("orderDetails.Status")}}</li>
+                <ul class="orderUl items-center" v-for="item in allorderUser">
+                    <li>{{bignumberTrans(item.amount)}}</li>
+                    <li>{{timetranstion(item.startTime)}}</li>
+                    <li>{{timetranstion(item.endTime)}}</li>
+                    <li>{{bignumberTrans(item.amount)*0.225}}</li>
+                    <li @click="complatedState(item.endTime)">{{item.startTime}}</li>
                 </ul>
             </div>
         </div>
@@ -57,13 +36,43 @@ export default{
     data(){
         return{
             show:true,
+            allorderUser:this.$store.state.user.userOrder
         }
+    },
+    computed:{
+        listenOrderUser(){
+            return this.$store.state.user.userOrder
+        },
+        timetranstion(){
+            return function(val){
+            let time= new Date(val*1000)
+            let y=time.getFullYear()
+            let m=time.getMonth()+1
+            let d=time.getDate()
+            return y+"."+m+"."+d
+        }
+        }       
+    },
+    watch:{
+        listenOrderUser:{
+            async handler(newval,oldval){
+                this.allorderUser=newval
+            }
+        }
+    },
+    mounted(){
+        console.log(this.allorderUser)
     },
     components:{
         topheader:()=> import(/* webpackChunkName: 'index' */ "@/components/header/header.vue")
     },
     methods:{
-
+        bignumberTrans(val){
+            return parseInt(this.$ethers.utils.formatUnits(val,6))
+        },
+        complatedState(starttime,endTime,isUnFreeze){
+            console.log(new Date().getTime(),(starttime.toNumber())*1000)
+        }
     }
 }
 

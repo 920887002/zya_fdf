@@ -71,7 +71,7 @@ export default{
         async deposit(){
             this.dis=true
             await this.$connect.connect()
-            await this.$connect.deposit().then(res=>{
+            await this.$connect.deposit(this.value).then(res=>{
                 this.dis=false
                 console.log(res)
 

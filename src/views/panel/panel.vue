@@ -43,8 +43,8 @@
             {{ $t("PANNEL.luckyPrizePool") }}
           </h1>
           <div class="Transtips text-[32px] font-semibold mt-[4px]">
-            {{ $store.state.IDOinfo.stakingPool
-            }}<span class="text-[16px]">USDT</span>
+            {{ $store.state.IDOinfo.stakingPool}}
+            <span class="text-[16px]">USDT</span>
           </div>
           <van-count-down :time="time">
             <template #default="timeDate">
@@ -134,7 +134,7 @@
           <li v-for="item in getNewestOrder">
             <span>{{item.addr}}</span>
             <p>{{timetranstion(item.startTime*1000)}}</p>
-            <h5>{{item.amount}}</h5>
+            <h5>{{bignumberTrans(item.amount)}}U</h5>
           </li>
           
           
@@ -239,6 +239,9 @@ export default {
             this.timePassed++
             this.displayTime=this.$connect.formatDateTime(this.timePassed)
         },1000)
+    },
+    bignumberTrans(val){
+      return parseInt(this.$ethers.utils.formatUnits(val,6))
     }
   },
 }

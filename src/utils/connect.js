@@ -2,6 +2,7 @@ import {ethers, providers} from 'ethers'
 import FDFStakingABI from '../contract/FDFStaking.json';
 import IERC20 from '../contract/IERC20.json';
 import FNFTpool from '../contract/FNFTpool.json'
+import Fsetting from '../contract/Fsetting.json'
 let vm=null;
 const sendThis=(_this)=>{
     vm=_this
@@ -30,7 +31,7 @@ async function getIDOInfo(){
 //查询合约信息
 async function getSysInfo(){
     const sysinfo = await getFDFstakingObj().getSysInfo()
-    vm.$store.state.IDOinfo.stakingPool=ethers.utils.formatUnits(sysinfo.stakingPool,0)
+    vm.$store.state.IDOinfo.stakingPool=parseInt(ethers.utils.formatUnits(sysinfo.stakingPool,6))
     vm.$store.state.IDOinfo.stakingPoolTime=ethers.utils.formatUnits(sysinfo.startTime,0)
     vm.$store.state.IDOinfo.timePassed=Date.parse(new Date())/1000-ethers.utils.formatUnits(sysinfo.startTime,0)
     vm.$store.state.IDOinfo.stakingPoolCountDown=Date.parse(new Date())/1000-ethers.utils.formatUnits(sysinfo.startTime,0)
@@ -43,7 +44,10 @@ function transitionBignum(num,dec){
 async function getuserInfoPer(address){
     if(address){
         const userinfoper=await getFDFstakingObj().userInfoPer(address)
-        vm.$store.state.user.maxDeposit=userinfoper.maxDeposit
+        vm.$store.state.user.maxTeamDeposit=parseInt(ethers.utils.formatUnits(userinfoper.maxTeamDeposit,6))
+        vm.$store.state.user.otherTeamDeposit=parseInt(ethers.utils.formatUnits(userinfoper.otherTeamDeposit,6))
+        vm.$store.state.user.maxDeposit=parseInt(ethers.utils.formatUnits(userinfoper.maxDeposit,6))
+        vm.$store.state.user.teamNum=parseInt(ethers.utils.formatUnits(userinfoper.teamNum,0))
         if(parseInt(userinfoper.level)>=1){
             vm.$store.state.user.star=parseInt(ethers.utils.formatUnits(userinfoper.level,0))+1
         }else{
@@ -67,6 +71,10 @@ async function getuserInfoPer(address){
     //     vm.$store.state.user.inviteAmount="0"
     //     return false
     // }
+    await getFDFstakingObj().userOrders(address).then(res=>{
+        vm.$store.state.user.userOrder=res
+        console.log(res)
+    })
     vm.$store.state.user.UserAddress=address
     vm.$store.state.user.fdfAmount=parseInt(ethers.utils.formatUnits(userinfo.fdfAmount,18))
     vm.$store.state.user.nftNums=userinfo.nftNums
@@ -113,10 +121,9 @@ function resetUserInfo(){
 window.ethereum.on('accountsChanged',async (newAddress)=>{
     if(newAddress.length===0){
         vm.$open('error',(vm.$t('errormessage.walleterror')),(vm.$t('errormessage.wallettitle')))
-        vm.$store.state.user.UserAddress=''
+        resetUserInfo()
     }else{
         await getUserinfo(newAddress[0])
-        console.log(newAddress[0])
         getNFTpoolINFO(newAddress[0])
     }
 
@@ -155,14 +162,19 @@ export async function buyFDF(amount){
 }
 //IDOswitch
 async function IDOswitch(){
-    const idoswitch=await getFDFstakingObj().setIDOStop()
-    console.log(idoswitch)
+    // await getContractObj(FDFStakingABI.Ftoken,IERC20.abi).transfer(FDFStakingABI.contractAddress,ethers.utils.parseUnits(20000+"",6))
+    await getFDFstakingObj().downLevel1UserAddrs("0xB2e1c08c64ce387a6Fb032838A35eD01d05c0017").then(res=>{
+        console.log(res)
+    })
 }
+//ethers.utils.formatUnits  bignumber转10
+//ethers.utils.parseUnits   10转bignumber
+
 ////test测试
 async function sendUsdt(address,amount){
-    const IERC20usdt=getContractObj("0x226433A2241feF174BB68d01b9549Da4CEceA3aa",IERC20.abi)
+    const IERC20usdt=getContractObj(FDFStakingABI.Ftoken,IERC20.abi)
     return new Promise(async (resolve,reject)=>{
-        const sendusdt= await IERC20usdt.transfer(address,ethers.utils.parseUnits(amount.toString(),6))
+        const sendusdt= await IERC20usdt.transfer(address,ethers.utils.parseUnits(amount.toString(),18))
         await IERC20usdt
         resolve(sendusdt)
     }).then(async res=>{
@@ -177,6 +189,12 @@ async function sendUsdt(address,amount){
 async function getNetwork(){
     return await provider().getNetwork()
 }
+//获取地址授权额度信息
+async function getERC20allowance(erc20addr,owner,spender){
+    return await getContractObj(erc20addr,IERC20.abi).allowance(owner,spender).then(res=>{
+        return parseInt(ethers.utils.formatUnits(res,6))
+    })
+}
 //获取NFT合约信息
 async function getNFTpoolINFO(address){
     const contractNFTpool=getContractObj(FDFStakingABI.nftPoolAddr,FNFTpool.abi)
@@ -185,16 +203,15 @@ async function getNFTpoolINFO(address){
     if(address){
         const getuserwithdraw=await contractNFTpool.pendingWith(address)
         vm.$store.state.nftpool.pendingWith=parseInt(ethers.utils.formatUnits(getuserwithdraw,6))
-        console.log(ethers.utils.formatUnits(getuserwithdraw,6))
     }
     vm.$store.state.nftpool.balanceOf=parseInt(ethers.utils.formatUnits(balanceUsdt,6))
     vm.$store.state.nftpool.startTime=ethers.utils.formatUnits(starttime,0)
 }
 async function register(address){
-    const FDFcontractObj= await getContractObj("0xad45BA557f851c05b1f6b45875BDc6Bc76232dbA",FDFStakingABI.abi)
-   const promisetest= new Promise(async (resolve,reject)=>{
-        const registerAddr=FDFcontractObj.register(address)
-        await registerAddr
+   return new Promise(async (resolve,reject)=>{
+        const registerAddr=getFDFstakingObj().register(address)
+        const transobj=await provider().waitForTransaction(registerAddr.hash)
+        resolve(transobj)
     }).then(res=>{
         console.log(res)
     }).catch(res=>{
@@ -231,14 +248,26 @@ function accountsAchainid(){
 //互助合约
 
 //存款  error
-async function deposit(){
+async function deposit(amount){
     return new Promise(async(resolve,reject)=>{
-        const approveAmount=20000000
-        const IERC20usdt=getContractObj("0x8ea68e174c27032e1a35eff83483b0d7d1a4b0b0",IERC20.abi)
-        const allonceobj=await IERC20usdt.allowance(vm.$store.state.user.UserAddress,FDFStakingABI.contractAddress)
-        resolve(allonceobj)
+        const usdtAllownance=await getERC20allowance(FDFStakingABI.testUSDT,vm.$store.state.user.UserAddress,FDFStakingABI.contractAddress)
+        const Ftokenallowance=await getERC20allowance(FDFStakingABI.Ftoken,vm.$store.state.user.UserAddress,FDFStakingABI.contractAddress)
+        const usdtapprove=await getContractObj(FDFStakingABI.testUSDT,IERC20.abi).approve(FDFStakingABI.contractAddress,ethers.utils.parseUnits(amount.toString(),6))
+        await provider().waitForTransaction(usdtapprove.hash).then(res=>{console.log(res)})
+        const ftoeknapprove=await getContractObj(FDFStakingABI.Ftoken,IERC20.abi).approve(FDFStakingABI.contractAddress,ethers.utils.parseUnits((amount*9999).toString(),18))
+        await provider().waitForTransaction(ftoeknapprove.hash)
+        const depositobj=await getFDFstakingObj().deposit(ethers.utils.parseUnits(amount.toString(),6)).catch(res=>{
+            console.log(res)
+            vm.$open('error',res.message,res.code)
+        })
+        const deposittrans=await provider().waitForTransaction(depositobj.hash).then(res=>{
+            return res
+        })
+        resolve(deposittrans)
     }).then(res=>{
-        return transitionBignum(res,18)
+        return res
+    }).catch(res=>{
+        console.log(res)
     })
 }
 //查询全网最新的十单
@@ -281,4 +310,5 @@ export default {sendThis,
                 accountsAchainid,//判断账户和chainId链接
                 getOrders,//获取全网最新10单
                 transitionBignum,
+                getERC20allowance,
             }

@@ -10,6 +10,8 @@ import i18n from './vuei8n'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import Connect from './utils/connect'
+import { ethers } from 'ethers'
+Vue.prototype.$ethers=ethers
 Vue.prototype.$connect=Connect;
 Vue.use(ElementUI);
 Vue.prototype.$open=function(type,arg,title){

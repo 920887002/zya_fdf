@@ -1,796 +1,466 @@
 {
   "contractName": "FDFStaking",
-  "contractAddress":"0xad45BA557f851c05b1f6b45875BDc6Bc76232dbA",
-  "Ftoken":"0x8ea68e174c27032e1a35eff83483b0d7d1a4b0b0",
-  "testUSDT":"0x226433a2241fef174bb68d01b9549da4cecea3aa",
-  "nftPoolAddr":"0x24E9a00D707F72D726Ea665290A1995EE3941f75",
+  "contractAddress":"0xAE84a15Be43af7AC2c85dd20f0b0C443B33fcDEC",
+  "Ftoken":"0xf8429D2334654b4923AbD0CEF814Cd9aCfa3e4d3",
+  "testUSDT":"0x47c396a01B0A8293a2FbA020759758142C1A4254",
+  "nftPoolAddr":"0xb9dE19E455b78838D5368c8D39e1832F5F1c224F",
   "chainID":"137",
   "abi": [
+  {
+    "inputs": [
       {
-        "inputs": [
-          {
-            "internalType": "address",
-            "name": "setting_",
-            "type": "address"
-          }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "constructor"
+        "internalType": "address",
+        "name": "setting_",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
       },
       {
-        "anonymous": false,
-        "inputs": [
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "BuyFDF",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "Deposit",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "DepositBySplit",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "previousOwner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "OwnershipTransferred",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "nftNums",
+        "type": "uint256"
+      }
+    ],
+    "name": "ReceiveNFT",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "ReceiveToken",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "referral",
+        "type": "address"
+      }
+    ],
+    "name": "Register",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "buyFDF",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "dayLuckUsers",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "deposit",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "depositBySplit",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bool",
+        "name": "isEco",
+        "type": "bool"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "distribute",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      }
+    ],
+    "name": "downLevel1UserAddrs",
+    "outputs": [
+      {
+        "internalType": "address[]",
+        "name": "",
+        "type": "address[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "downLevel1Users",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getIDOInfo",
+    "outputs": [
+      {
+        "components": [
           {
-            "indexed": false,
-            "internalType": "address",
-            "name": "user",
-            "type": "address"
+            "internalType": "uint256",
+            "name": "totalRegisterUser",
+            "type": "uint256"
           },
           {
-            "indexed": false,
             "internalType": "uint256",
-            "name": "amount",
-            "type": "uint256"
-          }
-        ],
-        "name": "BuyFDF",
-        "type": "event"
-      },
-      {
-        "anonymous": false,
-        "inputs": [
-          {
-            "indexed": false,
-            "internalType": "address",
-            "name": "user",
-            "type": "address"
-          },
-          {
-            "indexed": false,
-            "internalType": "uint256",
-            "name": "amount",
-            "type": "uint256"
-          }
-        ],
-        "name": "Deposit",
-        "type": "event"
-      },
-      {
-        "anonymous": false,
-        "inputs": [
-          {
-            "indexed": false,
-            "internalType": "address",
-            "name": "user",
-            "type": "address"
-          },
-          {
-            "indexed": false,
-            "internalType": "uint256",
-            "name": "amount",
-            "type": "uint256"
-          }
-        ],
-        "name": "DepositBySplit",
-        "type": "event"
-      },
-      {
-        "anonymous": false,
-        "inputs": [
-          {
-            "indexed": true,
-            "internalType": "address",
-            "name": "previousOwner",
-            "type": "address"
-          },
-          {
-            "indexed": true,
-            "internalType": "address",
-            "name": "newOwner",
-            "type": "address"
-          }
-        ],
-        "name": "OwnershipTransferred",
-        "type": "event"
-      },
-      {
-        "anonymous": false,
-        "inputs": [
-          {
-            "indexed": false,
-            "internalType": "address",
-            "name": "user",
-            "type": "address"
-          },
-          {
-            "indexed": false,
-            "internalType": "uint256",
-            "name": "nftNums",
-            "type": "uint256"
-          }
-        ],
-        "name": "ReceiveNFT",
-        "type": "event"
-      },
-      {
-        "anonymous": false,
-        "inputs": [
-          {
-            "indexed": false,
-            "internalType": "address",
-            "name": "user",
-            "type": "address"
-          },
-          {
-            "indexed": false,
-            "internalType": "uint256",
-            "name": "amount",
-            "type": "uint256"
-          }
-        ],
-        "name": "ReceiveToken",
-        "type": "event"
-      },
-      {
-        "anonymous": false,
-        "inputs": [
-          {
-            "indexed": false,
-            "internalType": "address",
-            "name": "user",
-            "type": "address"
-          },
-          {
-            "indexed": false,
-            "internalType": "address",
-            "name": "referral",
-            "type": "address"
-          }
-        ],
-        "name": "Register",
-        "type": "event"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "uint256",
-            "name": "amount",
-            "type": "uint256"
-          }
-        ],
-        "name": "buyFDF",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "uint256",
-            "name": "",
+            "name": "totalIDOUser",
             "type": "uint256"
           },
           {
             "internalType": "uint256",
-            "name": "",
+            "name": "totalAmount",
             "type": "uint256"
-          }
-        ],
-        "name": "dayLuckUsers",
-        "outputs": [
-          {
-            "internalType": "address",
-            "name": "",
-            "type": "address"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [
+          },
           {
             "internalType": "uint256",
-            "name": "_amount",
+            "name": "totalNFTS",
             "type": "uint256"
-          }
-        ],
-        "name": "deposit",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "inputs": [
+          },
           {
             "internalType": "uint256",
-            "name": "_amount",
+            "name": "totalFDF",
             "type": "uint256"
-          }
-        ],
-        "name": "depositBySplit",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "inputs": [
+          },
           {
             "internalType": "bool",
-            "name": "isEco",
+            "name": "IDOStop",
             "type": "bool"
           },
           {
+            "internalType": "bool",
+            "name": "receiveStart",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct FDFIDO.IDOInfo",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getOrders",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "addr",
+            "type": "address"
+          },
+          {
             "internalType": "uint256",
             "name": "amount",
             "type": "uint256"
-          }
-        ],
-        "name": "distribute",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "address",
-            "name": "_user",
-            "type": "address"
-          }
-        ],
-        "name": "downLevel1UserAddrs",
-        "outputs": [
-          {
-            "internalType": "address[]",
-            "name": "",
-            "type": "address[]"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "address",
-            "name": "",
-            "type": "address"
           },
           {
             "internalType": "uint256",
-            "name": "",
-            "type": "uint256"
-          }
-        ],
-        "name": "downLevel1Users",
-        "outputs": [
-          {
-            "internalType": "address",
-            "name": "",
-            "type": "address"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [],
-        "name": "getIDOInfo",
-        "outputs": [
-          {
-            "components": [
-              {
-                "internalType": "uint256",
-                "name": "totalRegisterUser",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "totalIDOUser",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "totalAmount",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "totalNFTS",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "totalFDF",
-                "type": "uint256"
-              },
-              {
-                "internalType": "bool",
-                "name": "IDOStop",
-                "type": "bool"
-              },
-              {
-                "internalType": "bool",
-                "name": "receiveStart",
-                "type": "bool"
-              }
-            ],
-            "internalType": "struct FDFIDO.IDOInfo",
-            "name": "",
-            "type": "tuple"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [],
-        "name": "getOrders",
-        "outputs": [
-          {
-            "components": [
-              {
-                "internalType": "address",
-                "name": "addr",
-                "type": "address"
-              },
-              {
-                "internalType": "uint256",
-                "name": "amount",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "startTime",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "endTime",
-                "type": "uint256"
-              },
-              {
-                "internalType": "bool",
-                "name": "isUnFreeze",
-                "type": "bool"
-              }
-            ],
-            "internalType": "struct FDFStaking.OrderInfo[]",
-            "name": "",
-            "type": "tuple[]"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [],
-        "name": "getRisk",
-        "outputs": [
-          {
-            "components": [
-              {
-                "internalType": "uint256",
-                "name": "startTime",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "riskNum",
-                "type": "uint256"
-              },
-              {
-                "internalType": "bool",
-                "name": "riskFreeze",
-                "type": "bool"
-              },
-              {
-                "internalType": "bool",
-                "name": "riskLevelNext",
-                "type": "bool"
-              }
-            ],
-            "internalType": "struct FDFRisk.Risk",
-            "name": "",
-            "type": "tuple"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [],
-        "name": "getSysInfo",
-        "outputs": [
-          {
-            "components": [
-              {
-                "internalType": "uint256",
-                "name": "nowDay",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "stakingPool",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "startTime",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "lastDay",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "totalStakingUser",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "balance",
-                "type": "uint256"
-              }
-            ],
-            "internalType": "struct FDFStaking.SysInfo",
-            "name": "",
-            "type": "tuple"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "address",
-            "name": "user_",
-            "type": "address"
-          }
-        ],
-        "name": "getUserIDO",
-        "outputs": [
-          {
-            "components": [
-              {
-                "internalType": "address",
-                "name": "referrer",
-                "type": "address"
-              },
-              {
-                "internalType": "uint256",
-                "name": "amount",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "invites",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "inviteAmount",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "registers",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "nftNums",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "fdfAmount",
-                "type": "uint256"
-              },
-              {
-                "internalType": "bool",
-                "name": "nftReceived",
-                "type": "bool"
-              },
-              {
-                "internalType": "bool",
-                "name": "fdfReceived",
-                "type": "bool"
-              }
-            ],
-            "internalType": "struct FDFIDO.UserIDO",
-            "name": "",
-            "type": "tuple"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [],
-        "name": "nextNFTID",
-        "outputs": [
-          {
-            "internalType": "uint256",
-            "name": "",
-            "type": "uint256"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "address",
-            "name": "",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "",
-            "type": "uint256"
-          },
-          {
-            "internalType": "bytes",
-            "name": "",
-            "type": "bytes"
-          }
-        ],
-        "name": "onERC721Received",
-        "outputs": [
-          {
-            "internalType": "bytes4",
-            "name": "",
-            "type": "bytes4"
-          }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "inputs": [],
-        "name": "owner",
-        "outputs": [
-          {
-            "internalType": "address",
-            "name": "",
-            "type": "address"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [],
-        "name": "receiveFDF",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "inputs": [],
-        "name": "receiveNFT",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "address",
-            "name": "ref_",
-            "type": "address"
-          }
-        ],
-        "name": "register",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "inputs": [],
-        "name": "renounceOwnership",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "inputs": [],
-        "name": "riskLevelPre",
-        "outputs": [
-          {
-            "internalType": "uint256",
-            "name": "",
-            "type": "uint256"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [],
-        "name": "setIDOStop",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "inputs": [],
-        "name": "setReceiveStart",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "inputs": [],
-        "name": "totalNFTSFDFS",
-        "outputs": [
-          {
-            "internalType": "uint256",
-            "name": "",
+            "name": "startTime",
             "type": "uint256"
           },
           {
             "internalType": "uint256",
-            "name": "",
+            "name": "endTime",
             "type": "uint256"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "address",
-            "name": "newOwner",
-            "type": "address"
-          }
-        ],
-        "name": "transferOwnership",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "address",
-            "name": "to",
-            "type": "address"
           },
           {
-            "internalType": "uint256",
-            "name": "_amount",
-            "type": "uint256"
+            "internalType": "bool",
+            "name": "isUnFreeze",
+            "type": "bool"
           }
         ],
-        "name": "transferSplit",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
+        "internalType": "struct FDFStaking.OrderInfo[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getRisk",
+    "outputs": [
       {
-        "inputs": [
-          {
-            "internalType": "address",
-            "name": "_user",
-            "type": "address"
-          },
+        "components": [
           {
             "internalType": "uint256",
-            "name": "_start",
+            "name": "startTime",
             "type": "uint256"
           },
           {
             "internalType": "uint256",
-            "name": "_nums",
+            "name": "riskNum",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "riskFreeze",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "riskLevelNext",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct FDFRisk.Risk",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getSysInfo",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "nowDay",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "stakingPool",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "startTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "lastDay",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "lastTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "totalStakingUser",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "balance",
             "type": "uint256"
           }
         ],
-        "name": "userDownLevel1",
-        "outputs": [
-          {
-            "components": [
-              {
-                "internalType": "address",
-                "name": "referrer",
-                "type": "address"
-              },
-              {
-                "internalType": "address",
-                "name": "addr",
-                "type": "address"
-              },
-              {
-                "internalType": "uint256",
-                "name": "startTime",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "level",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "maxDeposit",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "totalHisDeposit",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "totalTeamDeposit",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "riskNum",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "unfreezeIndex",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "teamNum",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "level1Nums",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "otherTeamDeposit",
-                "type": "uint256"
-              },
-              {
-                "internalType": "address",
-                "name": "maxTeamAddr",
-                "type": "address"
-              },
-              {
-                "internalType": "uint256",
-                "name": "maxTeamDeposit",
-                "type": "uint256"
-              }
-            ],
-            "internalType": "struct FDFStaking.UserInfo[]",
-            "name": "",
-            "type": "tuple[]"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
+        "internalType": "struct FDFStaking.SysInfo",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
       {
-        "inputs": [
-          {
-            "internalType": "address",
-            "name": "",
-            "type": "address"
-          }
-        ],
-        "name": "userIDO",
-        "outputs": [
+        "internalType": "address",
+        "name": "user_",
+        "type": "address"
+      }
+    ],
+    "name": "getUserIDO",
+    "outputs": [
+      {
+        "components": [
           {
             "internalType": "address",
             "name": "referrer",
@@ -837,360 +507,708 @@
             "type": "bool"
           }
         ],
-        "stateMutability": "view",
-        "type": "function"
+        "internalType": "struct FDFIDO.UserIDO",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "nextNFTID",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
       },
       {
-        "inputs": [
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bytes",
+        "name": "",
+        "type": "bytes"
+      }
+    ],
+    "name": "onERC721Received",
+    "outputs": [
+      {
+        "internalType": "bytes4",
+        "name": "",
+        "type": "bytes4"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "owner",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "receiveFDF",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "receiveNFT",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "ref_",
+        "type": "address"
+      }
+    ],
+    "name": "register",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "renounceOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "riskLevelPre",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "setIDOStop",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "setReceiveStart",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "setting_",
+        "type": "address"
+      }
+    ],
+    "name": "setSetting",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "totalNFTSFDFS",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "transferSplit",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_start",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_nums",
+        "type": "uint256"
+      }
+    ],
+    "name": "userDownLevel1",
+    "outputs": [
+      {
+        "components": [
           {
             "internalType": "address",
-            "name": "_user",
+            "name": "referrer",
             "type": "address"
-          }
-        ],
-        "name": "userInfoPer",
-        "outputs": [
-          {
-            "components": [
-              {
-                "internalType": "address",
-                "name": "referrer",
-                "type": "address"
-              },
-              {
-                "internalType": "address",
-                "name": "addr",
-                "type": "address"
-              },
-              {
-                "internalType": "uint256",
-                "name": "startTime",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "level",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "maxDeposit",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "totalHisDeposit",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "totalTeamDeposit",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "riskNum",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "unfreezeIndex",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "teamNum",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "level1Nums",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "otherTeamDeposit",
-                "type": "uint256"
-              },
-              {
-                "internalType": "address",
-                "name": "maxTeamAddr",
-                "type": "address"
-              },
-              {
-                "internalType": "uint256",
-                "name": "maxTeamDeposit",
-                "type": "uint256"
-              }
-            ],
-            "internalType": "struct FDFStaking.UserInfo",
-            "name": "",
-            "type": "tuple"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [
+          },
           {
             "internalType": "address",
-            "name": "user_",
-            "type": "address"
-          }
-        ],
-        "name": "userNFTNums",
-        "outputs": [
-          {
-            "internalType": "uint256",
-            "name": "",
-            "type": "uint256"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "address",
-            "name": "_user",
+            "name": "addr",
             "type": "address"
           },
           {
             "internalType": "uint256",
-            "name": "index",
+            "name": "startTime",
             "type": "uint256"
-          }
-        ],
-        "name": "userOrder",
-        "outputs": [
-          {
-            "components": [
-              {
-                "internalType": "address",
-                "name": "addr",
-                "type": "address"
-              },
-              {
-                "internalType": "uint256",
-                "name": "amount",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "startTime",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "endTime",
-                "type": "uint256"
-              },
-              {
-                "internalType": "bool",
-                "name": "isUnFreeze",
-                "type": "bool"
-              }
-            ],
-            "internalType": "struct FDFStaking.OrderInfo",
-            "name": "",
-            "type": "tuple"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "address",
-            "name": "_user",
-            "type": "address"
-          }
-        ],
-        "name": "userOrderLen",
-        "outputs": [
+          },
           {
             "internalType": "uint256",
-            "name": "",
+            "name": "level",
             "type": "uint256"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "address",
-            "name": "_user",
-            "type": "address"
-          }
-        ],
-        "name": "userOrders",
-        "outputs": [
-          {
-            "components": [
-              {
-                "internalType": "address",
-                "name": "addr",
-                "type": "address"
-              },
-              {
-                "internalType": "uint256",
-                "name": "amount",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "startTime",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "endTime",
-                "type": "uint256"
-              },
-              {
-                "internalType": "bool",
-                "name": "isUnFreeze",
-                "type": "bool"
-              }
-            ],
-            "internalType": "struct FDFStaking.OrderInfo[]",
-            "name": "",
-            "type": "tuple[]"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "address",
-            "name": "user_",
-            "type": "address"
-          }
-        ],
-        "name": "userReceiveFDF",
-        "outputs": [
+          },
           {
             "internalType": "uint256",
-            "name": "",
+            "name": "maxDeposit",
             "type": "uint256"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "address",
-            "name": "_user",
-            "type": "address"
-          }
-        ],
-        "name": "userRewardInfo",
-        "outputs": [
-          {
-            "components": [
-              {
-                "internalType": "uint256",
-                "name": "totalCapitals",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "totalStatic",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "totalLevel1",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "totalLevel24",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "totalLevel510",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "totalLevel1115",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "totalLuck",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "totalFreeze",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "freezeSplit",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "totalRevenue",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "pendingSplit",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "pendingWithdraw",
-                "type": "uint256"
-              }
-            ],
-            "internalType": "struct FDFStaking.UserRewardInfo",
-            "name": "",
-            "type": "tuple"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [
+          },
           {
             "internalType": "uint256",
-            "name": "",
+            "name": "totalHisDeposit",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "totalTeamDeposit",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "riskNum",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "unfreezeIndex",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "teamNum",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "level1Nums",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "otherTeamDeposit",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "maxTeamAddr",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "maxTeamDeposit",
             "type": "uint256"
           }
         ],
-        "name": "users",
-        "outputs": [
-          {
-            "internalType": "address",
-            "name": "",
-            "type": "address"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [],
-        "name": "withdraw",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
+        "internalType": "struct FDFStaking.UserInfo[]",
+        "name": "",
+        "type": "tuple[]"
       }
-  ]
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "userIDO",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "referrer",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "invites",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "inviteAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "registers",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "nftNums",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "fdfAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "nftReceived",
+        "type": "bool"
+      },
+      {
+        "internalType": "bool",
+        "name": "fdfReceived",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      }
+    ],
+    "name": "userInfoPer",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "referrer",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "addr",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "startTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "level",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "maxDeposit",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "totalHisDeposit",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "totalTeamDeposit",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "riskNum",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "unfreezeIndex",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "teamNum",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "level1Nums",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "otherTeamDeposit",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "maxTeamAddr",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "maxTeamDeposit",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct FDFStaking.UserInfo",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "user_",
+        "type": "address"
+      }
+    ],
+    "name": "userNFTNums",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "index",
+        "type": "uint256"
+      }
+    ],
+    "name": "userOrder",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "addr",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "startTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "endTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "isUnFreeze",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct FDFStaking.OrderInfo",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      }
+    ],
+    "name": "userOrderLen",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      }
+    ],
+    "name": "userOrders",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "addr",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "startTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "endTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "isUnFreeze",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct FDFStaking.OrderInfo[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "user_",
+        "type": "address"
+      }
+    ],
+    "name": "userReceiveFDF",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      }
+    ],
+    "name": "userRewardInfo",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "totalCapitals",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "totalStatic",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "totalLevel1",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "totalLevel24",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "totalLevel510",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "totalLevel1115",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "totalLuck",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "totalFreeze",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "freezeSplit",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "totalRevenue",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "pendingSplit",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "pendingWithdraw",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct FDFStaking.UserRewardInfo",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "users",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "withdraw",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]
 }

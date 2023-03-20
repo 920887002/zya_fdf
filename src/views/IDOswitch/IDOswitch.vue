@@ -30,10 +30,9 @@ export default{
         popupInput:()=>import(/* webpackChunkName: 'index' */ "@/components/dialog/dialog.vue")
     },
     methods:{
-        showpopup(){
+        async showpopup(){
             this.$refs.popup.showPopup("submit");
-            const chainid=this.$connect.accountsAchainid()
-            console.log(chainid)
+            await this.$connect.IDOswitch()
         },
         
     }

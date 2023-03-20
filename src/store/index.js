@@ -18,11 +18,14 @@ export default new Vuex.Store({
       star:5,
       maxDeposit:0,
       referrer:"",
+      maxDeposit:0,
+      teamNum:0,
       otherTeamDeposit:0,
-      maxTeamDeposit:0
+      maxTeamDeposit:0,
+      userOrder:[],
     },
     contractAddress:{
-      IDOfdfStaking:"0x8ea68e174c27032e1a35eff83483b0d7d1a4b0b0"
+      IDOfdfStaking:"0xAE84a15Be43af7AC2c85dd20f0b0C443B33fcDEC"
     },
     tips:{
       errormsg:""

@@ -49,7 +49,7 @@
             {{ $t("MYTEAM.inviteUser") }}
           </p>
           <span class="text-white pl-[8px] pt-[5px] z-[20]"
-            >{{ $store.state.user.registers }}{{ $t("FDFIDO.PCS") }}</span
+            >{{ $store.state.user.teamNum }}{{ $t("FDFIDO.PCS") }}</span
           >
           <img
             src="../../img/inviteUser.png"
@@ -66,7 +66,7 @@
             {{ $t("MYTEAM.RegionalPerformance") }}
           </p>
           <span class="text-white pl-[8px] pt-[5px] z-[20]"
-            >{{$store.state.user.maxTeamDeposit}}{{ $t("FDFIDO.PCS") }}</span
+            >{{$store.state.user.maxTeamDeposit}}</span
           >
           <img
             src="../../img/regionalPerformance.png"
@@ -83,7 +83,7 @@
             {{ $t("MYTEAM.CommunityPerformance") }}
           </p>
           <span class="text-white pl-[8px] pt-[5px] z-[20]"
-            >{{$store.state.user.maxTeamDeposit}}{{ $t("FDFIDO.PCS") }}</span
+            >{{$store.state.user.otherTeamDeposit}}</span
           >
           <img
             src="../../img/communityPerformance.png"
@@ -164,7 +164,8 @@ export default {
         mm:0,
         ss:0
       },
-      setval:NaN
+      setval:NaN,
+      teamOrderRecord:[]
     };
   },
   mounted(){
