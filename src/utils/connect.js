@@ -31,7 +31,7 @@ async function getIDOInfo(){
 //查询合约信息
 async function getSysInfo(){
     const sysinfo = await getFDFstakingObj().getSysInfo()
-    vm.$store.state.IDOinfo.stakingPool=parseInt(ethers.utils.formatUnits(sysinfo.stakingPool,6))
+    vm.$store.state.IDOinfo.stakingPool=Number(ethers.utils.formatUnits(sysinfo.stakingPool,6)).toFixed(2)
     vm.$store.state.IDOinfo.stakingPoolTime=ethers.utils.formatUnits(sysinfo.startTime,0)
     vm.$store.state.IDOinfo.timePassed=Date.parse(new Date())/1000-ethers.utils.formatUnits(sysinfo.startTime,0)
     vm.$store.state.IDOinfo.stakingPoolCountDown=Date.parse(new Date())/1000-ethers.utils.formatUnits(sysinfo.startTime,0)
@@ -51,7 +51,11 @@ async function getuserInfoPer(address){
         if(parseInt(userinfoper.level)>=1){
             vm.$store.state.user.star=parseInt(ethers.utils.formatUnits(userinfoper.level,0))+1
         }else{
-            vm.$store.state.user.star=parseInt(ethers.utils.formatUnits(userinfoper.level,0))
+            if(parseInt(ethers.utils.formatUnits(userinfoper.maxDeposit,6))>=100){
+                vm.$store.state.user.star=parseInt(ethers.utils.formatUnits(userinfoper.level,0))+1
+            }else{
+                vm.$store.state.user.star=parseInt(ethers.utils.formatUnits(userinfoper.level,0))
+            }
         }
     }
     else{
@@ -73,8 +77,8 @@ async function getuserInfoPer(address){
     // }
     await getFDFstakingObj().userOrders(address).then(res=>{
         vm.$store.state.user.userOrder=res
-        console.log(res)
     })
+    await downLevel1UserAddrs(address)
     vm.$store.state.user.UserAddress=address
     vm.$store.state.user.fdfAmount=parseInt(ethers.utils.formatUnits(userinfo.fdfAmount,18))
     vm.$store.state.user.nftNums=userinfo.nftNums
@@ -85,6 +89,12 @@ async function getuserInfoPer(address){
     vm.$store.state.user.referrer=userinfo.referrer
     return true;
 }
+// 查询下一级用户所有地址
+async function downLevel1UserAddrs(address){
+    return await getFDFstakingObj().downLevel1UserAddrs(address).then(async res=>{
+        await userDownLevel1(address,res.length)
+    })
+}
 //链接钱包
  async function connect(){
     const [account]= await window.ethereum.request({method:'eth_requestAccounts'})
@@ -92,6 +102,7 @@ async function getuserInfoPer(address){
     if(ethers.utils.formatUnits(window.ethereum.chainId,0)==137){
         vm.$store.state.UserAddress=account
         getUserinfo(account)
+        userRewardInfo(account)
     }else{
         vm.$store.state.user.UserAddress=''
         vm.$open('error',(vm.$t('errormessage.chainid')),(vm.$t('errormessage.errortitle')))
@@ -160,12 +171,32 @@ export async function buyFDF(amount){
         vm.$store.state.tips.errormsg=res.data.message
     })
 }
+//查询用户资产详情
+async function userRewardInfo(address){
+    await getFDFstakingObj().userRewardInfo(address).then(res=>{
+        vm.$store.state.userRewardInfo.totalCapitals=Number(ethers.utils.formatUnits(res.totalCapitals,6)).toFixed(2)
+        vm.$store.state.userRewardInfo.totalStatic=Number(ethers.utils.formatUnits(res.totalStatic,6)).toFixed(2)
+        vm.$store.state.userRewardInfo.totalLevel1=Number(ethers.utils.formatUnits(res.totalLevel1,6)).toFixed(2)
+        vm.$store.state.userRewardInfo.totalLevel24=Number(ethers.utils.formatUnits(res.totalLevel24,6)).toFixed(2)
+        vm.$store.state.userRewardInfo.totalLevel510=Number(ethers.utils.formatUnits(res.totalLevel510,6)).toFixed(2)
+        vm.$store.state.userRewardInfo.totalLevel1115=Number(ethers.utils.formatUnits(res.totalLevel1115,6)).toFixed(2)
+        vm.$store.state.userRewardInfo.totalLuck=Number(ethers.utils.formatUnits(res.totalLuck,6)).toFixed(2)
+        vm.$store.state.userRewardInfo.totalFreeze=Number(ethers.utils.formatUnits(res.totalFreeze,6)).toFixed(2)
+        vm.$store.state.userRewardInfo.freezeSplit=Number(ethers.utils.formatUnits(res.freezeSplit,6)).toFixed(2)
+        vm.$store.state.userRewardInfo.totalRevenue=Number(ethers.utils.formatUnits(res.totalRevenue,6)).toFixed(2)
+        vm.$store.state.userRewardInfo.pendingSplit=Number(ethers.utils.formatUnits(res.pendingSplit,6)).toFixed(2)
+        vm.$store.state.userRewardInfo.pendingWithdraw=Number(ethers.utils.formatUnits(res.pendingWithdraw,6)).toFixed(2)
+    })
+}
+//查询下一级用户业绩信息
+async function userDownLevel1(address,numAddr){
+    await getFDFstakingObj().userDownLevel1(address,0,numAddr).then(res=>{
+        vm.$store.state.user.userDownLevel1=res
+    })
+}
 //IDOswitch
 async function IDOswitch(){
-    // await getContractObj(FDFStakingABI.Ftoken,IERC20.abi).transfer(FDFStakingABI.contractAddress,ethers.utils.parseUnits(20000+"",6))
-    await getFDFstakingObj().downLevel1UserAddrs("0xB2e1c08c64ce387a6Fb032838A35eD01d05c0017").then(res=>{
-        console.log(res)
-    })
+    
 }
 //ethers.utils.formatUnits  bignumber转10
 //ethers.utils.parseUnits   10转bignumber
@@ -199,13 +230,15 @@ async function getERC20allowance(erc20addr,owner,spender){
 async function getNFTpoolINFO(address){
     const contractNFTpool=getContractObj(FDFStakingABI.nftPoolAddr,FNFTpool.abi)
     const balanceUsdt=await contractNFTpool.balanceOf()
-    const starttime=await contractNFTpool.startTime()
+    const starttime=await contractNFTpool.getLastTime()
+    console.log(ethers.utils.formatUnits(starttime,0))
     if(address){
         const getuserwithdraw=await contractNFTpool.pendingWith(address)
         vm.$store.state.nftpool.pendingWith=parseInt(ethers.utils.formatUnits(getuserwithdraw,6))
     }
     vm.$store.state.nftpool.balanceOf=parseInt(ethers.utils.formatUnits(balanceUsdt,6))
-    vm.$store.state.nftpool.startTime=ethers.utils.formatUnits(starttime,0)
+    vm.$store.state.nftpool.startTime=(ethers.utils.formatUnits(starttime,0))*1000
+    console.log((ethers.utils.formatUnits(starttime,0))*1000,new Date().getTime())
 }
 async function register(address){
    return new Promise(async (resolve,reject)=>{
@@ -222,14 +255,14 @@ async function register(address){
 function formatDateTime(time){ 
     if (!time) return { ss: 0 };
   let t = time;
-  const ss = t % 60;
+  const ss = parseInt(t % 60);
   t = (t - ss) / 60;
   if (t < 1) return {ss};
-  const mm = t % 60;
+  const mm = parseInt(t % 60);
   t = (t - mm) / 60;
   if (t < 1) return {mm,ss};
-  const hh = t % 24;
-  t = (t - hh) / 24;
+  const hh = parseInt(t % 24);
+  t = parseInt((t - hh) / 24);
   if (t < 1) return {hh,mm,ss};
   const dd = t;
   return{dd,hh,mm,ss}
@@ -247,6 +280,16 @@ function accountsAchainid(){
 
 //互助合约
 
+//提款USDT
+async function withdraw(){
+    await getFDFstakingObj().withdraw().then(async res=>{
+        await provider().waitForTransaction(res.hash).then(res=>{
+            console.log(res)
+        })
+    }).catch(res=>{
+        vm.$open('error',res.message,res.code)
+    })
+}
 //存款  error
 async function deposit(amount){
     return new Promise(async(resolve,reject)=>{
@@ -289,6 +332,14 @@ async function receiveFDF(){
     })
     console.log(await provider().waitForTransaction(receiveFDFres.hash))
 }
+
+//nft奖池提款
+
+async function nftwithdraw(){
+    return getContractObj(FDFStakingABI.nftPoolAddr,FNFTpool.abi).withdrawToken().then(res=>{
+        console.log(res)
+    })
+}
 export default {sendThis,
                 connect,//链接钱包
                 getUserinfo,//获取用户信息
@@ -311,4 +362,8 @@ export default {sendThis,
                 getOrders,//获取全网最新10单
                 transitionBignum,
                 getERC20allowance,
+                userDownLevel1,//查询下一级用户信息
+                downLevel1UserAddrs,//查询下一级所有用户地址
+                withdraw,//提款USDT
+                nftwithdraw
             }

@@ -41,16 +41,16 @@
           {{$store.state.nftpool.balanceOf}} <span class="text-[16px]">USDT</span>
         </div>
       </div>
-      <div class="available w-[284px] mx-auto h-[34px] mt-[19px]">
+      <div class="available w-[284px] mx-auto h-auto mt-[19px]">
         <p
           class="w-full h-full bg-[#020202] rounded-[53px] leading-[34px] text-[#F8DCB5]"
         >
-          {{ $t("NFTPOOL.holdNFT") }}:{{this.$store.state.nftpool.pendingWith}}USDT
+          {{ $t("NFTPOOL.holdNFT") }} : {{this.$store.state.nftpool.pendingWith}}USDT
         </p>
       </div>
       <div
         class="w-[284px] h-[40px] bg-[url('~@/img/receiveBut.png')] mt-[16px] bg-[270px,35px] mx-auto bg-no-repeat bg-center font-semibold text-[#633706] leading-[32px]"
-        @click="showpopup"
+        @click="withdrawNfttoken"
       >
         {{ $t("NFTPOOL.ImmediateClaim") }}
       </div>
@@ -60,20 +60,20 @@
 </template>
 
 <script>
-import Tipspopup from '@/components/tipspopup/tipspopup.vue';
 export default {
   async created(){
     await this.$connect.getNFTpoolINFO(this.$store.state.user.UserAddress)
   },
    computed:{
     listenTimepassed(){
-        return this.$store.state.IDOinfo.timePassed
-    }
+        return this.$store.state.nftpool.startTime
+    },
   },
   watch:{
     listenTimepassed:{
         async handler(newVal,oldVal){
-            this.timePassed=newVal
+            this.timePassed=(new Date().getTime()-newVal)/1000
+            console.log(this.$connect.formatDateTime(this.timePassed))
         }
     }
   },
@@ -83,7 +83,7 @@ export default {
   data() {
     return {
       show: true,
-      timePassed:this.$store.state.IDOinfo.timePassed,
+      timePassed:parseInt(this.$store.state.nftpool.startTime),
       displayTime:{
         dd:0,
         hh:0,
@@ -113,6 +113,15 @@ export default {
             this.timePassed++
             this.displayTime=this.$connect.formatDateTime(this.timePassed)
         },1000)
+    },
+    async withdrawNfttoken(){
+      if(this.$connect.accountsAchainid()){
+        await this.$connect.nftwithdraw().then(res=>{
+        console.log(res)
+      })
+      }else{
+        this.$open('error',this.$t('errormessage.allerror'),this.$t('errormessage.wallettitle'))
+      }
     }
   },
 };

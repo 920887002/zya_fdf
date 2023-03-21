@@ -1,7 +1,8 @@
 <template>
 <div>
     <div class="h-44 flex flex-row items-center justify-between">
-                <div class="w-[103px] h-23 bg-[url('~@/img/logo.png')] bg-cover">
+
+                    <div class="w-[103px] h-23 bg-[url('~@/img/logo.png')] bg-cover">
                 </div>
                 <div class="text-[14px] w-[150px] font-semibold whitespace-nowrap Transtips overflow-hidden overflow-ellipsis" @click="connectedWallet">{{$store.state.user.UserAddress  || $t("major.connectedWallet")}}</div>
                 <rightslide></rightslide>

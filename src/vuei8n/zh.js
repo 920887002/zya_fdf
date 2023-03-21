@@ -98,7 +98,7 @@ const lang={
         closeedClaim:"關閉領取FDF和NFT"
     },
     NFTPOOL:{
-        holdNFT:"持有NFT",
+        holdNFT:"當前可領取分紅",
         DivideEqually:"平分獎池分紅", 
         currentPrizePool:"当前奖池",
         hour24claim:"每滿24小時可領一次獎",
@@ -157,7 +157,13 @@ const lang={
         chainid:"網絡錯誤請選擇polygon網絡",
         errortitle:"網絡錯誤",
         walleterror:"請鏈接錢包",
-        wallettitle:"錯誤"
+        wallettitle:"錯誤",
+        allerror:"請檢查錢包或者網絡連接"
+    },
+    orederState:{
+        completed:"已完成",
+        associated:"待关联",
+        NotYetDue:"未到期"
     }
 
 }

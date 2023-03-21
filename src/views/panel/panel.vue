@@ -19,7 +19,7 @@
           <li>
             {{ $t("orderDetails.CyclicalReturn") }}：<span
               class="text-[#E7B67C]"
-              >225%</span
+              >22.5%</span
             >
           </li>
         </ul>
@@ -107,7 +107,7 @@
               size="22px"
             />
           </li>
-          <li>{{ $t("PANNEL.GrossIncome") }}：$0.00</li>
+          <li>{{ $t("PANNEL.GrossIncome") }}：{{$store.state.userRewardInfo.totalRevenue}}</li>
           <li>
             {{ $t("PANNEL.myInviter") }}：{{ $store.state.user.referrer }}
           </li>
@@ -133,7 +133,7 @@
         <ul class="NewinList">
           <li v-for="item in getNewestOrder">
             <span>{{item.addr}}</span>
-            <p>{{timetranstion(item.startTime*1000)}}</p>
+            <p>{{timetranstion(item.startTime)}}</p>
             <h5>{{bignumberTrans(item.amount)}}U</h5>
           </li>
           
@@ -150,17 +150,18 @@ import { Rate, CountDown } from "vant";
 Vue.use(Rate).use(CountDown);
 export default {
   async created() {
-      this.$connect.getuserInfoPer(this.$store.state.user.UserAddress)
-      this.getNewestOrder=await this.$connect.getOrders()
+
   },
   computed:{
     timetranstion(){
       return function(val){
-      let time= new Date(val)
+      let time= new Date(val*1000)
       let y=time.getFullYear()
       let m=time.getMonth()+1
       let d=time.getDate()
-      return y+"."+m+"."+d
+      let h=time.getHours()
+      let mm=time.getMinutes()
+      return y+"/"+m+"/"+d+"  "+h+":"+mm
       }
     },
     listenTimepassed(){
@@ -176,8 +177,12 @@ export default {
         }
     }
   },
-  mounted() {
+  async mounted() {
     this.changeTimePassed()
+    if(this.$connect.accountsAchainid()){
+      this.$connect.getuserInfoPer(window.ethereum.selectedAddress)
+      this.getNewestOrder=await this.$connect.getOrders()
+    }
   },
   beforeDestroy(){
     clearInterval(this.setval)
@@ -268,7 +273,7 @@ export default {
       text-overflow: ellipsis;
     }
     p {
-      width: 121px;
+      width: 70px;
     }
     h5 {
       width: 80px;

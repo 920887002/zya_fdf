@@ -98,7 +98,7 @@ const lang={
         closeedClaim:"إغلاق قوات الدفاع والأمن NFT"
     },
     NFTPOOL:{
-        holdNFT:" عقد NFT ",
+        holdNFT:" الأرباح المستحقة حاليا",
         DivideEqually:"تقاسم المكافآت", 
         currentPrizePool:"جائزة بركة",
         hour24claim:"",
@@ -153,6 +153,18 @@ const lang={
         successed:"النجاح .",
         faild:"هزم",
         rightnow:"شراء على الفور"
+    },
+    errormessage:{
+        chainid:"خطأ في الشبكة الرجاء اختيار شبكة polygon",
+        errortitle:"خطأ في الشبكة",
+        walleterror:"يرجى ربط المحفظة",
+        wallettitle:"خطأ .",
+        allerror:"يرجى التحقق من المحفظة أو اتصال الشبكة"
+    },
+    orederState:{
+        completed:"انتهى",
+        associated:"تكون مرتبطة",
+        NotYetDue:"غير مستحق"
     }
 
 }

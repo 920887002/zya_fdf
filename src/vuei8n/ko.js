@@ -98,7 +98,7 @@ const lang = {
         closeedClaim: "FDF 및 NFT 수령 닫기"
     },
     NFTPOOL: {
-        holdNFT: "NFT 보유",
+        holdNFT: "현재 배당금 수령 가능",
         DivideEqually: "상장 배당금 균등하게 나누기",
         currentPrizePool: "현재 보너스 풀",
         hour24claim: "24시간마다 청구",
@@ -152,6 +152,18 @@ const lang = {
         successed:"성공",
         faild:"실패",
         rightnow:"당장 사재기"
+    },
+    errormessage:{
+        chainid:"네트워크 오류 polygon 네트워크를 선택하십시오.",
+        errortitle:"네트워크 오류",
+        walleterror:"지갑을 연결해 주세요",
+        wallettitle:"오류",
+        allerror:"지갑 또는 네트워크 연결을 확인하십시오."
+    },
+    orederState:{
+        completed:"완료됨",
+        associated:"대기 연관",
+        NotYetDue:"만료되지 않음"
     }
 
 }

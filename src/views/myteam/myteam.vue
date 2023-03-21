@@ -13,7 +13,7 @@
           <li>
             {{ $t("orderDetails.CyclicalReturn") }}：<span
               class="text-[#E7B67C]"
-              >225%</span
+              >22.5%</span
             >
           </li>
         </ul>
@@ -108,42 +108,13 @@
             <span>{{ $t("MYTEAM.teamPerformance") }}</span>
             <span>團隊人數</span>
           </li>
-          <li>
-            <h5>xxxxxxxxx</h5>
-            <p>1000U</p>
-            <span>8500</span>
-            <span>15</span>
+          <li v-for="item in teamOrderRecord">
+            <h5>{{item.addr}}</h5>
+            <p>{{bignumberTrans(item.totalTeamDeposit)}}</p>
+            <span>{{bignumberTrans(item.totalTeamDeposit)}}</span>
+            <span>{{item.teamNum}}</span>
           </li>
-          <li>
-            <h5>xxxxxxxxxxxxxxxxxxxxxxxxxxx</h5>
-            <p>1000U</p>
-            <span>8500</span>
-            <span>15</span>
-          </li>
-          <li>
-            <h5>xxxxxxxxx</h5>
-            <p>1000U</p>
-            <span>850085008500</span>
-            <span>15</span>
-          </li>
-          <li>
-            <h5>xxxxxxxxx</h5>
-            <p>1000U</p>
-            <span>8500</span>
-            <span>15</span>
-          </li>
-          <li>
-            <h5>xxxxxxxxx</h5>
-            <p>1000U</p>
-            <span>8500</span>
-            <span>15</span>
-          </li>
-          <li>
-            <h5>xxxxxxxxx</h5>
-            <p>1000U</p>
-            <span>8500</span>
-            <span>15</span>
-          </li>
+         
         </ul>
       </div>
     </div>
@@ -168,20 +139,31 @@ export default {
       teamOrderRecord:[]
     };
   },
-  mounted(){
+  async mounted(){
     this.changeTimePassed()
+    if(this.$connect.accountsAchainid()){
+      this.$connect.downLevel1UserAddrs(window.ethereum.selectedAddress)
+    }
   },
   watch:{
     listenTimepassed:{
         async handler(newVal,oldVal){
             this.timePassed=newVal
         }
+    },
+    listenteamOrderRecord:{
+      async handler(newval,oldval){
+        this.teamOrderRecord=newval
+      }
     }
   },
   computed:{
     listenTimepassed(){
             return this.$store.state.IDOinfo.timePassed
-        }
+        },
+    listenteamOrderRecord(){
+      return this.$store.state.user.userDownLevel1
+    }
   },
   beforeDestroy(){
     clearInterval(this.setval)
@@ -196,6 +178,9 @@ export default {
             this.timePassed++
             this.displayTime=this.$connect.formatDateTime(this.timePassed)
         },1000)
+    },
+    bignumberTrans(val){
+      return Number(this.$ethers.utils.formatUnits(val,6)).toFixed(2)
     }
   },
 };

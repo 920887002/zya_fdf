@@ -97,7 +97,7 @@ const lang = {
         closeedClaim:  "Закрыть доступ к FDF и NFT"
     },
     NFTPOOL: {
-        holdNFT: "Держать NFT",
+        holdNFT: "Сейчас можно получать дивиденды.",
         DivideEqually: "Распределение дивидендов в пулах призов",
         currentPrizePool: "Призовой пул",
         hour24claim: "Получить 24 часа ",
@@ -152,6 +152,18 @@ const lang = {
         successed:"Успех",
         faild:"Неудача",
         rightnow:"Покупка"
+    },
+    errormessage:{
+        chainid:"Сетевые ошибки Пожалуйста, выберите сеть Polygon",
+        errortitle:"Сетевая ошибка",
+        walleterror:"Пожалуйста, подключите кошелек",
+        wallettitle:"Ошибка",
+        allerror:"Проверьте кошелек или подключение к сети"
+    },
+    orederState:{
+        completed:"Завершено",
+        associated:"Будут связаны",
+        NotYetDue:"Срок не истек"
     }
 
 }

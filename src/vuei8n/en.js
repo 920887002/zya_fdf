@@ -98,7 +98,7 @@ const lang={
         closeedClaim:"Turn off receiving FDF and NFT"
     },
     NFTPOOL:{
-        holdNFT:"Holding NFT",
+        holdNFT:"Currently eligible for dividends",
         DivideEqually:"Divide the prize pool equally", 
         currentPrizePool:"Prize pool",
         hour24claim:"Every 24 hours claim",
@@ -153,6 +153,18 @@ const lang={
         successed:"succeed",
         faild:"fail",
         rightnow:"Buy now"
+    },
+    errormessage:{
+        chainid:"Network error, please select a polygon network",
+        errortitle:"Network error",
+        walleterror:"Please connect your wallet",
+        wallettitle:"Error",
+        allerror:"Please check your wallet or network connection"
+    },
+    orederState:{
+        completed:"Completed",
+        associated:"associated",
+        NotYetDue:"Unexpired"
     }
 
 }

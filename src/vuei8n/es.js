@@ -98,7 +98,7 @@ const lang={
         closeedClaim:"Cierre para recibir FDF y nft"
     },
     NFTPOOL:{
-        holdNFT:"Mantener nft",
+        holdNFT:"Actualmente se pueden recibir dividendos",
         DivideEqually:"Dividir por igual", 
         currentPrizePool:"Recompensa",
         hour24claim:"Recogida las 24 horas",
@@ -153,6 +153,18 @@ const lang={
         successed:"éxito",
         faild:"Fracaso",
         rightnow:"Compra de inmediato"
+    },
+    errormessage:{
+        chainid:"error de red, por favor elija la red polygon",
+        errortitle:"error de red",
+        walleterror:"por favor, conecte la billetera",
+        wallettitle:"error",
+        allerror:"por favor, compruebe su billetera o conexión a la red"
+    },
+    orederState:{
+        completed:"Completado",
+        associated:"Asociación",
+        NotYetDue:"No vencido"
     }
 
 }

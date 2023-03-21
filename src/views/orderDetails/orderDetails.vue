@@ -7,7 +7,7 @@
                 <ul class="contractAddress pt-[12px] pl-[8px]">
                     <li class="h-[55px]">{{$t("orderDetails.contractAddress")}}：TYmXaDZxYhEvkqGReDCW1LrNom8B8sTMgK</li>
                     <li>{{$t("orderDetails.platformTime")}}：2023.3.3</li>
-                    <li>{{$t("orderDetails.CyclicalReturn")}}：<span class="text-[#E7B67C]">225%</span></li>
+                    <li>{{$t("orderDetails.CyclicalReturn")}}：<span class="text-[#E7B67C]">22.5%</span></li>
                 </ul>
             </div>
             <div class="h-[22px] text-[#FAE2BE] text-[16px] font-semibold text-start mt-[16px]">{{$t("orderDetails.orderDetail")}}</div>
@@ -20,11 +20,11 @@
                     <p>{{$t("orderDetails.orderStatus")}}</p>
                 </div>
                 <ul class="orderUl items-center" v-for="item in allorderUser">
-                    <li>{{bignumberTrans(item.amount)}}</li>
+                    <li>{{bignumberTrans(item.amount)}}U</li>
                     <li>{{timetranstion(item.startTime)}}</li>
                     <li>{{timetranstion(item.endTime)}}</li>
                     <li>{{bignumberTrans(item.amount)*0.225}}</li>
-                    <li @click="complatedState(item.endTime)">{{item.startTime}}</li>
+                    <li>{{complatedState(item.startTime,item.endTime,item.isUnFreeze)}}</li>
                 </ul>
             </div>
         </div>
@@ -49,9 +49,11 @@ export default{
             let y=time.getFullYear()
             let m=time.getMonth()+1
             let d=time.getDate()
-            return y+"."+m+"."+d
-        }
-        }       
+            let h=time.getHours()
+            let mm=time.getMinutes()
+            return y+"/"+m+"/"+d+"  "+h+":"+mm
+            }
+        },       
     },
     watch:{
         listenOrderUser:{
@@ -61,7 +63,6 @@ export default{
         }
     },
     mounted(){
-        console.log(this.allorderUser)
     },
     components:{
         topheader:()=> import(/* webpackChunkName: 'index' */ "@/components/header/header.vue")
@@ -71,7 +72,14 @@ export default{
             return parseInt(this.$ethers.utils.formatUnits(val,6))
         },
         complatedState(starttime,endTime,isUnFreeze){
-            console.log(new Date().getTime(),(starttime.toNumber())*1000)
+            if((endTime.toNumber()*1000)<=new Date().getTime()){
+                if(isUnFreeze){
+                    return this.$t("orederState.completed")
+                }
+                return this.$t("orederState.associated")
+            }else{
+                return this.$t("orederState.NotYetDue")
+            }
         }
     }
 }

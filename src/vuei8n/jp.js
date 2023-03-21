@@ -97,7 +97,7 @@ const lang={
         closeedClaim:"FDFとNFTの受け取りをオフにする"
     },
     NFTPOOL:{
-        holdNFT:"NFTを持っている",
+        holdNFT:"現在配当金を受け取ることができます",
         DivideEqually:"分配プール配当", 
         currentPrizePool:"現在のプール",
         hour24claim:"24時間ごとのクレーム",
@@ -152,6 +152,18 @@ const lang={
         successed:"成功",
         faild:"に失敗",
         rightnow:"すぐに買い占める"
+    },
+    errormessage:{
+        chainid:"ネットワークエラーはpolygonネットワークを選択してください",
+        errortitle:"ネットワークエラー",
+        walleterror:"財布につないでください",
+        wallettitle:"エラー",
+        allerror:"財布やネットワーク接続をチェックしてください"
+    },
+    orederState:{
+        completed:"完了",
+        associated:"関連付け",
+        NotYetDue:"時間がない"
     }
 
 }
