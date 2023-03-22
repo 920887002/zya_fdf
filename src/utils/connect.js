@@ -3,6 +3,7 @@ import FDFStakingABI from '../contract/FDFStaking.json';
 import IERC20 from '../contract/IERC20.json';
 import FNFTpool from '../contract/FNFTpool.json'
 import Fsetting from '../contract/Fsetting.json'
+import {defaultAddress} from '../constants/index.js'
 let vm=null;
 const sendThis=(_this)=>{
     vm=_this
@@ -31,6 +32,7 @@ async function getIDOInfo(){
 //查询合约信息
 async function getSysInfo(){
     const sysinfo = await getFDFstakingObj().getSysInfo()
+    console.log(ethers.utils.formatUnits(sysinfo.lastTime,0))
     vm.$store.state.IDOinfo.stakingPool=Number(ethers.utils.formatUnits(sysinfo.stakingPool,6)).toFixed(2)
     vm.$store.state.IDOinfo.stakingPoolTime=ethers.utils.formatUnits(sysinfo.startTime,0)
     vm.$store.state.IDOinfo.timePassed=Date.parse(new Date())/1000-ethers.utils.formatUnits(sysinfo.startTime,0)
@@ -75,6 +77,7 @@ async function getuserInfoPer(address){
     //     vm.$store.state.user.inviteAmount="0"
     //     return false
     // }
+    console.log(userinfo)
     await getFDFstakingObj().userOrders(address).then(res=>{
         vm.$store.state.user.userOrder=res
     })
@@ -103,6 +106,10 @@ async function downLevel1UserAddrs(address){
         vm.$store.state.UserAddress=account
         getUserinfo(account)
         userRewardInfo(account)
+        getNFTpoolINFO(account)
+        userRewardInfo(account)
+        getOrders()
+        getuserInfoPer(account)
     }else{
         vm.$store.state.user.UserAddress=''
         vm.$open('error',(vm.$t('errormessage.chainid')),(vm.$t('errormessage.errortitle')))
@@ -112,6 +119,20 @@ async function downLevel1UserAddrs(address){
 async function checkTranstionsDone(txhash){
     const hashresult=await provider().waitForTransaction(txhash)
     return hashresult
+}
+//connectRegister
+async function connectRegister(addr){
+    return await window.ethereum.request({method:'eth_requestAccounts'}).then(async res=>{
+        await getFDFstakingObj().getUserIDO(res[0]).then(async res=>{
+            if(parseInt(res.referrer,16)===0){
+                await getFDFstakingObj().register(addr).then(async res=>{
+                    await provider().waitForTransaction(res.hash).then(res=>{
+                        vm.$open('success',vm.$t('dialog.successed'),vm.$t('dialog.successed'))
+                    })
+                })
+            }
+        })
+    })
 }
 //重置用户信息
 function resetUserInfo(){
@@ -134,16 +155,22 @@ window.ethereum.on('accountsChanged',async (newAddress)=>{
         vm.$open('error',(vm.$t('errormessage.walleterror')),(vm.$t('errormessage.wallettitle')))
         resetUserInfo()
     }else{
-        await getUserinfo(newAddress[0])
+        getUserinfo(newAddress[0])
         getNFTpoolINFO(newAddress[0])
+        userRewardInfo(newAddress[0])
+        getOrders()
+        getuserInfoPer(newAddress[0])
     }
 
 })
 //检查网络变更
  window.ethereum.on('chainChanged',async (chainId)=>{
     if(ethers.utils.formatUnits(chainId,0)!=137){
-        vm.$open('error',(vm.$t('errormessage.chainid')),(vm.$t('errormessage.errortitle')))
         resetUserInfo()
+        getNFTpoolINFO(window.ethereum.selectedAddress)
+        userRewardInfo(window.ethereum.selectedAddress)
+        getOrders()
+        getuserInfoPer(window.ethereum.selectedAddress)
     }
  })
 
@@ -194,9 +221,21 @@ async function userDownLevel1(address,numAddr){
         vm.$store.state.user.userDownLevel1=res
     })
 }
+//积分下单
+async function depositBySplit(amount){
+    await getFDFstakingObj().depositBySplit(ethers.utils.parseUnits(amount.toString(),6)).then(async res=>{
+        await provider().waitForTransaction(res.hash).then(res=>{
+            console.log(res)
+        })
+    })
+}
 //IDOswitch
 async function IDOswitch(){
-    
+    await getFDFstakingObj().setIDOStop().then(async res=>{
+        await provider().waitForTransaction(res.hash).then(res=>{
+            console.log(res)
+        })
+    })
 }
 //ethers.utils.formatUnits  bignumber转10
 //ethers.utils.parseUnits   10转bignumber
@@ -221,9 +260,9 @@ async function getNetwork(){
     return await provider().getNetwork()
 }
 //获取地址授权额度信息
-async function getERC20allowance(erc20addr,owner,spender){
+async function getERC20allowance(erc20addr,owner,spender,dec){
     return await getContractObj(erc20addr,IERC20.abi).allowance(owner,spender).then(res=>{
-        return parseInt(ethers.utils.formatUnits(res,6))
+        return parseInt(ethers.utils.formatUnits(res,dec))
     })
 }
 //获取NFT合约信息
@@ -231,14 +270,12 @@ async function getNFTpoolINFO(address){
     const contractNFTpool=getContractObj(FDFStakingABI.nftPoolAddr,FNFTpool.abi)
     const balanceUsdt=await contractNFTpool.balanceOf()
     const starttime=await contractNFTpool.getLastTime()
-    console.log(ethers.utils.formatUnits(starttime,0))
     if(address){
         const getuserwithdraw=await contractNFTpool.pendingWith(address)
         vm.$store.state.nftpool.pendingWith=parseInt(ethers.utils.formatUnits(getuserwithdraw,6))
     }
     vm.$store.state.nftpool.balanceOf=parseInt(ethers.utils.formatUnits(balanceUsdt,6))
     vm.$store.state.nftpool.startTime=(ethers.utils.formatUnits(starttime,0))*1000
-    console.log((ethers.utils.formatUnits(starttime,0))*1000,new Date().getTime())
 }
 async function register(address){
    return new Promise(async (resolve,reject)=>{
@@ -267,6 +304,16 @@ function formatDateTime(time){
   const dd = t;
   return{dd,hh,mm,ss}
     }
+
+function timetrans(time){
+    const h = parseInt(time / 3600)
+    const minute = parseInt(time / 60 % 60)
+    const second = Math.ceil(time % 60)    
+
+    const hours = h < 10 ? '0' + h : h
+    const formatSecond = second > 59 ? 59 : second
+    return {hours,minute,formatSecond}
+}
 function accountsAchainid(){
     const chainid=ethers.utils.formatUnits(window.ethereum.chainId,0)
     const account=window.ethereum.selectedAddress
@@ -277,6 +324,22 @@ function accountsAchainid(){
         return false
     }
 }
+//积分转账
+async function transferSplit(amount,address){
+    if(accountsAchainid()){
+        await getFDFstakingObj().transferSplit(address,ethers.utils.parseUnits(amount.toString(),6)).then(async res=>{
+            await provider().waitForTransaction(res.hash).then(res=>{
+                console.log(res)
+                userRewardInfo(vm.$store.state.user.UserAddress)
+            })
+        }).catch(res=>{
+            console.log(res)
+            vm.$open('error',res.message,res.code)
+        })
+    }else{
+        vm.$open('error',(vm.$t('errormessage.allerror')),(vm.$t('errormessage.wallettitle')))
+    }
+}
 
 //互助合约
 
@@ -284,33 +347,44 @@ function accountsAchainid(){
 async function withdraw(){
     await getFDFstakingObj().withdraw().then(async res=>{
         await provider().waitForTransaction(res.hash).then(res=>{
-            console.log(res)
+            getSysInfo(vm.$store.state.user.U)
         })
     }).catch(res=>{
-        vm.$open('error',res.message,res.code)
+        vm.$open('error',res.data.message,res.code)
     })
 }
 //存款  error
 async function deposit(amount){
     return new Promise(async(resolve,reject)=>{
-        const usdtAllownance=await getERC20allowance(FDFStakingABI.testUSDT,vm.$store.state.user.UserAddress,FDFStakingABI.contractAddress)
-        const Ftokenallowance=await getERC20allowance(FDFStakingABI.Ftoken,vm.$store.state.user.UserAddress,FDFStakingABI.contractAddress)
-        const usdtapprove=await getContractObj(FDFStakingABI.testUSDT,IERC20.abi).approve(FDFStakingABI.contractAddress,ethers.utils.parseUnits(amount.toString(),6))
-        await provider().waitForTransaction(usdtapprove.hash).then(res=>{console.log(res)})
-        const ftoeknapprove=await getContractObj(FDFStakingABI.Ftoken,IERC20.abi).approve(FDFStakingABI.contractAddress,ethers.utils.parseUnits((amount*9999).toString(),18))
-        await provider().waitForTransaction(ftoeknapprove.hash)
-        const depositobj=await getFDFstakingObj().deposit(ethers.utils.parseUnits(amount.toString(),6)).catch(res=>{
-            console.log(res)
+        const usdtAllownance=await getERC20allowance(FDFStakingABI.testUSDT,vm.$store.state.user.UserAddress,FDFStakingABI.contractAddress,6)
+        const Ftokenallowance=await getERC20allowance(FDFStakingABI.Ftoken,vm.$store.state.user.UserAddress,FDFStakingABI.contractAddress,18)
+        console.log(usdtAllownance,Ftokenallowance)
+        if(usdtAllownance<amount){
+            const usdtapprove=await getContractObj(FDFStakingABI.testUSDT,IERC20.abi).approve(FDFStakingABI.contractAddress,ethers.utils.parseUnits(amount.toString(),6)).catch(res=>{reject(false)})
+            await provider().waitForTransaction(usdtapprove.hash).then(res=>{console.log(res)})
+        }
+        if(Ftokenallowance<amount){
+            const ftoeknapprove=await getContractObj(FDFStakingABI.Ftoken,IERC20.abi).approve(FDFStakingABI.contractAddress,ethers.utils.parseUnits((amount*10000).toString(),18)).catch(res=>{reject(false)})
+            await provider().waitForTransaction(ftoeknapprove.hash)
+        }
+        await getFDFstakingObj().deposit(ethers.utils.parseUnits(amount.toString(),6)).then(async res=>{
+            await provider().waitForTransaction(res.hash).then(res=>{
+                vm.$open("success",vm.$t('dialog.success'),vm.$t('dialog.successed'))
+                resolve(true)
+            })
+            userRewardInfo(vm.$store.state.user.UserAddress)
+            getOrders()
+            getuserInfoPer(vm.$store.state.user.UserAddress)
+            return true
+        }).catch(res=>{
+            console.log("cate")
             vm.$open('error',res.message,res.code)
+            reject(false)
         })
-        const deposittrans=await provider().waitForTransaction(depositobj.hash).then(res=>{
-            return res
-        })
-        resolve(deposittrans)
     }).then(res=>{
         return res
     }).catch(res=>{
-        console.log(res)
+        return res
     })
 }
 //查询全网最新的十单
@@ -324,13 +398,26 @@ async function setcondition(){
     const IERC20usdt=getContractObj(FDFStakingABI.testUSDT,IERC20.abi)
     const allowancce=await IERC20usdt.approve(FDFStakingABI.contractAddress,ethers.utils.parseUnits(amount.toString(),6))
 }
-//接收receive
+//接收receiveFDF
 async function receiveFDF(){
-    const receiveFDFres=await getFDFstakingObj().receiveFDF().catch(res=>{
-        console.log(res.data.message)
-        getUserinfo(vm.$store.state.user.UserAddress)
+    await getFDFstakingObj().receiveFDF().then(async res=>{
+        await provider().waitForTransaction(res.hash).then(res=>{
+            vm.$open('success',vm.$t('dialog.success'),vm.$t('dialog.success'))
+        })
+    }).catch(res=>{
+        vm.$open('error',vm.$t('tips.NotOpenYet'),vm.$t('errormessage.wallettitle'))
     })
-    console.log(await provider().waitForTransaction(receiveFDFres.hash))
+
+}
+//接受receiveNFT
+async function receiveNFT(){
+    await getFDFstakingObj().receiveNFT().then(async res=>{
+        await provider().waitForTransaction(res.hash).then(res=>{
+            vm.$open('success',vm.$t('dialog.success'),vm.$t('dialog.success'))
+        })
+    }).catch(res=>{
+        vm.$open('error',vm.$t('tips.NotOpenYet'),vm.$t('errormessage.wallettitle'))
+    })
 }
 
 //nft奖池提款
@@ -339,6 +426,20 @@ async function nftwithdraw(){
     return getContractObj(FDFStakingABI.nftPoolAddr,FNFTpool.abi).withdrawToken().then(res=>{
         console.log(res)
     })
+}
+//USDTtoFdf
+async function USDTToFDFAmount(val){
+    return await getContractObj(Fsetting.contractAddress,Fsetting.abi).USDTToFDFAmount(ethers.utils.parseUnits((val*2/100).toString(),6)).then(res=>{
+        return Number(ethers.utils.formatUnits(res,18)).toFixed(2)
+    })
+}
+//判断defaultAddress
+function judgeDefaultAddr(){
+    if(window.ethereum.selectedAddress===defaultAddress.toLowerCase()){
+        return true
+    }else{
+        return false
+    }
 }
 export default {sendThis,
                 connect,//链接钱包
@@ -365,5 +466,12 @@ export default {sendThis,
                 userDownLevel1,//查询下一级用户信息
                 downLevel1UserAddrs,//查询下一级所有用户地址
                 withdraw,//提款USDT
-                nftwithdraw
+                nftwithdraw,
+                timetrans,
+                transferSplit,
+                depositBySplit,
+                receiveNFT,
+                USDTToFDFAmount,
+                judgeDefaultAddr,
+                connectRegister,
             }

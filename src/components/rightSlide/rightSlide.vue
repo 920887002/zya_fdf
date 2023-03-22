@@ -68,7 +68,7 @@
             </li></router-link
           >
           <router-link :to="{ name: 'IDOswitch' }"
-            ><li>
+            ><li v-show='ifdefaultAddr'>
               <img src="~@/img/idoswitchicon.png" alt="" /><span>{{$t("sideSlide.IDOswitch")}}</span>
             </li></router-link
           >
@@ -108,6 +108,11 @@ Vue.use(Popup);
 Vue.use(Popover);
 export default {
   name: "rightslide",
+  computed:{
+    ifdefaultAddr(){
+      return this.$connect.judgeDefaultAddr()
+    }
+  },
   components:{
     tipspopup:()=> import(/* webpackChunkName: 'index' */ "@/components/tipspopup/tipspopup.vue")
   },
@@ -116,6 +121,7 @@ export default {
       show: false,
       showPopover: false,
       localLanguage:"中文繁体",
+      displayNone:false,
       actions: [{ text: "اللغة العربية" ,sx:"ar"}, { text: "Español",sx:"es"}, { text: "English",sx:"en"}, { text: "Русский язык" ,sx:"ru"}, { text: "한국어" ,sx:"ko"}, { text: "日本語 ",sx:"jp" },{ text: "中文繁体 ",sx:"zh" }],
       
     };

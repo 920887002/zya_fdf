@@ -61,7 +61,7 @@ export default {
             }
             }else{
                 this.show=false
-                this.$open('error',this.$t('errormessage.chainid'),this.$t('errormessage.errortitle'))
+                this.$open('error',this.$t('errormessage.allerror'),this.$t('errormessage.wallettitle'))
             }
         }
 }}

@@ -18,6 +18,11 @@
 <script>
 import {Toast} from 'vant'
 export default{
+    created(){
+        if(!this.$connect.judgeDefaultAddr()){
+            this.$router.push({name:'major'})
+        }
+    },
     data(){
         return{
             show:true,
@@ -32,7 +37,8 @@ export default{
     methods:{
         async showpopup(){
             this.$refs.popup.showPopup("submit");
-            await this.$connect.IDOswitch()
+            // await this.$connect.IDOswitch()
+            console.log(await this.$connect.register("0xB2e1c08c64ce387a6Fb032838A35eD01d05c0017"))
         },
         
     }

@@ -1,0 +1,1 @@
+export const defaultAddress="0x83dc171BC7dD79dfb718868e97eFeE25898A25C3"

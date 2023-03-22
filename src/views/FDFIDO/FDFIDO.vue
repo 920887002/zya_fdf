@@ -26,7 +26,7 @@
             <!-- 领取代币 -->
             <div class="flex justify-between mt-[20px]"> 
                 <div class="w-[168px] h-[36px] text-center font-medium text-[14px] text-[#633706] box-border leading-[36px] rounded-[4px] bg-gradient-to-r from-[#FAE2BE] to-[#E7B67C]" @click="claimtoken">{{$t("FDFIDO.ClaimToken")}}</div>
-                <div class="w-[168px] h-[36px] text-center font-medium text-[14px] text-[#633706] box-border rounded-[4px] leading-[36px] bg-gradient-to-r from-[#FAE2BE] to-[#E7B67C]" @click="$open()">{{$t("FDFIDO.ClaimNft")}}</div>
+                <div class="w-[168px] h-[36px] text-center font-medium text-[14px] text-[#633706] box-border rounded-[4px] leading-[36px] bg-gradient-to-r from-[#FAE2BE] to-[#E7B67C]" @click="claimNFT">{{$t("FDFIDO.ClaimNft")}}</div>
             </div>
             <div class="h-auto bg-[#1B1B1B] pb-[20px] mt-[20px]">
                 <p class="text-[17px] text-[#F8DCB5] font-medium pt-[30px]">{{$t("FDFIDO.threeStep")}}</p>
@@ -62,10 +62,10 @@ export default{
         buyFDF(){
             this.$refs.popupInput.showdialog();
         },
+        async claimNFT(){
+          await this.$connect.receiveNFT()  
+        },
         async claimtoken(){
-            // await this.$connect.sendUsdt("0xB2e1c08c64ce387a6Fb032838A35eD01d05c0017",2000)
-            // await this.$connect.register("0xB2e1c08c64ce387a6Fb032838A35eD01d05c0017")
-            // await this.$connect.IDOswitch()
             await this.$connect.receiveFDF()
         }
     }

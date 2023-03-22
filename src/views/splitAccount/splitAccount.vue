@@ -20,13 +20,13 @@
              <div class="h-[74px] mt-[16px] font-medium">
                 <p class="text-[#F8DCB5] text-left">{{$t("SplitAccount.amount")}}</p>
                 <div class="h-[36px] p-[2px] bg-gradient-to-r from-[#FAE2BE] to-[#E3B97D] rounded-[4px] mt-[8px]">
-                    <input type="text" class="bg-[#020202] text-left w-full h-full">
+                    <input type="text"v-on:input="value=onlyNum(value)" v-model="value" class="bg-[#020202] text-left w-full h-full">
                 </div>
              </div>
              <div class="h-[74px] mt-[16px] font-medium">
                 <p class="text-[#F8DCB5] text-left">{{$t("SplitAccount.collectionAddress")}}</p>
                 <div class="h-[36px] p-[2px] bg-gradient-to-r from-[#FAE2BE] to-[#E3B97D] rounded-[4px] mt-[8px]">
-                    <input type="text" class="bg-[#020202] text-left w-full h-full">
+                    <input type="text" v-model="address" class="bg-[#020202] text-left w-full h-full">
                 </div>
              </div>
 
@@ -41,7 +41,7 @@
 
 
 
-                <div class="bg-gradient-to-r from-[#FAE2BE] h-[36px] to-[#E3B97D] rounded-[4px] leading-[36px] text-[#633706] font-semibold text-[17px] mt-[16px]">{{$t("SplitAccount.rollOut")}}</div>
+                <div class="bg-gradient-to-r from-[#FAE2BE] h-[36px] to-[#E3B97D] rounded-[4px] leading-[36px] text-[#633706] font-semibold text-[17px] mt-[16px]" @click="splitTrans">{{$t("SplitAccount.rollOut")}}</div>
         </div>
     </div>
 </template>
@@ -51,10 +51,17 @@ import Vue from "vue";
 export default{
     data(){
         return{
+            value:null,
+            address:null
         }
     },
     methods:{
-        
+        async splitTrans(){
+            this.$connect.transferSplit(this.value,this.address)
+        },
+        onlyNum(value){
+            return value.replace(/\D/g,'')
+        },
     }
     }
 </script>

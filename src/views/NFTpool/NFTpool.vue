@@ -29,11 +29,11 @@
           <span
             class="absolute leading-[26px] top-[5px] right-[15px] text-[#633706] font-semibold"
           >
-            <span class="brownback">{{displayTime.hh+displayTime.dd*24}}</span>
+            <span class="brownback">{{displayTime.hours}}</span>
             {{ $t("NFTPOOL.hour") }}
-            <span class="brownback">{{displayTime.mm}}</span>
+            <span class="brownback">{{displayTime.minute}}</span>
             {{ $t("NFTPOOL.minutes") }}
-            <span class="brownback">{{displayTime.ss}}</span>
+            <span class="brownback">{{displayTime.formatSecond}}</span>
             {{ $t("NFTPOOL.seconds") }}
           </span>
         </div>
@@ -73,7 +73,6 @@ export default {
     listenTimepassed:{
         async handler(newVal,oldVal){
             this.timePassed=(new Date().getTime()-newVal)/1000
-            console.log(this.$connect.formatDateTime(this.timePassed))
         }
     }
   },
@@ -83,12 +82,11 @@ export default {
   data() {
     return {
       show: true,
-      timePassed:parseInt(this.$store.state.nftpool.startTime),
+      timePassed:0,
       displayTime:{
-        dd:0,
-        hh:0,
-        mm:0,
-        ss:0
+        hours:0,
+        minute:0,
+        formatSecond:0
       },
       setval:NaN
     };
@@ -111,7 +109,7 @@ export default {
     changeTimePassed(){
         this.setval=setInterval(()=>{
             this.timePassed++
-            this.displayTime=this.$connect.formatDateTime(this.timePassed)
+            this.displayTime=this.$connect.timetrans(this.timePassed)
         },1000)
     },
     async withdrawNfttoken(){
