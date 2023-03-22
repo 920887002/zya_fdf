@@ -107,7 +107,6 @@ async function downLevel1UserAddrs(address){
         getUserinfo(account)
         userRewardInfo(account)
         getNFTpoolINFO(account)
-        userRewardInfo(account)
         getOrders()
         getuserInfoPer(account)
     }else{
@@ -134,6 +133,32 @@ async function connectRegister(addr){
         })
     })
 }
+window.onload=function(){
+        //检查钱包变更
+        window.ethereum.on('accountsChanged',(newAddress)=>{
+            if(newAddress.length===0){
+                vm.$open('error',(vm.$t('errormessage.walleterror')),(vm.$t('errormessage.wallettitle')))
+                resetUserInfo()
+            }else{
+                getUserinfo(newAddress[0])
+                getNFTpoolINFO(newAddress[0])
+                userRewardInfo(newAddress[0])
+                getOrders()
+                getuserInfoPer(newAddress[0])
+            }
+        
+        })
+        //检查网络变更
+        window.ethereum.on('chainChanged',(chainId)=>{
+            if(ethers.utils.formatUnits(chainId,0)!=137){
+                resetUserInfo()
+                getNFTpoolINFO(window.ethereum.selectedAddress)
+                userRewardInfo(window.ethereum.selectedAddress)
+                getOrders()
+                getuserInfoPer(window.ethereum.selectedAddress)
+            }
+         })
+}
 //重置用户信息
 function resetUserInfo(){
     vm.$store.state.user.UserAddress=""
@@ -149,30 +174,10 @@ function resetUserInfo(){
     vm.$store.state.user.otherTeamDeposit="0"
     vm.$store.state.user.maxTeamDeposit="0"
 }
-//检查钱包变更
-window.ethereum.on('accountsChanged',async (newAddress)=>{
-    if(newAddress.length===0){
-        vm.$open('error',(vm.$t('errormessage.walleterror')),(vm.$t('errormessage.wallettitle')))
-        resetUserInfo()
-    }else{
-        getUserinfo(newAddress[0])
-        getNFTpoolINFO(newAddress[0])
-        userRewardInfo(newAddress[0])
-        getOrders()
-        getuserInfoPer(newAddress[0])
-    }
 
-})
-//检查网络变更
- window.ethereum.on('chainChanged',async (chainId)=>{
-    if(ethers.utils.formatUnits(chainId,0)!=137){
-        resetUserInfo()
-        getNFTpoolINFO(window.ethereum.selectedAddress)
-        userRewardInfo(window.ethereum.selectedAddress)
-        getOrders()
-        getuserInfoPer(window.ethereum.selectedAddress)
-    }
- })
+
+
+
 
 //参与抢购
 export async function buyFDF(amount){

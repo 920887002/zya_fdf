@@ -112,13 +112,13 @@
             {{ $t("PANNEL.myInviter") }}：{{ $store.state.user.referrer }}
           </li>
           <li>
-            {{ $t("PANNEL.myinviterUrl") }}：http//:{{
-              $store.state.user.UserAddress
-            }}
+            {{ $t("PANNEL.myinviterUrl") }}：{{ copyUrl }}
           </li>
           <span
             class="absolute bottom-[-15px] right-[16px] w-auto pl-[10px] pr-[10px] h-[24px] text-center font-medium text-[12px] text-[#633706] box-border leading-[24px] rounded-[4px] bg-gradient-to-r from-[#FAE2BE] to-[#E7B67C]"
             @click="showpopup"
+            v-clipboard:copy="copyUrl"
+            v-clipboard:success="firstCopySuccess"
             >{{ $t("PANNEL.copyurl") }}</span
           >
         </ul>
@@ -153,6 +153,11 @@ export default {
 
   },
   computed:{
+    copyUrl () {
+      return `http//:${
+        this.$store.state.user.UserAddress
+      }`
+    },
     timetranstion(){
       return function(val){
       let time= new Date(val*1000)
@@ -228,6 +233,9 @@ export default {
   methods: {
     showpopup() {
         console.log(this.timePassed)
+      this.$refs.popup.showPopup("copyurl");
+    },
+    firstCopySuccess () {
       this.$refs.popup.showPopup("copyurl");
     },
     onSelect(action) {
