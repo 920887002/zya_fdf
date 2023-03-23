@@ -7,14 +7,10 @@
 
 <script>
 export default {
-  async created(){
-        this.$connect.getSysInfo()
-        this.$connect.getIDOInfo()
-  },
   watch:{
     listenAddress:{
             async handler(newVal,oldVal){
-               if(this.$connect.accountsAchainid()){
+               if(this.$connect.getUsername()){
                 this.$connect.getSysInfo()
                 this.$connect.getIDOInfo()
                 this.$connect.getuserInfoPer(newVal)

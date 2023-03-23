@@ -105,22 +105,24 @@ async function downLevel1UserAddrs(address){
 }
 //链接钱包
  async function connect(){
-    const [account]= await window.ethereum.request({method:'eth_requestAccounts'})
-    if(ethers.utils.formatUnits(window.ethereum.chainId,0)==137){
-        vm.$store.state.user.UserAddress=account;
-        getUserinfo(account)
-        userRewardInfo(account)
-        getNFTpoolINFO(account)
-        getOrders()
-        getuserInfoPer(account)
-        getIDOInfo()
-        await getOwner().then(res=>{
-            vm.$store.state.defaultAddr=res
-        })
-    }else{
-        resetUserInfo()
-        vm.$open('error',(vm.$t('errormessage.chainid')),(vm.$t('errormessage.errortitle')))
-    }
+    await window.ethereum.request({method:'eth_requestAccounts'}).then(async res=>{
+        console.log(res)
+        if(ethers.utils.formatUnits(window.ethereum.chainId,0)==137){
+            vm.$store.state.user.UserAddress=res[0];
+            await getUserinfo(res[0])
+            await userRewardInfo(res[0])
+            await getNFTpoolINFO(res[0])
+            await getOrders()
+            await getuserInfoPer(res[0])
+            await getIDOInfo()
+            await getOwner().then(res=>{
+                vm.$store.state.defaultAddr=res
+            })
+        }else{
+            resetUserInfo()
+            vm.$open('error',(vm.$t('errormessage.chainid')),(vm.$t('errormessage.errortitle')))
+        }
+    })
 }
 //查询交易是否结束
 async function checkTranstionsDone(txhash){
@@ -193,7 +195,7 @@ export async function buyFDF(amount){
             })
         }
             await getFDFstakingObj().buyFDF(ethers.utils.parseUnits(amount.toString(),6)).then(async res=>{
-                await checkTranstionsDone(res.hash).then(async res=>{
+                await provider().waitForTransaction(res.hash).then(async res=>{
                     await getUserinfo(vm.$store.state.user.UserAddress)
                     vm.$store.state.user.showBool=false
                     console.log("----------------------------------------")

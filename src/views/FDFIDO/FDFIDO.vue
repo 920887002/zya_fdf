@@ -137,7 +137,7 @@ export default {
       show: true,
     };
   },
-  async mounted() {},
+ mounted() {},
   components: {
     topheader: () =>
       import(/* webpackChunkName: 'index' */ "@/components/header/header.vue"),
