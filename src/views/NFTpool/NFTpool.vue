@@ -61,18 +61,17 @@
 
 <script>
 export default {
-  async created(){
-    await this.$connect.getNFTpoolINFO(this.$store.state.user.UserAddress)
-  },
    computed:{
     listenTimepassed(){
-        return this.$store.state.nftpool.startTime
+      console.log(this.$store.state.nftpool.timePassed)
+        return this.$store.state.nftpool.timePassed
     },
   },
   watch:{
     listenTimepassed:{
         async handler(newVal,oldVal){
-            this.timePassed=(new Date().getTime()-newVal)/1000
+            console.log(newVal)
+            this.timePassed=newVal
         }
     }
   },
@@ -91,8 +90,11 @@ export default {
       setval:NaN
     };
   },
-  mounted() {
+  async mounted() {
     this.changeTimePassed()
+    if(this.$connect.accountsAchainid()){
+      await this.$connect.getNFTpoolINFO(this.$store.state.user.UserAddress)
+    }
   },
   components: {
     tipspopup: () =>
@@ -113,7 +115,7 @@ export default {
         },1000)
     },
     async withdrawNfttoken(){
-      if(this.$connect.accountsAchainid()){
+      if(this.$connect.getUsername()){
         await this.$connect.nftwithdraw().then(res=>{
         console.log(res)
       })

@@ -25,14 +25,15 @@ function getContractObj(Address,abi){
 //获取IDO信息
 async function getIDOInfo(){
     const IDOinfo=await getFDFstakingObj().getIDOInfo()
-
+    vm.$store.state.IDOinfo.IDOStop=IDOinfo.IDOStop
+    vm.$store.state.IDOinfo.receiveStart=IDOinfo.receiveStart
+    vm.$store.state.IDOinfo.totalNFTS=ethers.utils.parseUnits((IDOinfo.totalNFTS).toString(),0)
     vm.$store.state.IDOinfo.totalRegisterUser=parseInt(IDOinfo.totalRegisterUser,16)
     
 }
 //查询合约信息
 async function getSysInfo(){
     const sysinfo = await getFDFstakingObj().getSysInfo()
-    console.log(ethers.utils.formatUnits(sysinfo.lastTime,0))
     vm.$store.state.IDOinfo.stakingPool=Number(ethers.utils.formatUnits(sysinfo.stakingPool,6)).toFixed(2)
     vm.$store.state.IDOinfo.stakingPoolTime=ethers.utils.formatUnits(sysinfo.startTime,0)
     vm.$store.state.IDOinfo.timePassed=Date.parse(new Date())/1000-ethers.utils.formatUnits(sysinfo.startTime,0)
@@ -60,38 +61,42 @@ async function getuserInfoPer(address){
             }
         }
     }
-    else{
-        console.log("no")
-    }
+    
 }
 //获取用户信息
  async function getUserinfo(address){
-    const userinfo=await getFDFstakingObj().getUserIDO(address);
-    //     if(parseInt(userinfo.referrer,16)===0){
-    //     vm.$store.state.user.UserAddress=""
-    //     vm.$store.state.user.fdfAmount="0"
-    //     vm.$store.state.user.nftNums="0"
-    //     vm.$store.state.user.registers="0"
-    //     vm.$store.state.user.amount="0"
-    //     vm.$store.state.user.invites="0"
-    //     vm.$store.state.user.inviteAmount="0"
-    //     return false
-    // }
-    console.log(userinfo)
-    await getFDFstakingObj().userOrders(address).then(res=>{
-        vm.$store.state.user.userOrder=res
+    return new Promise(async(resolve,reject)=>{
+        await getFDFstakingObj().getUserIDO(address).then(async res=>{
+            const owner=await getOwner()
+            if(ethers.utils.formatUnits(res.referrer,0)==0 && address!=owner){
+                console.log("here")
+                resetUserInfo()
+                vm.$open('error',vm.$t('tips.noregister'),vm.$t('errormessage.wallettitle'))
+                return
+            }
+            await getFDFstakingObj().userOrders(address).then(res=>{
+                vm.$store.state.user.userOrder=res
+            })
+            await downLevel1UserAddrs(address)
+            vm.$store.state.user.UserAddress=address
+            vm.$store.state.user.fdfAmount=parseInt(ethers.utils.formatUnits(res.fdfAmount,18))
+            vm.$store.state.user.nftNums=res.nftNums
+            vm.$store.state.user.registers=res.registers
+            vm.$store.state.user.amount=parseInt(ethers.utils.formatUnits(res.amount,18))
+            vm.$store.state.user.invites=res.invites
+            vm.$store.state.user.inviteAmount=res.inviteAmount
+            vm.$store.state.user.referrer=res.referrer
+            resolve(true)
+        })
+    }).then(res=>{
+        console.log(res)
+        return res
+    }).catch(res=>{
+        console.log(res)
+        return res
     })
-    await downLevel1UserAddrs(address)
-    vm.$store.state.user.UserAddress=address
-    vm.$store.state.user.fdfAmount=parseInt(ethers.utils.formatUnits(userinfo.fdfAmount,18))
-    vm.$store.state.user.nftNums=userinfo.nftNums
-    vm.$store.state.user.registers=userinfo.registers
-    vm.$store.state.user.amount=parseInt(ethers.utils.formatUnits(userinfo.amount,18))
-    vm.$store.state.user.invites=userinfo.invites
-    vm.$store.state.user.inviteAmount=userinfo.inviteAmount
-    vm.$store.state.user.referrer=userinfo.referrer
-    return true;
 }
+//
 // 查询下一级用户所有地址
 async function downLevel1UserAddrs(address){
     return await getFDFstakingObj().downLevel1UserAddrs(address).then(async res=>{
@@ -101,17 +106,19 @@ async function downLevel1UserAddrs(address){
 //链接钱包
  async function connect(){
     const [account]= await window.ethereum.request({method:'eth_requestAccounts'})
-    vm.$store.state.user.UserAddress=account;
     if(ethers.utils.formatUnits(window.ethereum.chainId,0)==137){
-        vm.$store.state.UserAddress=account
+        vm.$store.state.user.UserAddress=account;
         getUserinfo(account)
         userRewardInfo(account)
         getNFTpoolINFO(account)
-        userRewardInfo(account)
         getOrders()
         getuserInfoPer(account)
+        getIDOInfo()
+        await getOwner().then(res=>{
+            vm.$store.state.defaultAddr=res
+        })
     }else{
-        vm.$store.state.user.UserAddress=''
+        resetUserInfo()
         vm.$open('error',(vm.$t('errormessage.chainid')),(vm.$t('errormessage.errortitle')))
     }
 }
@@ -124,12 +131,16 @@ async function checkTranstionsDone(txhash){
 async function connectRegister(addr){
     return await window.ethereum.request({method:'eth_requestAccounts'}).then(async res=>{
         await getFDFstakingObj().getUserIDO(res[0]).then(async res=>{
+            console.log(addr)
             if(parseInt(res.referrer,16)===0){
                 await getFDFstakingObj().register(addr).then(async res=>{
-                    await provider().waitForTransaction(res.hash).then(res=>{
+                    await provider().waitForTransaction(res.hash).then(async res=>{
                         vm.$open('success',vm.$t('dialog.successed'),vm.$t('dialog.successed'))
+                           await connect()
                     })
                 })
+            }else{
+                await connect()
             }
         })
     })
@@ -149,53 +160,52 @@ function resetUserInfo(){
     vm.$store.state.user.otherTeamDeposit="0"
     vm.$store.state.user.maxTeamDeposit="0"
 }
-//检查钱包变更
-window.ethereum.on('accountsChanged',async (newAddress)=>{
-    if(newAddress.length===0){
-        vm.$open('error',(vm.$t('errormessage.walleterror')),(vm.$t('errormessage.wallettitle')))
-        resetUserInfo()
-    }else{
-        getUserinfo(newAddress[0])
-        getNFTpoolINFO(newAddress[0])
-        userRewardInfo(newAddress[0])
-        getOrders()
-        getuserInfoPer(newAddress[0])
-    }
 
-})
-//检查网络变更
- window.ethereum.on('chainChanged',async (chainId)=>{
-    if(ethers.utils.formatUnits(chainId,0)!=137){
+window.onload=function(){
+    //检查钱包变更
+    window.ethereum.on('accountsChanged',async (newAddress)=>{
         resetUserInfo()
-        getNFTpoolINFO(window.ethereum.selectedAddress)
-        userRewardInfo(window.ethereum.selectedAddress)
-        getOrders()
-        getuserInfoPer(window.ethereum.selectedAddress)
-    }
- })
-
+    
+    })
+    //检查网络变更
+     window.ethereum.on('chainChanged',async (chainId)=>{
+        resetUserInfo()
+     })
+}
+//获取地址授权额度信息
+async function getERC20allowance(erc20addr,owner,spender,dec){
+    return await getContractObj(erc20addr,IERC20.abi).allowance(owner,spender).then(res=>{
+        return parseInt(ethers.utils.formatUnits(res,dec))
+    })
+}
 //参与抢购
 export async function buyFDF(amount){
     return new Promise(async (resolve,reject)=>{
-        const IERC20usdt=getContractObj(FDFStakingABI.testUSDT,IERC20.abi)
-        const allowancce=await IERC20usdt.approve(FDFStakingABI.contractAddress,ethers.utils.parseUnits(amount.toString(),6)).catch(res=>{
-            vm.$store.state.tips.errormsg=res.message
-            reject(res)
-        })
-        const allowanceRes=await provider().waitForTransaction(allowancce.hash)
-        resolve(allowanceRes)
-    }).then(async res=>{
-        const FDFcontractObj= await getContractObj(FDFStakingABI.contractAddress,FDFStakingABI.abi)
-        const buyFdf= await FDFcontractObj.buyFDF(ethers.utils.parseUnits(amount.toString(),6)).catch(res=>{
-            vm.$store.state.tips.errormsg=res.data.message
-        })
-        const buyFdfRes = await checkTranstionsDone(buyFdf.hash)
-        await getUserinfo(vm.$store.state.user.UserAddress)
-        console.log(buyFdfRes)
-        vm.$store.state.user.showBool=false
-        return true;
+        const usdtAllownance=await getERC20allowance(FDFStakingABI.testUSDT,vm.$store.state.user.UserAddress,FDFStakingABI.contractAddress,6)
+        console.log(usdtAllownance)
+        if(usdtAllownance<amount){
+            await getContractObj(FDFStakingABI.testUSDT,IERC20.abi).approve(FDFStakingABI.contractAddress,ethers.utils.parseUnits(amount.toString(),6)).then(async res=>{
+                await provider().waitForTransaction(res.hash).then(res=>{
+                    console.log(res)
+                })
+            }).catch(res=>{
+                reject(false)
+            })
+        }
+            await getFDFstakingObj().buyFDF(ethers.utils.parseUnits(amount.toString(),6)).then(async res=>{
+                await checkTranstionsDone(res.hash).then(async res=>{
+                    await getUserinfo(vm.$store.state.user.UserAddress)
+                    vm.$store.state.user.showBool=false
+                    console.log("----------------------------------------")
+                    resolve(true)
+                })
+       }).catch(res=>{
+        reject(false)
+    })
+    }).then(res=>{
+        return res
     }).catch(res=>{
-        vm.$store.state.tips.errormsg=res.data.message
+        return res
     })
 }
 //查询用户资产详情
@@ -231,9 +241,23 @@ async function depositBySplit(amount){
 }
 //IDOswitch
 async function IDOswitch(){
-    await getFDFstakingObj().setIDOStop().then(async res=>{
+    return await getFDFstakingObj().setIDOStop().then(async res=>{
         await provider().waitForTransaction(res.hash).then(res=>{
-            console.log(res)
+            vm.$open("success",vm.$t('tips.submitted'),vm.$t('dialog.successed'))
+            getIDOInfo()
+        })
+    }).catch(res=>{
+        vm.$open('error',(vm.$t('errormessage.walleterror')),(vm.$t('errormessage.wallettitle')))
+    })
+}
+//开启领取FDF和NFT
+async function setFDFaNft(){
+    return await getFDFstakingObj().setReceiveStart().then(async res=>{
+        await provider().waitForTransaction(res.hash).then(res=>{
+            vm.$open("success",vm.$t('tips.submitted'),vm.$t('dialog.successed'))
+            getIDOInfo()
+        }).catch(res=>{
+            vm.$open('error',(vm.$t('errormessage.walleterror')),(vm.$t('errormessage.wallettitle')))
         })
     })
 }
@@ -259,23 +283,20 @@ async function sendUsdt(address,amount){
 async function getNetwork(){
     return await provider().getNetwork()
 }
-//获取地址授权额度信息
-async function getERC20allowance(erc20addr,owner,spender,dec){
-    return await getContractObj(erc20addr,IERC20.abi).allowance(owner,spender).then(res=>{
-        return parseInt(ethers.utils.formatUnits(res,dec))
-    })
-}
+
 //获取NFT合约信息
 async function getNFTpoolINFO(address){
     const contractNFTpool=getContractObj(FDFStakingABI.nftPoolAddr,FNFTpool.abi)
-    const balanceUsdt=await contractNFTpool.balanceOf()
-    const starttime=await contractNFTpool.getLastTime()
+    await contractNFTpool.balanceOf().then(res=>{
+        vm.$store.state.nftpool.balanceOf=Number(ethers.utils.formatUnits(res,6)).toFixed(2)
+    })
+    await contractNFTpool.getLastTime().then(res=>{
+        vm.$store.state.nftpool.timePassed=(parseInt(new Date().getTime()/1000)-((ethers.utils.formatUnits(res,0))))
+    })
     if(address){
         const getuserwithdraw=await contractNFTpool.pendingWith(address)
         vm.$store.state.nftpool.pendingWith=parseInt(ethers.utils.formatUnits(getuserwithdraw,6))
     }
-    vm.$store.state.nftpool.balanceOf=parseInt(ethers.utils.formatUnits(balanceUsdt,6))
-    vm.$store.state.nftpool.startTime=(ethers.utils.formatUnits(starttime,0))*1000
 }
 async function register(address){
    return new Promise(async (resolve,reject)=>{
@@ -324,6 +345,16 @@ function accountsAchainid(){
         return false
     }
 }
+function getUsername(){
+    const chainid=ethers.utils.formatUnits(window.ethereum.chainId,0)
+    const account=parseInt(vm.$store.state.user.UserAddress,16)
+    console.log(account)
+    if(chainid==137 && account){
+        return true
+    }else{
+        return false
+    }
+}
 //积分转账
 async function transferSplit(amount,address){
     if(accountsAchainid()){
@@ -340,7 +371,12 @@ async function transferSplit(amount,address){
         vm.$open('error',(vm.$t('errormessage.allerror')),(vm.$t('errormessage.wallettitle')))
     }
 }
-
+//获取owner
+async function getOwner(){
+    return await getFDFstakingObj().owner().then(res=>{
+        return res.toLowerCase()
+    })
+}
 //互助合约
 
 //提款USDT
@@ -434,13 +470,6 @@ async function USDTToFDFAmount(val){
     })
 }
 //判断defaultAddress
-function judgeDefaultAddr(){
-    if(window.ethereum.selectedAddress===defaultAddress.toLowerCase()){
-        return true
-    }else{
-        return false
-    }
-}
 export default {sendThis,
                 connect,//链接钱包
                 getUserinfo,//获取用户信息
@@ -472,6 +501,7 @@ export default {sendThis,
                 depositBySplit,
                 receiveNFT,
                 USDTToFDFAmount,
-                judgeDefaultAddr,
                 connectRegister,
+                setFDFaNft,
+                getUsername,
             }

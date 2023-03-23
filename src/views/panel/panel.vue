@@ -1,12 +1,8 @@
 <template>
   <div class="w-full">
     <div class="w-[345px] mx-auto pb-[20px]">
-      <div class="h-44 flex flex-row items-center justify-between">
-        <div class="w-[103px] h-23 bg-[url('~@/img/logo.png')] bg-cover"></div>
-        <span class="flex ml-[133px] text-[12px]">
-          <toppopup></toppopup>
-        </span>
-        <rightslide></rightslide>
+      <div class="h-44 w-full">
+        <topheader></topheader>
       </div>
       <div class="h-[155px] mt-[10px] bg-[#1B1B1B]">
         <ul class="contractAddress pt-[12px] pl-[8px]">
@@ -112,13 +108,14 @@
             {{ $t("PANNEL.myInviter") }}：{{ $store.state.user.referrer }}
           </li>
           <li>
-            {{ $t("PANNEL.myinviterUrl") }}：http//:{{
-              $store.state.user.UserAddress
-            }}
+            {{ $t("PANNEL.myinviterUrl") }}：{{copyUrl}}
           </li>
           <span
             class="absolute bottom-[-15px] right-[16px] w-auto pl-[10px] pr-[10px] h-[24px] text-center font-medium text-[12px] text-[#633706] box-border leading-[24px] rounded-[4px] bg-gradient-to-r from-[#FAE2BE] to-[#E7B67C]"
             @click="showpopup"
+            v-show="this.$store.state.user.UserAddress"
+            v-clipboard:copy="copyUrl"
+            v-clipboard:success="firstCopySuccess"
             >{{ $t("PANNEL.copyurl") }}</span
           >
         </ul>
@@ -147,12 +144,20 @@
 <script>
 import Vue from "vue";
 import { Rate, CountDown } from "vant";
-Vue.use(Rate).use(CountDown);
+import VueClipboard from 'vue-clipboard2'
+Vue.use(Rate).use(CountDown).use(VueClipboard)
 export default {
   async created() {
 
   },
   computed:{
+    copyUrl(){
+      if(this.$store.state.user.UserAddress){
+        return `http://192.168.110.213:8080/#/major?addr=${this.$store.state.user.UserAddress}`
+      }else{
+        return ""
+      }
+    },
     timetranstion(){
       return function(val){
       let time= new Date(val*1000)
@@ -189,6 +194,7 @@ export default {
   },
   data() {
     return {
+      copy:null,
       show: true,
       star: require("../../img/star.png"),
       hollowstra: require("../../img/hollowStar.png"),
@@ -224,6 +230,7 @@ export default {
       import(
         /* webpackChunkName: 'index' */ "@/components/toppopup/toppopup.vue"
       ),
+      topheader:()=> import(/* webpackChunkName: 'index' */ "@/components/header/header.vue")
   },
   methods: {
     showpopup() {
@@ -247,7 +254,10 @@ export default {
     },
     bignumberTrans(val){
       return parseInt(this.$ethers.utils.formatUnits(val,6))
-    }
+    },
+     firstCopySuccess () {
+      this.$refs.popup.showPopup("copyurl");
+    },
   },
 }
 </script>

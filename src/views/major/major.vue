@@ -64,12 +64,6 @@
 <script>
 export default{
     async mounted(){
-        if((window.location.href).indexOf("addr")!=-1){
-            const lohref=new URL(window.location).hash
-            const addr=lohref.toString().split("addr=").slice(-1)
-            console.log(addr)
-            await this.$connect.connectRegister(addr[0])
-        }
     },
     data(){
         return{

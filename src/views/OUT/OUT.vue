@@ -30,10 +30,10 @@ export default{
     },
     methods:{
         userWithdraw(){
-            if(this.$connect.accountsAchainid()){
+            if(this.$connect.getUsername()){
                 this.$connect.withdraw()
             }else{
-                this.$open('error',this.$store.state.tips.errormsg,this.$t('dialog.faild'))
+                this.$open('error',this.$t('errormessage.allerror'),this.$t('errormessage.wallettitle'))
             }
         }
         }

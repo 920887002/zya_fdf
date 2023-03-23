@@ -1,4 +1,5 @@
 module.exports = {
   outputDir: 'dist',
-  transpileDependencies: true
+  transpileDependencies: true,
+  publicPath: './'
 }

@@ -11,9 +11,11 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import Connect from './utils/connect'
 import { ethers } from 'ethers'
+import VueClipboard from 'vue-clipboard2'
 Vue.prototype.$ethers=ethers
 Vue.prototype.$connect=Connect;
-Vue.use(ElementUI);
+Vue.use(ElementUI)
+Vue.use(VueClipboard)
 Vue.prototype.$open=function(type,arg,title){
     this.$notify({
         title:title,

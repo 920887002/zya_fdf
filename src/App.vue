@@ -10,7 +10,6 @@ export default {
   async created(){
         this.$connect.getSysInfo()
         this.$connect.getIDOInfo()
-        this.$connect.getuserInfoPer(this.$store.state.user.UserAddress)
   },
   watch:{
     listenAddress:{

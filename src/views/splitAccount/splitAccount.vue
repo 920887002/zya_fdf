@@ -57,7 +57,11 @@ export default{
     },
     methods:{
         async splitTrans(){
+             if(this.$connect.getUsername()){
             this.$connect.transferSplit(this.value,this.address)
+             }else{
+                this.$open('error',this.$t('errormessage.allerror'),this.$t('errormessage.wallettitle'))
+             }
         },
         onlyNum(value){
             return value.replace(/\D/g,'')

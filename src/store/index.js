@@ -26,7 +26,7 @@ export default new Vuex.Store({
       userDownLevel1:[]
     },
     contractAddress:{
-      IDOfdfStaking:"0xAE84a15Be43af7AC2c85dd20f0b0C443B33fcDEC"
+      IDOfdfStaking:"0xdf797E27481E499BEA41487D238481709f7dc559"
     },
     tips:{
       errormsg:""
@@ -37,12 +37,16 @@ export default new Vuex.Store({
       timePassed:0,
       stakingPoolTime:new Date(),
       stakingPoolCountDown:0,
-      startTime:0
+      startTime:0,
+      IDOStop:false,
+      receiveStart:false,
+      totalNFTS:0,
     },
     nftpool:{
       balanceOf:0,
       pendingWith:0,
-      startTime:0
+      startTime:0,
+      timePassed:0,
     },
     userRewardInfo:{
       totalCapitals:0,
@@ -57,7 +61,8 @@ export default new Vuex.Store({
       totalRevenue:0,
       pendingSplit:0,
       pendingWithdraw:0,
-    }
+    },
+    defaultAddr:"",
   },
   // 获取state数据
   getters: {

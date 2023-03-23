@@ -41,20 +41,21 @@ export default {
             this.show=!this.show
             },
         async buyFDFfr(){
-            if(this.$connect.accountsAchainid()){
+            if(this.$connect.getUsername()){
                 if(this.value!=0 && this.value % 100===0){
                 this.dis=true
-                const resulttx=await this.$connect.buyFDF(this.value).then(res=>{
-                    console.log(res)
-                }).then(res=>{
-                    this.show=false
-                    this.dis=false
-                    this.$open("success",this.$t('dialog.success'),this.$t('dialog.successed'))
-                }).catch(res=>{
-                    this.show=false
-                    console.log("ad")
-                    this.dis=false
-                    this.$open('error',this.$store.state.tips.errormsg,this.$t('dialog.faild'))
+                await this.$connect.buyFDF(this.value).then(res=>{
+                    if(res){
+                        this.show=false
+                        this.dis=false
+                        this.$open("success",this.$t('dialog.success'),this.$t('dialog.successed'))
+                    }else{
+                        this.show=false
+                        console.log("ad")
+                        this.dis=false
+                        this.$open('error',this.$store.state.tips.errormsg,this.$t('dialog.faild'))
+                    }
+                    
                 })
             }else{
                 this.$refs.popup.showPopup("errorNum")

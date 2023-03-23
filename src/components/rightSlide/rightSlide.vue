@@ -60,21 +60,22 @@
               <img src="~@/img/reporticon.png" alt="" /><span>{{$t("sideSlide.AuditReport")}}</span>
             </li></router-link
           >
-          <router-link :to="{ name: 'major' }"
-            ><li>
+          <li @click="sushi">
               <img src="~@/img/sushiswapicon.png" alt="" /><span
                 >Sushi SWAP</span
               >
-            </li></router-link
-          >
+            </li>
           <router-link :to="{ name: 'IDOswitch' }"
-            ><li v-show='ifdefaultAddr'>
+            ><li v-show='this.$store.state.user.UserAddress==this.$store.state.defaultAddr && this.$store.state.user.UserAddress!=""'>
               <img src="~@/img/idoswitchicon.png" alt="" /><span>{{$t("sideSlide.IDOswitch")}}</span>
             </li></router-link
           >
         </ul>
         <span
           class="absolute Transtips font-semibold text-[12px] bottom-[68px] text-right right-[21px]" @click="showMidPopup"
+          v-if="this.$store.state.user.UserAddress"
+          v-clipboard:copy="copyUrl"
+          v-clipboard:success="firstCopySuccess"
           >{{$t("sideSlide.copyInviteUrl")}}</span
         >
         <tipspopup ref="popup"></tipspopup>
@@ -109,9 +110,9 @@ Vue.use(Popover);
 export default {
   name: "rightslide",
   computed:{
-    ifdefaultAddr(){
-      return this.$connect.judgeDefaultAddr()
-    }
+    copyUrl(){
+      return `http://192.168.110.213:8080/#/major?addr=${this.$store.state.user.UserAddress}`
+    },
   },
   components:{
     tipspopup:()=> import(/* webpackChunkName: 'index' */ "@/components/tipspopup/tipspopup.vue")
@@ -134,14 +135,20 @@ export default {
       if(action.sx==="ar"){
         document.documentElement.setAttribute("dir","rtl")
       }else{
-        document.documentElement.removeAttribute("dir")
+        document.documentElement.removeAttribute("dir","ltr")
       }
       this.localLanguage=action.text
       this.$i18n.locale=action.sx
     },
     showMidPopup(){
             this.$refs.popup.showPopup("copyurl");
-        }
+        },
+      firstCopySuccess () {
+    this.$refs.popup.showPopup("copyurl");
+  },
+  sushi(){
+    window.location.href="https://cn.sushi.com/"
+  }
   },
 };
 </script>

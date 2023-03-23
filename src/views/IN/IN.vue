@@ -137,7 +137,7 @@ export default {
       await await this.$connect.receiveFDF();
     },
     async deposit() {
-      if (this.$connect.accountsAchainid()) {
+      if (this.$connect.getUsername()) {
         if (this.value != 0 && this.value % 100 === 0) {
           this.dis = true;
           await this.$connect.connect();

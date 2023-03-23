@@ -25,31 +25,22 @@ export default {
         tipspopup:()=> import(/* webpackChunkName: 'index' */ "@/components/tipspopup/tipspopup.vue"),
     },
     computed:{
-         listenAddress(){
-            return this.$store.state.user.UserAddress
-        }
+        
     },
     methods:{
         async connectedWallet(){
-            const result =await this.$connect.connect();
-            // if(!result){
-            //     this.$refs.popup.showPopup("noregister")
-            // }
+        if((window.location.href).indexOf("addr")!=-1){
+            const lohref=new URL(window.location).hash
+            const addr=lohref.toString().split("addr=").slice(-1)
+            console.log(addr)
+            await this.$connect.connectRegister(addr[0])
+        }else{
+            await this.$connect.connect()
+        }
+        
         }
     },
-    watch:{
-        listenAddress:{
-            async handler(newVal,oldVal){
-               if(this.$connect.accountsAchainid()){
-                 const result = await this.$connect.getUserinfo(newVal);
-                if(!result){
-                    this.$refs.popup.showPopup('noregister')
-                }
-               }
-            },
-            deep:true
-        }
-    }
+   
     
 }
 </script>
